@@ -14,7 +14,10 @@
 #include "InputManager.h"
 #include "TimedCodeController.h"
 #include "TimedCodeIncludes.h"
+#include <iostream>
 #include <string>
+#include "oaidl.h"
+#include <comdef.h>
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
@@ -26,12 +29,20 @@ template <class T> void SafeRelease(T** ppT) {
 	}
 }
 
-
 HRESULT LoadResourceBitmap(
 	ID2D1RenderTarget* pRenderTarget,
 	IWICImagingFactory* pIWICFactory,
 	PCWSTR resourceName,
 	PCWSTR resourceType,
+	UINT destinationWidth,
+	UINT destinationHeight,
+	ID2D1Bitmap** ppBitmap
+);
+
+HRESULT LoadBitmapFromFile(
+	ID2D1RenderTarget* pRenderTarget,
+	IWICImagingFactory* pIWICFactory,
+	PCWSTR uri,
 	UINT destinationWidth,
 	UINT destinationHeight,
 	ID2D1Bitmap** ppBitmap
@@ -93,15 +104,27 @@ HRESULT MainWindow::CreateGraphicsResources() {
 			if (SUCCEEDED(hr)) {
 				CalculateLayout();
 				if (SUCCEEDED(hr)) {
-					hr = LoadResourceBitmap(
-						pRenderTarget,
-						iwicFactory,
-						L"SampleImage",
-						L"Image",
-						200,
-						0,
-						&bitmap
-					);
+					if (iwicFactory == NULL) {
+						hr = CoCreateInstance(
+							CLSID_WICImagingFactory,
+							NULL,
+							CLSCTX_INPROC_SERVER,
+							IID_PPV_ARGS(&iwicFactory)
+						);
+					}
+					if (SUCCEEDED(hr)) {
+						hr = LoadBitmapFromFile(
+							pRenderTarget,
+							iwicFactory,
+							L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp",
+							200,
+							0,
+							&bitmap
+						);
+					}
+					if (SUCCEEDED(hr)) {
+						OutputDebugString(L"please");
+					}
 				}
 			}
 		}
@@ -138,7 +161,7 @@ void MainWindow::OnPaint() {
 			)
 		);
 
-		pRenderTarget->FillEllipse(ellipse, pBrush);
+		//pRenderTarget->FillEllipse(ellipse, pBrush);
 
 		hr = pRenderTarget->EndDraw();
 		if (SUCCEEDED(hr)) {
@@ -174,8 +197,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
 	IncludeTimedCodes(win.Window());
 	TimedCodeController::RunStarts();
 
-	
-	MessageBox(NULL, L"wow it Succeeded", L"yay", MB_OK);
 	MSG msg = { };
 	while (GetMessage(&msg, NULL, 0, 0)) {
 		TranslateMessage(&msg);
@@ -245,8 +266,10 @@ HRESULT LoadResourceBitmap(
 	
 
 	// Locate the resource.
-	imageResHandle = FindResourceW(HINST_THISCOMPONENT, resourceName, resourceType);
+	imageResHandle = FindResource(HINST_THISCOMPONENT, resourceName, resourceType);
 	HRESULT hr = imageResHandle ? S_OK : E_FAIL;
+	OutputDebugString(_com_error(hr).Description());
+	
 	if (SUCCEEDED(hr))
 	{
 		// Load the resource.
@@ -353,9 +376,69 @@ HRESULT LoadResourceBitmap(
 	return hr;
 }
 
-//wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
-//{
-//	wchar_t* wString = new wchar_t[4096];
-//	MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
-//	return wString;
-//}
+HRESULT LoadBitmapFromFile(
+	ID2D1RenderTarget* pRenderTarget,
+	IWICImagingFactory* pIWICFactory,
+	PCWSTR uri,
+	UINT destinationWidth,
+	UINT destinationHeight,
+	ID2D1Bitmap** ppBitmap
+)
+{
+	IWICBitmapDecoder* pDecoder = NULL;
+	IWICBitmapFrameDecode* pSource = NULL;
+	IWICStream* pStream = NULL;
+	IWICFormatConverter* pConverter = NULL;
+	IWICBitmapScaler* pScaler = NULL;
+
+	HRESULT hr = pIWICFactory->CreateDecoderFromFilename(
+		uri,
+		NULL,
+		GENERIC_READ,
+		WICDecodeMetadataCacheOnLoad,
+		&pDecoder
+	);
+
+	if (SUCCEEDED(hr))
+	{
+		// Create the initial frame.
+		hr = pDecoder->GetFrame(0, &pSource);
+	}
+	if (SUCCEEDED(hr))
+	{
+
+		// Convert the image format to 32bppPBGRA
+		// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+		hr = pIWICFactory->CreateFormatConverter(&pConverter);
+
+	}
+	if (SUCCEEDED(hr))
+	{
+		hr = pConverter->Initialize(
+			pSource,
+			GUID_WICPixelFormat32bppPBGRA,
+			WICBitmapDitherTypeNone,
+			NULL,
+			0.f,
+			WICBitmapPaletteTypeMedianCut
+		);
+	}
+	if (SUCCEEDED(hr))
+	{
+
+		// Create a Direct2D bitmap from the WIC bitmap.
+		hr = pRenderTarget->CreateBitmapFromWicBitmap(
+			pConverter,
+			NULL,
+			ppBitmap
+		);
+	}
+
+	SafeRelease(&pDecoder);
+	SafeRelease(&pSource);
+	SafeRelease(&pStream);
+	SafeRelease(&pConverter);
+	SafeRelease(&pScaler);
+
+	return hr;
+}

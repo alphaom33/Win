@@ -99,4 +99,9 @@
       <Filter>Source Files</Filter>
     </Xml>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="image1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

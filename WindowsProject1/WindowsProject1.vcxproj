@@ -165,6 +165,9 @@
   <ItemGroup>
     <Xml Include="Source.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="image1.bin" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

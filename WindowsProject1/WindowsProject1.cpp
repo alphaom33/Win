@@ -13,49 +13,25 @@
 #include "MoreVK.h"
 #include "InputManager.h"
 #include "TimedCodeController.h"
-#include "TimedCodeIncludes.h"
 #include <iostream>
 #include <string>
-#include "oaidl.h"
-#include <comdef.h>
+#include "Utils.h"
+#include "Main.h"
+#include "Drawer.h"
+
+using namespace utils;
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 
-template <class T> void SafeRelease(T** ppT) {
-	if (*ppT) {
-		(*ppT)->Release();
-		*ppT = NULL;
-	}
-}
-
-HRESULT LoadResourceBitmap(
-	ID2D1RenderTarget* pRenderTarget,
-	IWICImagingFactory* pIWICFactory,
-	PCWSTR resourceName,
-	PCWSTR resourceType,
-	UINT destinationWidth,
-	UINT destinationHeight,
-	ID2D1Bitmap** ppBitmap
-);
-
-HRESULT LoadBitmapFromFile(
-	ID2D1RenderTarget* pRenderTarget,
-	IWICImagingFactory* pIWICFactory,
-	PCWSTR uri,
-	UINT destinationWidth,
-	UINT destinationHeight,
-	ID2D1Bitmap** ppBitmap
-);
-
 class MainWindow : public BaseWindow<MainWindow> {
+public:
 	ID2D1Factory* pFactory;
 	ID2D1HwndRenderTarget* pRenderTarget;
 	ID2D1SolidColorBrush* pBrush;
 	D2D1_ELLIPSE ellipse;
 
 	IWICImagingFactory* iwicFactory;
-	ID2D1Bitmap* bitmap;
 
 	void CalculateLayout();
 	HRESULT CreateGraphicsResources();
@@ -65,8 +41,7 @@ class MainWindow : public BaseWindow<MainWindow> {
 
 
 
-public:
-	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), iwicFactory(NULL) {
+	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), iwicFactory(NULL), ellipse() {
 	}
 
 	PCWSTR ClassName() const { return L"Dodecahedron"; }
@@ -85,6 +60,7 @@ void MainWindow::CalculateLayout() {
 
 HRESULT MainWindow::CreateGraphicsResources() {
 	HRESULT hr = S_OK;
+
 	if (pRenderTarget == NULL) {
 		RECT rc;
 		GetClientRect(m_hwnd, &rc);
@@ -100,33 +76,22 @@ HRESULT MainWindow::CreateGraphicsResources() {
 		if (SUCCEEDED(hr)) {
 			const D2D1_COLOR_F color = D2D1::ColorF(1.0f, 1.0f, 0);
 			hr = pRenderTarget->CreateSolidColorBrush(color, &pBrush);
-			
-			if (SUCCEEDED(hr)) {
-				CalculateLayout();
-				if (SUCCEEDED(hr)) {
-					if (iwicFactory == NULL) {
-						hr = CoCreateInstance(
-							CLSID_WICImagingFactory,
-							NULL,
-							CLSCTX_INPROC_SERVER,
-							IID_PPV_ARGS(&iwicFactory)
-						);
-					}
-					if (SUCCEEDED(hr)) {
-						hr = LoadBitmapFromFile(
-							pRenderTarget,
-							iwicFactory,
-							L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp",
-							200,
-							0,
-							&bitmap
-						);
-					}
-					if (SUCCEEDED(hr)) {
-						OutputDebugString(L"please");
-					}
-				}
+		}
+		if (SUCCEEDED(hr)) {
+			CalculateLayout();
+		}
+		if (SUCCEEDED(hr)) {
+			if (iwicFactory == NULL) {
+				hr = CoCreateInstance(
+					CLSID_WICImagingFactory,
+					NULL,
+					CLSCTX_INPROC_SERVER,
+					IID_PPV_ARGS(&iwicFactory)
+				);
 			}
+		}
+		if (SUCCEEDED(hr)) {
+			Drawer::ReadySprites(&hr, pRenderTarget, iwicFactory);
 		}
 	}
 	
@@ -146,22 +111,19 @@ void MainWindow::OnPaint() {
 		BeginPaint(m_hwnd, &ps);
 
 		pRenderTarget->BeginDraw();
-		pRenderTarget->Clear();
+		pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Coral));
 
-		D2D1_SIZE_F size = bitmap->GetSize();
-		D2D1_POINT_2F upperLeft = D2D1::Point2F(100.0f, 10.0f);
-
-		pRenderTarget->DrawBitmap(
-			bitmap,
-			D2D1::RectF(
-				upperLeft.x,
-				upperLeft.y,
-				upperLeft.x + size.width,
-				upperLeft.y + size.height
-			)
+		//D2D1_POINT_2F upperLeft = D2D1::Point2F(100.0f, 10.0f);
+		D2D1_RECT_F rcBrushRect = D2D1::RectF(
+			upperLeft.x,
+			upperLeft.y,
+			upperLeft.x + 100,
+			upperLeft.y + 100
 		);
 
-		//pRenderTarget->FillEllipse(ellipse, pBrush);
+		pRenderTarget->FillEllipse(ellipse, pBrush);
+
+		Drawer::DrawSprites(pRenderTarget, &rcBrushRect);
 
 		hr = pRenderTarget->EndDraw();
 		if (SUCCEEDED(hr)) {
@@ -184,7 +146,7 @@ void MainWindow::Resize() {
 	}
 }
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int nCmdShow) {
 
 	MainWindow win;
 
@@ -194,7 +156,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
 
 	ShowWindow(win.Window(), TRUE);
 	
-	IncludeTimedCodes(win.Window());
+	new Main(win.Window());
 	TimedCodeController::RunStarts();
 
 	MSG msg = { };
@@ -242,203 +204,3 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 }
 
-HRESULT LoadResourceBitmap(
-	ID2D1RenderTarget* pRenderTarget,
-	IWICImagingFactory* pIWICFactory,
-	PCWSTR resourceName,
-	PCWSTR resourceType,
-	UINT destinationWidth,
-	UINT destinationHeight,
-	ID2D1Bitmap** ppBitmap
-)
-{
-
-	IWICBitmapDecoder* pDecoder = NULL;
-	IWICBitmapFrameDecode* pSource = NULL;
-	IWICStream* pStream = NULL;
-	IWICFormatConverter* pConverter = NULL;
-	IWICBitmapScaler* pScaler = NULL;
-
-	HRSRC imageResHandle = NULL;
-	HGLOBAL imageResDataHandle = NULL;
-	void* pImageFile = NULL;
-	DWORD imageFileSize = 0;
-	
-
-	// Locate the resource.
-	imageResHandle = FindResource(HINST_THISCOMPONENT, resourceName, resourceType);
-	HRESULT hr = imageResHandle ? S_OK : E_FAIL;
-	OutputDebugString(_com_error(hr).Description());
-	
-	if (SUCCEEDED(hr))
-	{
-		// Load the resource.
-		imageResDataHandle = LoadResource(HINST_THISCOMPONENT, imageResHandle);
-
-		hr = imageResDataHandle ? S_OK : E_FAIL;
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		// Lock it to get a system memory pointer.
-		pImageFile = LockResource(imageResDataHandle);
-
-		hr = pImageFile ? S_OK : E_FAIL;
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Calculate the size.
-		imageFileSize = SizeofResource(HINST_THISCOMPONENT, imageResHandle);
-
-		hr = imageFileSize ? S_OK : E_FAIL;
-
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		// Lock it to get a system memory pointer.
-		pImageFile = LockResource(imageResDataHandle);
-
-		hr = pImageFile ? S_OK : E_FAIL;
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Calculate the size.
-		imageFileSize = SizeofResource(HINST_THISCOMPONENT, imageResHandle);
-
-		hr = imageFileSize ? S_OK : E_FAIL;
-
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Create a WIC stream to map onto the memory.
-		hr = pIWICFactory->CreateStream(&pStream);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Initialize the stream with the memory pointer and size.
-		hr = pStream->InitializeFromMemory(
-			reinterpret_cast<BYTE*>(pImageFile),
-			imageFileSize
-		);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Create a decoder for the stream.
-		hr = pIWICFactory->CreateDecoderFromStream(
-			pStream,
-			NULL,
-			WICDecodeMetadataCacheOnLoad,
-			&pDecoder
-		);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Create the initial frame.
-		hr = pDecoder->GetFrame(0, &pSource);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// Convert the image format to 32bppPBGRA
-		// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
-		hr = pIWICFactory->CreateFormatConverter(&pConverter);
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		hr = pConverter->Initialize(
-			pSource,
-			GUID_WICPixelFormat32bppPBGRA,
-			WICBitmapDitherTypeNone,
-			NULL,
-			0.f,
-			WICBitmapPaletteTypeMedianCut
-		);
-	}
-	if (SUCCEEDED(hr))
-	{
-		//create a Direct2D bitmap from the WIC bitmap.
-		hr = pRenderTarget->CreateBitmapFromWicBitmap(
-			pConverter,
-			NULL,
-			ppBitmap
-		);
-
-	}
-
-	SafeRelease(&pDecoder);
-	SafeRelease(&pSource);
-	SafeRelease(&pStream);
-	SafeRelease(&pConverter);
-	SafeRelease(&pScaler);
-
-
-	return hr;
-}
-
-HRESULT LoadBitmapFromFile(
-	ID2D1RenderTarget* pRenderTarget,
-	IWICImagingFactory* pIWICFactory,
-	PCWSTR uri,
-	UINT destinationWidth,
-	UINT destinationHeight,
-	ID2D1Bitmap** ppBitmap
-)
-{
-	IWICBitmapDecoder* pDecoder = NULL;
-	IWICBitmapFrameDecode* pSource = NULL;
-	IWICStream* pStream = NULL;
-	IWICFormatConverter* pConverter = NULL;
-	IWICBitmapScaler* pScaler = NULL;
-
-	HRESULT hr = pIWICFactory->CreateDecoderFromFilename(
-		uri,
-		NULL,
-		GENERIC_READ,
-		WICDecodeMetadataCacheOnLoad,
-		&pDecoder
-	);
-
-	if (SUCCEEDED(hr))
-	{
-		// Create the initial frame.
-		hr = pDecoder->GetFrame(0, &pSource);
-	}
-	if (SUCCEEDED(hr))
-	{
-
-		// Convert the image format to 32bppPBGRA
-		// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
-		hr = pIWICFactory->CreateFormatConverter(&pConverter);
-
-	}
-	if (SUCCEEDED(hr))
-	{
-		hr = pConverter->Initialize(
-			pSource,
-			GUID_WICPixelFormat32bppPBGRA,
-			WICBitmapDitherTypeNone,
-			NULL,
-			0.f,
-			WICBitmapPaletteTypeMedianCut
-		);
-	}
-	if (SUCCEEDED(hr))
-	{
-
-		// Create a Direct2D bitmap from the WIC bitmap.
-		hr = pRenderTarget->CreateBitmapFromWicBitmap(
-			pConverter,
-			NULL,
-			ppBitmap
-		);
-	}
-
-	SafeRelease(&pDecoder);
-	SafeRelease(&pSource);
-	SafeRelease(&pStream);
-	SafeRelease(&pConverter);
-	SafeRelease(&pScaler);
-
-	return hr;
-}

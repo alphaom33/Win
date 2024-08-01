@@ -3,7 +3,6 @@
 #include "Windows.h"
 #include <map>
 
-TimedCode::TimedCode(HWND hwnd) {
-	m_hwnd = hwnd;
+TimedCode::TimedCode() {
 	TimedCodeController::RegisterTimedCode(this);
 }

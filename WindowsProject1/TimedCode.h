@@ -4,11 +4,8 @@
 
 class TimedCode {
 public:
-	TimedCode(HWND hwnd);
+	TimedCode();
 
 	virtual void Start() = 0;
 	virtual void Periodic() = 0;
-protected:
-	HWND m_hwnd;
-
 };

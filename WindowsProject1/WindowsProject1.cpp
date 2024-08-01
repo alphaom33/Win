@@ -2,6 +2,7 @@
 #define UNICODE
 #endif 
 
+#include "thread"
 #include <windows.h>
 #include <d2d1.h>
 #pragma comment(lib, "d2d1")
@@ -11,13 +12,18 @@
 
 #include "basewin.h"
 #include "MoreVK.h"
-#include "InputManager.h"
 #include "TimedCodeController.h"
 #include <iostream>
+#include "sstream"
 #include <string>
 #include "Utils.h"
+#include "InputManager.h"
 #include "Main.h"
 #include "Drawer.h"
+#include "MoreWM.h"
+#include "Time.h"
+#include "ColliderController.h"
+#include "Print.h"
 
 using namespace utils;
 
@@ -113,21 +119,13 @@ void MainWindow::OnPaint() {
 		pRenderTarget->BeginDraw();
 		pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Coral));
 
-		//D2D1_POINT_2F upperLeft = D2D1::Point2F(100.0f, 10.0f);
-		D2D1_RECT_F rcBrushRect = D2D1::RectF(
-			upperLeft.x,
-			upperLeft.y,
-			upperLeft.x + 100,
-			upperLeft.y + 100
-		);
-
 		pRenderTarget->FillEllipse(ellipse, pBrush);
 
-		Drawer::DrawSprites(pRenderTarget, &rcBrushRect);
+		Drawer::DrawSprites(pRenderTarget);
 
 		hr = pRenderTarget->EndDraw();
 		if (SUCCEEDED(hr)) {
-			DiscardGraphicsResources();
+			//DiscardGraphicsResources();
 		}
 		EndPaint(m_hwnd, &ps);
 	}
@@ -146,6 +144,8 @@ void MainWindow::Resize() {
 	}
 }
 
+std::thread thread;
+
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int nCmdShow) {
 
 	MainWindow win;
@@ -155,15 +155,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	}
 
 	ShowWindow(win.Window(), TRUE);
-	
-	new Main(win.Window());
-	TimedCodeController::RunStarts();
+	Print::hy(win.Window());
 
 	MSG msg = { };
+	MainWindow* a = &win;
+	std::wstring print = L"";
+	thread = std::thread([a, &print] {
+		new Main(a->Window());
+		TimedCodeController::RunStarts();
+		while (a->Window() != NULL) {
+			calcTimes();
+			TimedCodeController::RunPeriodics();
+			InputManager::ResetKeys();
+			ColliderController::CheckCollisions();
+			SendMessage(a->Window(), WM_PAINT, NULL, NULL);
+		}
+		});
+	thread.detach();
 	while (GetMessage(&msg, NULL, 0, 0)) {
+		OutputDebugString(print.c_str());
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
-		TimedCodeController::RunPeriodics();
 	}
 
 	return 0;
@@ -181,6 +193,7 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		DiscardGraphicsResources();
 		SafeRelease(&pFactory);
 		PostQuitMessage(0);
+		m_hwnd = NULL;
 		return 0;
 
 	case WM_PAINT:
@@ -192,14 +205,24 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		return 0;
 
 	case WM_KEYDOWN:
-		SetKeyDown((int)wParam);
+		InputManager::SetKeyDown((int)wParam);
 		return 0;
-
 	case WM_KEYUP:
-		SetKeyUp((int)wParam);
+		InputManager::SetKeyUp((int)wParam);
 		return 0;
-	}
 
+	case WM_DRAWSPRITES:
+		if (pRenderTarget) {
+			pRenderTarget->BeginDraw();
+			Drawer::DrawSprites(pRenderTarget);
+			pRenderTarget->EndDraw();
+		}
+		break;
+
+	case WM_PRINTTHREAD:
+		Print::Printy();
+		break;
+	}
 
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 }

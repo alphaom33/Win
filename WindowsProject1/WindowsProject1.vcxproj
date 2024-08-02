@@ -159,6 +159,7 @@
     <ClInclude Include="WindowsProject1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderController.cpp" />

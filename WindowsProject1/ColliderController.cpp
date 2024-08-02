@@ -13,31 +13,20 @@ void ColliderController::UnRegisterCollider(ICollider* toUnRegister)
 	throw std::exception();
 }
 
-bool ColliderController::GetCollideds(ICollider* a, Vector2* bPos, Vector2* bScale)
+bool ColliderController::GetCollideds(Vector2* aPos, Vector2* aScale, Vector2* bPos, Vector2* bScale)
 {
-	double rightPos = a->GetPosition()->x + a->GetSize()->x;
-	bool collidedRight = rightPos > bPos->x - bScale->x &&
-		rightPos < bPos->x + bScale->x;
+	bool sideIntersecta = CheckIntersect(aPos->x, aScale->x, bPos->x, bScale->x);
+	bool topIntersecta = CheckIntersect(aPos->y, aScale->y, bPos->y, bScale->y);
 
-	double leftPos = a->GetPosition()->x - a->GetSize()->x;
-	bool collidedLeft = leftPos > bPos->x - bScale->x &&
-		leftPos < bPos->x + bScale->x;
+	bool sideIntersectb = CheckIntersect(bPos->x, bScale->x, aPos->x, aScale->x);
+	bool topIntersectb = CheckIntersect(bPos->y, bScale->y, aPos->y, aScale->y);
 
-
-	double topPos = a->GetPosition()->y - a->GetSize()->y;
-	bool collidedTop = topPos > bPos->y - bScale->y &&
-		topPos < bPos->y + bScale->y;
-
-	double bottomPos = a->GetPosition()->y + a->GetSize()->y;
-	bool collidedBottom = bottomPos > bPos->y - bScale->y &&
-		bottomPos < bPos->y + bScale->y;
-
-	return (collidedRight || collidedLeft) && (collidedTop || collidedBottom);
+	return (sideIntersecta || sideIntersectb) && (topIntersecta || topIntersectb);
 }
 
 bool ColliderController::GetCollideds(ICollider* a, ICollider* b)
 {
-	return GetCollideds(a, b->GetPosition(), b->GetSize());
+	return GetCollideds(a->GetPosition(), a->GetSize(), b->GetPosition(), b->GetSize());
 }
 
 void ColliderController::CheckCollisions()
@@ -60,10 +49,23 @@ bool ColliderController::CheckBox(Vector2* pos, Vector2* scale) {
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
-		if (GetCollideds(colliders[i], pos, scale)) {
+		if (GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale)) {
 			Print::AddPrint(colliders[i]->GetName());
 			return true;
 		}
 	}
 	return false;
+}
+
+bool ColliderController::CheckIntersect(double aPos, double aScale, double bPos, double bScale)
+{
+	double rightPos = aPos + aScale;
+	bool collidedRight = rightPos > bPos &&
+		rightPos < bPos + bScale;
+
+	double leftPos = aPos;
+	bool collidedLeft = leftPos > bPos &&
+		leftPos < bPos + bScale;
+
+	return collidedLeft || collidedRight;
 }

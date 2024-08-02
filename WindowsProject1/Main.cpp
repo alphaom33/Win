@@ -1,13 +1,11 @@
 #include "Main.h"
 #include "PlayerController.h"
 #include "Box.h"
+#include "SpriteCollider.h"
 
 Main::Main(HWND hwnd) : TimedCode() {
 	new PlayerController(hwnd);
-	//new Box(hwnd, new Vector2(200, 300));
-	new Sprite(new Vector2(400, 400), new Vector2(100, 100), hwnd);
-	Collider* a = new Collider(new Vector2(400, 400), new Vector2(100, 100));
-	a->name = std::wstring(L"aaahhhh");
+	new Box(hwnd, new Vector2(200, 300));
 }
 
 void Main::Start() {

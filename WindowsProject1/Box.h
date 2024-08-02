@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include "SpriteCollider.h"
 #include "TimedCode.h"
 
 #pragma once
@@ -9,15 +9,15 @@ public:
 	void Start();
 	void Periodic();
 private:
-	Sprite* left;
-	Sprite* right;
-	Sprite* top;
-	Sprite* bottom;
+	SpriteCollider* left;
+	SpriteCollider* right;
+	SpriteCollider* top;
+	SpriteCollider* bottom;
 
-	Sprite* topLeft;
-	Sprite* topRight;
-	Sprite* bottomLeft;
-	Sprite* bottomRight;
+	SpriteCollider* topLeft;
+	SpriteCollider* topRight;
+	SpriteCollider* bottomLeft;
+	SpriteCollider* bottomRight;
 
 	Vector2 pos = Vector2(500, 100);
 	Vector2 size;

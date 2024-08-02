@@ -29,9 +29,9 @@ void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWI
 
 void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 	for (auto s : toDraws) {
-		Vector2 *pos = s->GetPos();
+		Vector2 *pos = s->GetPosition();
 		Vector2* scale = s->GetScale();
-		D2D1_RECT_F rcBrushRect = D2D1::RectF(
+		D2D1_RECT_F rcBrushRect = D2D1::Rect(
 			pos->x,
 			pos->y,
 			pos->x + scale->x,

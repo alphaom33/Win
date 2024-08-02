@@ -149,6 +149,7 @@
     <ClInclude Include="Print.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteCollider.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TimedCode.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteCollider.cpp" />
     <ClCompile Include="TimedCode.cpp" />
     <ClCompile Include="TimedCodeController.cpp" />
     <ClCompile Include="Vector2.cpp" />

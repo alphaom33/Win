@@ -5,6 +5,6 @@
 class IDrawable {
 public:
 	virtual ID2D1Bitmap** GetBitmap() = 0;
-	virtual Vector2* GetPos() = 0;
+	virtual Vector2* GetPosition() = 0;
 	virtual Vector2* GetScale() = 0;
 };

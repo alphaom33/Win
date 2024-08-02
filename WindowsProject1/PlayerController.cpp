@@ -2,15 +2,17 @@
 #include "InputManager.h"
 #include "MoreWM.h"
 #include "Print.h"
+#include "Collider.h"
+#include "ColliderController.h"
 
 #define SPEED 10
 
+Collider* why;
 PlayerController::PlayerController(HWND hwnd) : TimedCode()
 {
-	heart = new Sprite(new Vector2(10.0f, 100.0f), new Vector2(100.0f, 100.0f), hwnd);
-	collider = new Collider(new Vector2(100.0f, 100.0f), new Vector2(10.0f, 10.0f));
-	collider->name = std::wstring(L"whyyyy");
+	heart = new Sprite(new Vector2(), new Vector2(100, 100), hwnd);
 	this->hwnd = hwnd;
+	why = new Collider(new Vector2(), new Vector2(100, 100));
 }
 
 void PlayerController::Start()
@@ -19,16 +21,21 @@ void PlayerController::Start()
 
 void PlayerController::Periodic()
 {
+	Vector2* pos = heart->GetPosition();
 	if (InputManager::GetKey(VK_RIGHT)) {
-		heart->position->x += SPEED;
+		Vector2* newPos = new Vector2(pos->x + SPEED, pos->y);
+		heart->SetPosition(new Vector2(pos->x + SPEED, pos->y));
 	} else if (InputManager::GetKey(VK_LEFT)) {
-		heart->position->x -= SPEED;
+		heart->SetPosition(new Vector2(pos->x - SPEED, pos->y));
 	}
+
+	pos = heart->GetPosition();
 	if (InputManager::GetKey(VK_UP)) {
-		heart->position->y -= SPEED;
+		heart->SetPosition(new Vector2(pos->x, pos->y - SPEED));
 	} else if (InputManager::GetKey(VK_DOWN)) {
-		heart->position->y += SPEED;
+		heart->SetPosition(new Vector2(pos->x, pos->y + SPEED));
 	}
-	collider->position = heart->position;
-	Print::AddPrint(std::to_wstring(collider->collided) + L"\n");
+
+	why->SetPosition(heart->GetPosition());
+	Print::AddPrint(std::to_wstring(why->GetCollided()) + L"\n");
 }

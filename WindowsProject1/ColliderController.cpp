@@ -13,29 +13,57 @@ void ColliderController::UnRegisterCollider(ICollider* toUnRegister)
 	throw std::exception();
 }
 
+bool ColliderController::GetCollideds(ICollider* a, Vector2* bPos, Vector2* bScale)
+{
+	double rightPos = a->GetPosition()->x + a->GetSize()->x;
+	bool collidedRight = rightPos > bPos->x - bScale->x &&
+		rightPos < bPos->x + bScale->x;
+
+	double leftPos = a->GetPosition()->x - a->GetSize()->x;
+	bool collidedLeft = leftPos > bPos->x - bScale->x &&
+		leftPos < bPos->x + bScale->x;
+
+
+	double topPos = a->GetPosition()->y - a->GetSize()->y;
+	bool collidedTop = topPos > bPos->y - bScale->y &&
+		topPos < bPos->y + bScale->y;
+
+	double bottomPos = a->GetPosition()->y + a->GetSize()->y;
+	bool collidedBottom = bottomPos > bPos->y - bScale->y &&
+		bottomPos < bPos->y + bScale->y;
+
+	return (collidedRight || collidedLeft) && (collidedTop || collidedBottom);
+}
+
+bool ColliderController::GetCollideds(ICollider* a, ICollider* b)
+{
+	return GetCollideds(a, b->GetPosition(), b->GetSize());
+}
+
 void ColliderController::CheckCollisions()
 {
+	for (ICollider* a : colliders) {
+		a->SetCollided(false);
+	}
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		for (int j = i + 1; j < colliders.size(); j++) {
-			double rightPos = colliders[i]->GetPosition()->x + colliders[i]->GetSize()->x;
-			bool collidedRight = rightPos > colliders[j]->GetPosition()->x - colliders[j]->GetSize()->x &&
-				rightPos < colliders[j]->GetPosition()->x + colliders[j]->GetSize()->x;
 
-			double leftPos = colliders[i]->GetPosition()->x - colliders[i]->GetSize()->x;
-			bool collidedLeft = leftPos > colliders[j]->GetPosition()->x - colliders[j]->GetSize()->x &&
-				leftPos < colliders[j]->GetPosition()->x + colliders[j]->GetSize()->x;
-
-
-			double topPos = colliders[i]->GetPosition()->y - colliders[i]->GetSize()->y;
-			bool collidedTop = topPos > colliders[j]->GetPosition()->y - colliders[j]->GetSize()->y &&
-				topPos < colliders[j]->GetPosition()->y + colliders[j]->GetSize()->y;
-
-			double bottomPos = colliders[i]->GetPosition()->y + colliders[i]->GetSize()->y;
-			bool collidedBottom = bottomPos > colliders[j]->GetPosition()->y - colliders[j]->GetSize()->y &&
-				bottomPos < colliders[j]->GetPosition()->y + colliders[j]->GetSize()->y;
-
-			colliders[i]->SetCollided((collidedRight || collidedLeft) && (collidedTop || collidedBottom));
+			if (GetCollideds(colliders[i], colliders[j])) {
+				colliders[i]->SetCollided(true);
+			}
 		}
 	}
+}
+
+bool ColliderController::CheckBox(Vector2* pos, Vector2* scale) {
+
+	for (int i = 0; i < colliders.size(); i++)
+	{
+		if (GetCollideds(colliders[i], pos, scale)) {
+			Print::AddPrint(colliders[i]->GetName());
+			return true;
+		}
+	}
+	return false;
 }

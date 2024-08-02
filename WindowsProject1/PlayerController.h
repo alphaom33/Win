@@ -1,6 +1,5 @@
 #include "TimedCode.h"
 #include "Sprite.h"
-#include "Collider.h"
 
 #pragma once
 class PlayerController : TimedCode
@@ -11,7 +10,6 @@ public:
 	void Periodic();
 private:
 	Sprite* heart;
-	Collider* collider;
 	HWND hwnd;
 
 };

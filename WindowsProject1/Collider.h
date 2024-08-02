@@ -6,17 +6,23 @@
 class Collider : ICollider
 {
 public:
-	Collider(Vector2*, Vector2*);
+	Collider(Vector2* position, Vector2* size);
+	Collider(Vector2* position, Vector2* size, std::wstring name);
 
 	Vector2* GetSize();
 	Vector2* GetPosition();
-	void SetCollided(bool);
+	bool GetCollided();
 	std::wstring GetName();
 
-	Vector2* position;
-	Vector2* size;
+	void SetSize(Vector2* newSize);
+	void SetPosition(Vector2* newPosition);
+	void SetCollided(bool newCollided);
 
 	bool collided;
+
+private:
+	Vector2* position;
+	Vector2* size;
 	std::wstring name;
 };
 

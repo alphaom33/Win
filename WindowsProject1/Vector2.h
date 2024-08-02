@@ -16,5 +16,7 @@ public:
 
 	static Vector2* Zero();
 	static Vector2* One();
+
+	Vector2* operator +(Vector2 lhs);
 };
 

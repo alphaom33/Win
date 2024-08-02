@@ -23,3 +23,8 @@ Vector2* Vector2::Zero() {
 Vector2* Vector2::One() {
 	return new Vector2(1, 1);
 }
+
+Vector2* Vector2::operator+(Vector2 rhs)
+{
+	return new Vector2(x + rhs.x, y + rhs.y);
+}

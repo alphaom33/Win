@@ -131,7 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderController.h" />
@@ -159,7 +159,7 @@
     <ClInclude Include="WindowsProject1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderController.cpp" />
@@ -170,6 +170,7 @@
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteCollider.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="TimedCode.cpp" />
     <ClCompile Include="TimedCodeController.cpp" />
     <ClCompile Include="Vector2.cpp" />

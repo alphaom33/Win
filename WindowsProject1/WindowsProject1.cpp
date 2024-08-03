@@ -96,9 +96,9 @@ HRESULT MainWindow::CreateGraphicsResources() {
 				);
 			}
 		}
-		if (SUCCEEDED(hr)) {
-			Drawer::ReadySprites(&hr, pRenderTarget, iwicFactory);
-		}
+	}
+	if (SUCCEEDED(hr)) {
+		Drawer::ReadySprites(&hr, pRenderTarget, iwicFactory);
 	}
 	
 	return hr;
@@ -172,6 +172,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 		}
 		});
 	thread.detach();
+
 	while (GetMessage(&msg, NULL, 0, 0)) {
 		OutputDebugString(print.c_str());
 		TranslateMessage(&msg);

@@ -2,16 +2,16 @@
 #include "d2d1.h"
 #include "string"
 #include "TimedCode.h"
+#include "vector"
 #pragma once
 class AnimatedSprite : IDrawable, TimedCode
 {
 public:
-	AnimatedSprite(Vector2* position, Vector2* scale, std::wstring frames[], double speed);
+	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed);
 
 	Vector2* GetPosition();
 	Vector2* GetScale();
-	ID2D1Bitmap** GetBitmap();
-	std::wstring GetName();
+	std::wstring GetBitmap();
 
 	void Play();
 
@@ -19,14 +19,11 @@ public:
 	void Periodic();
 
 private:
-	int length;
-	std::wstring* frames;
+	std::vector<std::wstring> frames;
 	std::wstring current;
 	double speed;
 
 	double startTime;
-
-	ID2D1Bitmap* bitmap;
 
 	Vector2* position;
 	Vector2* scale;

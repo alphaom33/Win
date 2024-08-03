@@ -50,7 +50,6 @@ bool ColliderController::CheckBox(Vector2* pos, Vector2* scale) {
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		if (GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale)) {
-			Print::AddPrint(colliders[i]->GetName());
 			return true;
 		}
 	}

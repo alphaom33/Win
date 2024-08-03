@@ -4,20 +4,18 @@
 #include "thread"
 #include "Time.h"
 
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::wstring frames[], double speed)
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed)
 {
 	this->position = position;
 	this->scale = scale;
 
 	this->frames = frames;
-	length = frames->size();
 	this->current = frames[0];
 	this->speed = speed;
 
-	bitmap = NULL;
+	startTime = 0;
 
-	
-	Drawer::RegisterDraw(this);
+	Drawer::RegisterDraw(this, frames);
 }
 
 Vector2* AnimatedSprite::GetPosition()
@@ -30,12 +28,7 @@ Vector2* AnimatedSprite::GetScale()
 	return scale;
 }
 
-ID2D1Bitmap** AnimatedSprite::GetBitmap()
-{
-	return &bitmap;
-}
-
-std::wstring AnimatedSprite::GetName()
+std::wstring AnimatedSprite::GetBitmap()
 {
 	return current;
 }
@@ -51,6 +44,5 @@ void AnimatedSprite::Start()
 
 void AnimatedSprite::Periodic()
 {
-	Print::AddPrint(std::to_wstring(Time::currentTime - startTime) + L"\n");
-	current = frames[(int)round(Time::currentTime - startTime) % length];
+	current = frames[(int)round(Time::currentTime - startTime) % frames.size()];
 }

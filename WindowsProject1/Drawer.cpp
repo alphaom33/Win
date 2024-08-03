@@ -1,11 +1,17 @@
 #include "Drawer.h"
 #include "Images.h"
 #include "string"
+#include "Print.h"
 
 std::vector<IDrawable*> Drawer::toDraws;
+std::map<std::wstring, ID2D1Bitmap*> Drawer::bitmaps;
 
-void Drawer::RegisterDraw(IDrawable *toDraw) {
+void Drawer::RegisterDraw(IDrawable *toDraw, std::vector<std::wstring> toAdd) {
 	toDraws.push_back(toDraw);
+
+	for (int i = 0; i < toAdd.size(); i++) {
+		if (!bitmaps.count(toAdd[i])) bitmaps[toAdd[i]] = NULL;
+	}
 }
 
 void Drawer::UnRegisterDraw(IDrawable* toNotDraw) {
@@ -13,15 +19,15 @@ void Drawer::UnRegisterDraw(IDrawable* toNotDraw) {
 }
 
 void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWICImagingFactory *iwicFactory) {
-	for (auto s : toDraws) {
+	for (auto &kv : bitmaps) {
 		if (SUCCEEDED(*hr)) {
 			*hr = image::LoadBitmapFromFile(
 				pRenderTarget,
 				iwicFactory,
-				L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp",
+				kv.first.c_str(),
 				200,
 				0,
-				s->GetBitmap()
+				&kv.second
 			);
 		}
 	}
@@ -29,7 +35,14 @@ void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWI
 
 void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 	for (auto s : toDraws) {
-		Vector2 *pos = s->GetPosition();
+		if (!bitmaps.count(s->GetBitmap())) {
+			bitmaps[s->GetBitmap()] = NULL;
+		}
+		if (bitmaps[s->GetBitmap()] == NULL) {
+			continue;
+		}
+
+		Vector2* pos = s->GetPosition();
 		Vector2* scale = s->GetScale();
 		D2D1_RECT_F rcBrushRect = D2D1::Rect(
 			pos->x,
@@ -38,7 +51,7 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 			pos->y + scale->y
 			);
 		pRenderTarget->DrawBitmap(
-			*s->GetBitmap(),
+			bitmaps[s->GetBitmap()],
 			rcBrushRect
 		);
 	}

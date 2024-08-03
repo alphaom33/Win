@@ -5,10 +5,9 @@
 class Sprite : IDrawable
 {
 public:
-	Sprite(HWND);
 	Sprite(Vector2*, Vector2*, HWND);
 
-	ID2D1Bitmap** GetBitmap();
+	std::wstring GetBitmap();
 	Vector2* GetPosition();
 	Vector2* GetScale();
 
@@ -19,7 +18,7 @@ private:
 	int rotation;
 	Vector2* scale;
 
-	ID2D1Bitmap* bitmap;
+	std::wstring bitmap;
 
 	HWND hwnd;
 };

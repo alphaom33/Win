@@ -164,7 +164,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 		new Main(a->Window());
 		TimedCodeController::RunStarts();
 		while (a->Window() != NULL) {
-			calcTimes();
+			Time::calcTimes();
 			TimedCodeController::RunPeriodics();
 			InputManager::ResetKeys();
 			ColliderController::CheckCollisions();

@@ -12,7 +12,6 @@
 
 #include "basewin.h"
 #include "MoreVK.h"
-#include "TimedCodeController.h"
 #include <iostream>
 #include "sstream"
 #include <string>
@@ -24,6 +23,7 @@
 #include "Time.h"
 #include "ColliderController.h"
 #include "Print.h"
+#include "GameManager.h"
 
 using namespace utils;
 
@@ -161,11 +161,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	MainWindow* a = &win;
 	std::wstring print = L"";
 	thread = std::thread([a, &print] {
+		GameManager::state = GameManager::BULLET;
 		new Main(a->Window());
-		TimedCodeController::RunStarts();
 		while (a->Window() != NULL) {
 			Time::calcTimes();
-			TimedCodeController::RunPeriodics();
+			GameManager::Periodics();
 			InputManager::ResetKeys();
 			ColliderController::CheckCollisions();
 			SendMessage(a->Window(), WM_PAINT, NULL, NULL);

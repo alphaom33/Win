@@ -1,7 +1,7 @@
 #include "SpriteCollider.h"
 #include "Print.h"
 
-SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd) : TimedCode()
+SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd) : TimedCodeBullet()
 {
 	this->position = position;
 	this->scale = scale;
@@ -33,12 +33,15 @@ void SpriteCollider::SetScale(Vector2* newScale)
 	collider->SetSize(newScale);
 }
 
-void SpriteCollider::Start()
+void SpriteCollider::BulletEnter()
+{
+}
+
+void SpriteCollider::BulletPeriodic()
 {
 
 }
 
-void SpriteCollider::Periodic()
+void SpriteCollider::BulletExit()
 {
-
 }

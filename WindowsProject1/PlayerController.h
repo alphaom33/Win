@@ -1,13 +1,14 @@
-#include "TimedCode.h"
+#include "TimedCodeBullet.h"
 #include "Sprite.h"
 
 #pragma once
-class PlayerController : TimedCode
+class PlayerController : TimedCodeBullet
 {
 public:
 	PlayerController(HWND);
-	void Start();
-	void Periodic();
+	void BulletEnter();
+	void BulletPeriodic();
+	void BulletExit();
 private:
 	Sprite* heart;
 	HWND hwnd;

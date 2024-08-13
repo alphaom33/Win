@@ -37,12 +37,15 @@ void AnimatedSprite::Play()
 {
 }
 
-void AnimatedSprite::Start()
+void AnimatedSprite::BulletEnter()
 {
-	startTime = Time::currentTime;
 }
 
-void AnimatedSprite::Periodic()
+void AnimatedSprite::BulletPeriodic()
 {
 	current = frames[(int)round(Time::currentTime - startTime) % frames.size()];
+}
+
+void AnimatedSprite::BulletExit()
+{
 }

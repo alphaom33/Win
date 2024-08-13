@@ -1,12 +1,11 @@
-#include "TimedCode.h"
+#include "TimedCodeAlways.h"
 #include "Sprite.h"
 
 #pragma once
-class Main : TimedCode
+class Main : TimedCodeAlways
 {
 public:
 	Main(HWND);
-	void Start();
-	void Periodic();
+	void AlwaysPeriodic();
 };
 

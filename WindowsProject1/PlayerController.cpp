@@ -7,17 +7,17 @@
 
 #define SPEED 10
 
-PlayerController::PlayerController(HWND hwnd) : TimedCode()
+PlayerController::PlayerController(HWND hwnd) : TimedCodeBullet()
 {
 	heart = new Sprite(new Vector2(), new Vector2(100, 100), hwnd);
 	this->hwnd = hwnd;
 }
 
-void PlayerController::Start()
+void PlayerController::BulletEnter()
 {
 }
 
-void PlayerController::Periodic()
+void PlayerController::BulletPeriodic()
 {
 	Vector2* pos = heart->GetPosition();
 	Vector2* newPos = new Vector2();
@@ -26,7 +26,11 @@ void PlayerController::Periodic()
 	} else if (InputManager::GetKey(VK_LEFT)) {
 		newPos->x = -SPEED;
 	}
+	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale())) {
+		heart->SetPosition(*heart->GetPosition() + *newPos);
+	}
 
+	newPos = new Vector2();
 	pos = heart->GetPosition();
 	if (InputManager::GetKey(VK_UP)) {
 		newPos->y = -SPEED;
@@ -37,4 +41,8 @@ void PlayerController::Periodic()
 	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale())) {
 		heart->SetPosition(*heart->GetPosition() + *newPos);
 	}
+}
+
+void PlayerController::BulletExit()
+{
 }

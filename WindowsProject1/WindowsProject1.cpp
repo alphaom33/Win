@@ -9,6 +9,7 @@
 #include <wincodecsdk.h>
 #include <stdio.h>
 #include <string>
+#include "dwrite.h"
 
 #include "basewin.h"
 #include "MoreVK.h"
@@ -24,6 +25,7 @@
 #include "ColliderController.h"
 #include "Print.h"
 #include "GameManager.h"
+#include "MenuManager.h"
 
 using namespace utils;
 
@@ -39,6 +41,8 @@ public:
 
 	IWICImagingFactory* iwicFactory;
 
+	IDWriteFactory* pDWriteFactory;
+
 	void CalculateLayout();
 	HRESULT CreateGraphicsResources();
 	void DiscardGraphicsResources();
@@ -47,7 +51,7 @@ public:
 
 
 
-	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), iwicFactory(NULL), ellipse() {
+	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), iwicFactory(NULL), pDWriteFactory(NULL), ellipse() {
 	}
 
 	PCWSTR ClassName() const { return L"Dodecahedron"; }
@@ -95,6 +99,15 @@ HRESULT MainWindow::CreateGraphicsResources() {
 					IID_PPV_ARGS(&iwicFactory)
 				);
 			}
+			if (SUCCEEDED(hr)) {
+				if (pDWriteFactory == NULL) {
+					hr = DWriteCreateFactory(
+						DWRITE_FACTORY_TYPE_SHARED,
+						__uuidof(IDWriteFactory),
+						reinterpret_cast<IUnknown**>(&pDWriteFactory)
+					);
+				}
+			}
 		}
 	}
 	if (SUCCEEDED(hr)) {
@@ -122,10 +135,13 @@ void MainWindow::OnPaint() {
 		pRenderTarget->FillEllipse(ellipse, pBrush);
 
 		Drawer::DrawSprites(pRenderTarget);
+		hr = Drawer::DrawTexts(pRenderTarget, pDWriteFactory);
 
-		hr = pRenderTarget->EndDraw();
 		if (SUCCEEDED(hr)) {
-			//DiscardGraphicsResources();
+			hr = pRenderTarget->EndDraw();
+			if (SUCCEEDED(hr)) {
+				//DiscardGraphicsResources();
+			}
 		}
 		EndPaint(m_hwnd, &ps);
 	}
@@ -156,6 +172,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 
 	ShowWindow(win.Window(), TRUE);
 	Print::hy(win.Window());
+
+	MenuManager::InitMenu();
 
 	MSG msg = { };
 	MainWindow* a = &win;

@@ -9,4 +9,8 @@ public:
 	virtual void BulletEnter() = 0;
 	virtual void BulletPeriodic() = 0;
 	virtual void BulletExit() = 0;
+
+	void Enter() override;
+	void Periodic() override;
+	void Exit() override;
 };

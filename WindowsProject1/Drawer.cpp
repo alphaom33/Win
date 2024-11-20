@@ -6,6 +6,8 @@
 std::vector<IDrawable*> Drawer::toDraws;
 std::map<std::wstring, ID2D1Bitmap*> Drawer::bitmaps;
 
+std::vector<ITextable*> Drawer::toWrite;
+
 void Drawer::RegisterDraw(IDrawable *toDraw, std::vector<std::wstring> toAdd) {
 	toDraws.push_back(toDraw);
 
@@ -55,4 +57,50 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 			rcBrushRect
 		);
 	}
+}
+
+void Drawer::UnRegisterText(ITextable* text)
+{
+	auto index = std::find(toWrite.begin(), toWrite.end(), text);
+	if (index != toWrite.end()) {
+		toWrite.erase(index);
+	}
+}
+
+void Drawer::RegisterText(ITextable* text)
+{
+	toWrite.push_back(text);
+}
+
+HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* pDWriteFactory) {
+		ID2D1SolidColorBrush* brush;
+		HRESULT hr = pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1, 1, 1), &brush);
+
+		if (SUCCEEDED(hr)) {
+			for (ITextable* t : toWrite)
+			{
+				IDWriteTextFormat* pTextFormat;
+				hr = pDWriteFactory->CreateTextFormat(
+					L"Gabriola",
+					NULL,
+					DWRITE_FONT_WEIGHT_REGULAR,
+					DWRITE_FONT_STYLE_NORMAL,
+					DWRITE_FONT_STRETCH_ULTRA_EXPANDED,
+					t->GetSize(),
+					L"en-us",
+					&pTextFormat
+				);
+
+				if (SUCCEEDED(hr)) {
+					D2D1_RECT_F a{
+						a.bottom = 0,
+						a.top = t->GetPos()->y,
+						a.left = t->GetPos()->x,
+						a.right = t->GetPos()->x + t->GetWidth(),
+					};
+					pRenderTarget->DrawTextW(t->GetText().c_str(), t->GetText().length(), pTextFormat, &a, brush);
+				}
+			}
+		}
+	return hr;
 }

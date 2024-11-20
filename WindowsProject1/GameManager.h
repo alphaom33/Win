@@ -1,19 +1,21 @@
-#include "list"
 #include "TimedCodeBullet.h"
 #include "TimedCodeBase.h"
 #include "TimedCodeAlways.h"
 #include "TimedCodeMenu.h"
+#include "map"
+#include "vector"
+
 #pragma once
 class GameManager
 {
 public:
 	enum State
 	{
+		ALWAYS,
 		BULLET,
 		MENU
 	};
 	static State state;
-	static void RegisterTimedCode(TimedCodeBase* timedCode);
 	static void RegisterTimedCode(TimedCodeBase* timedCode, State kind);
 	static void SetState(State newState);
 
@@ -21,8 +23,6 @@ public:
 	static void Periodics();
 	static void Exits();
 private:
-	static std::list<TimedCodeBullet*> timedListBullet;
-	static std::list<TimedCodeMenu*> timedListMenu;
-	static std::list<TimedCodeAlways*> timedListAlways;
+	static std::map<State, std::vector<TimedCodeBase*>> timedLists;
 };
 

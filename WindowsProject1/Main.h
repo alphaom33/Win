@@ -6,6 +6,6 @@ class Main : TimedCodeAlways
 {
 public:
 	Main(HWND);
-	void AlwaysPeriodic();
+	void AlwaysPeriodic() override;
 };
 

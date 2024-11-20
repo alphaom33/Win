@@ -6,9 +6,9 @@ class Box : TimedCodeBullet
 {
 public:
 	Box(HWND, Vector2*);
-	void BulletEnter();
-	void BulletPeriodic();
-	void BulletExit();
+	void BulletEnter() override;
+	void BulletPeriodic() override;
+	void BulletExit() override;
 private:
 	SpriteCollider* left;
 	SpriteCollider* right;

@@ -104,10 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dwrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>false</EnableDpiAwareness>
@@ -133,6 +135,8 @@
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderController.h" />
     <ClInclude Include="Drawer.h" />
@@ -143,7 +147,10 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="basewin.h" />
+    <ClInclude Include="ITextable.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuManager.h" />
     <ClInclude Include="MoreVK.h" />
     <ClInclude Include="MoreWM.h" />
     <ClInclude Include="PlayerController.h" />
@@ -164,12 +171,16 @@
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderController.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Sprite.cpp" />

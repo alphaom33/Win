@@ -7,3 +7,18 @@ TimedCodeBullet::TimedCodeBullet() : TimedCodeBase()
 {
 	GameManager::RegisterTimedCode(this, GameManager::BULLET);
 }
+
+void TimedCodeBullet::Enter()
+{
+	BulletEnter();
+}
+
+void TimedCodeBullet::Periodic()
+{
+	BulletPeriodic();
+}
+
+void TimedCodeBullet::Exit()
+{
+	BulletExit();
+}

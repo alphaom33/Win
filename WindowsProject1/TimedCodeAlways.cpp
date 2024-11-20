@@ -3,5 +3,10 @@
 
 TimedCodeAlways::TimedCodeAlways()
 {
-	GameManager::RegisterTimedCode(this);
+	GameManager::RegisterTimedCode(this, GameManager::State::ALWAYS);
+}
+
+void TimedCodeAlways::Periodic()
+{
+	AlwaysPeriodic();
 }

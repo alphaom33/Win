@@ -38,7 +38,7 @@
 #define VK_Y 89
 #define VK_Z 90
 
-#define HIGH_KEY 90
+#define HIGH_KEY 91
 
 //wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
 //{

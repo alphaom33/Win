@@ -6,9 +6,9 @@ class PlayerController : TimedCodeBullet
 {
 public:
 	PlayerController(HWND);
-	void BulletEnter();
-	void BulletPeriodic();
-	void BulletExit();
+	void BulletEnter() override;
+	void BulletPeriodic() override;
+	void BulletExit() override;
 private:
 	Sprite* heart;
 	HWND hwnd;

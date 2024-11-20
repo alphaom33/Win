@@ -29,6 +29,16 @@ void Sprite::SetScale(Vector2* newScale)
 	scale = newScale;
 }
 
+void Sprite::Hide()
+{
+	Drawer::UnRegisterDraw(this);
+}
+
+void Sprite::Show()
+{
+	Drawer::RegisterDraw(this, {});
+}
+
 std::wstring Sprite::GetBitmap() {
 	return L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp";
 }

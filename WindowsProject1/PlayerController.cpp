@@ -15,6 +15,7 @@ PlayerController::PlayerController(HWND hwnd) : TimedCodeBullet()
 
 void PlayerController::BulletEnter()
 {
+	heart->Show();
 }
 
 void PlayerController::BulletPeriodic()
@@ -45,4 +46,5 @@ void PlayerController::BulletPeriodic()
 
 void PlayerController::BulletExit()
 {
+	heart->Hide();
 }

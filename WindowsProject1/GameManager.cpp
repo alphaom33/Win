@@ -2,24 +2,15 @@
 #include "list"
 #include "Print.h"
 
-std::list<TimedCodeBullet*> GameManager::timedListBullet;
-std::list<TimedCodeMenu*> GameManager::timedListMenu;
-std::list<TimedCodeAlways*> GameManager::timedListAlways;
+GameManager::State GameManager::state;
 
-void GameManager::RegisterTimedCode(TimedCodeBase* timedCode)
-{
-	timedListAlways.push_back((TimedCodeAlways*)timedCode);
-}
+std::map<GameManager::State, std::vector<TimedCodeBase*>> GameManager::timedLists;
 
 void GameManager::RegisterTimedCode(TimedCodeBase* timedCode, State kind) {
-	switch (kind) {
-	case BULLET:
-		timedListBullet.push_back((TimedCodeBullet*)timedCode);
-		break;
-	case MENU:
-		timedListMenu.push_back((TimedCodeMenu*)timedCode);
-		break;
+	if (!timedLists.count(kind)) {
+		timedLists[kind] = std::vector<TimedCodeBase*>();
 	}
+	timedLists[kind].push_back(timedCode);
 }
 
 void GameManager::SetState(State newState)
@@ -31,57 +22,24 @@ void GameManager::SetState(State newState)
 
 void GameManager::Entries()
 {
-	switch (state)
-	{
-	case GameManager::BULLET:
-		for (TimedCodeBullet* t : timedListBullet) {
-			t->BulletEnter();
-		}
-		break;
-	case GameManager::MENU:
-		for (TimedCodeMenu* t : timedListMenu) {
-			t->MenuEnter();
-		}
-		break;
+	for (TimedCodeBase* t : timedLists[state]) {
+		t->Enter();
 	}
 }
 
 void GameManager::Periodics()
 {
-	for (TimedCodeAlways* t : timedListAlways) {
-		t->AlwaysPeriodic();
+	for (TimedCodeBase* t : timedLists[State::ALWAYS]) {
+		t->Periodic();
 	}
-
-	switch (state)
-	{
-	case GameManager::BULLET:
-		for (TimedCodeBullet* t : timedListBullet) {
-			t->BulletPeriodic();
-		}
-		break;
-	case GameManager::MENU:
-		for (TimedCodeMenu* t : timedListMenu) {
-			t->MenuPeriodic();
-		}
-		break;
+	for (TimedCodeBase* t : timedLists[state]) {
+		t->Periodic();
 	}
 }
 
 void GameManager::Exits()
 {
-	switch (state)
-	{
-	case GameManager::BULLET:
-		for (TimedCodeBullet* t : timedListBullet) {
-			t->BulletExit();
-		}
-		break;
-	case GameManager::MENU:
-		for (TimedCodeMenu* t : timedListMenu) {
-			t->MenuExit();
-		}
-		break;
+	for (TimedCodeBase* t : timedLists[state]) {
+		t->Exit();
 	}
 }
-
-GameManager::State GameManager::state;

@@ -2,15 +2,12 @@
 #include "list"
 #include "Print.h"
 
-GameManager::State GameManager::state;
+State GameManager::state;
 
-std::map<GameManager::State, std::vector<TimedCodeBase*>> GameManager::timedLists;
+std::vector<ITimedCode*> GameManager::timedList;
 
-void GameManager::RegisterTimedCode(TimedCodeBase* timedCode, State kind) {
-	if (!timedLists.count(kind)) {
-		timedLists[kind] = std::vector<TimedCodeBase*>();
-	}
-	timedLists[kind].push_back(timedCode);
+void GameManager::RegisterTimedCode(ITimedCode* timedCode) {
+	timedList.push_back(timedCode);
 }
 
 void GameManager::SetState(State newState)
@@ -22,24 +19,22 @@ void GameManager::SetState(State newState)
 
 void GameManager::Entries()
 {
-	for (TimedCodeBase* t : timedLists[state]) {
-		t->Enter();
+	for (ITimedCode* t : timedList) {
+		if (t->GetState() == state) t->Enter();
 	}
 }
 
 void GameManager::Periodics()
 {
-	for (TimedCodeBase* t : timedLists[State::ALWAYS]) {
-		t->Periodic();
-	}
-	for (TimedCodeBase* t : timedLists[state]) {
-		t->Periodic();
+	for (ITimedCode* t : timedList) {
+		if (t->GetState() == state || t->GetState() == State::ALWAYS) t->Periodic();
 	}
 }
 
 void GameManager::Exits()
 {
-	for (TimedCodeBase* t : timedLists[state]) {
+	for (ITimedCode* t : timedList) {
+		if (t->GetState() == state)
 		t->Exit();
 	}
 }

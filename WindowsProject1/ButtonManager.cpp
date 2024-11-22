@@ -2,7 +2,7 @@
 #include "InputManager.h"
 #include "MoreVK.h"
 
-ButtonManager::ButtonManager(std::vector<Button*> buttons)
+ButtonManager::ButtonManager(std::vector<Button*> buttons) : TimedCode(State::MENU)
 {
 	this->buttons = buttons;
 	current = 0;
@@ -10,11 +10,11 @@ ButtonManager::ButtonManager(std::vector<Button*> buttons)
 	this->buttons[current]->SetSprite(true);
 }
 
-void ButtonManager::MenuEnter()
+void ButtonManager::Enter()
 {
 }
 
-void ButtonManager::MenuPeriodic()
+void ButtonManager::Periodic()
 {
 	if (InputManager::GetKeyDown(VK_RIGHT))
 	{
@@ -26,7 +26,7 @@ void ButtonManager::MenuPeriodic()
 	}
 }
 
-void ButtonManager::MenuExit()
+void ButtonManager::Exit()
 {
 	for (Button* b : buttons) {
 		b->SetSprite(false);

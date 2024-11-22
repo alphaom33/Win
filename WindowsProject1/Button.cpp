@@ -3,7 +3,7 @@
 #include "InputManager.h"
 #include "MenuManager.h"
 
-Button::Button(std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu)
+Button::Button(std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu) : TimedCode(State::MENU)
 {
 	buttonOn = on;
 	buttonOff = off;
@@ -37,17 +37,17 @@ Vector2* Button::GetScale()
 	return scale;
 }
 
-void Button::MenuEnter()
+void Button::Enter()
 {
 }
 
-void Button::MenuPeriodic()
+void Button::Periodic()
 {
 	if (currentSprite && InputManager::GetKeyDown(VK_Z)) {
 		MenuManager::SetMenu(menu);
 	}
 }
 
-void Button::MenuExit()
+void Button::Exit()
 {
 }

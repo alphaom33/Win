@@ -1,10 +1,10 @@
 #include "IDrawable.h"
 #include "d2d1.h"
 #include "string"
-#include "TimedCodeBullet.h"
+#include "TimedCode.h"
 #include "vector"
 #pragma once
-class AnimatedSprite : IDrawable, TimedCodeBullet
+class AnimatedSprite : IDrawable, TimedCode
 {
 public:
 	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed);
@@ -15,9 +15,9 @@ public:
 
 	void Play();
 
-	void BulletEnter();
-	void BulletPeriodic();
-	void BulletExit();
+	void Enter() override;
+	void Periodic() override;
+	void Exit() override;
 
 private:
 	std::vector<std::wstring> frames;

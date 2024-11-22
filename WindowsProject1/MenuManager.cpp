@@ -4,11 +4,6 @@
 
 Menu* MenuManager::menu;
 
-void MenuManager::InitMenu()
-{
-	new MenuManager();
-}
-
 void MenuManager::SetMenu(Menu* p_menu)
 {
 	Drawer::UnRegisterText(menu);
@@ -16,15 +11,15 @@ void MenuManager::SetMenu(Menu* p_menu)
 	Drawer::RegisterText(menu);
 }
 
-void MenuManager::MenuEnter()
+void MenuManager::Enter()
 {
 }
 
-void MenuManager::MenuPeriodic()
+void MenuManager::Periodic()
 {
 }
 
-void MenuManager::MenuExit()
+void MenuManager::Exit()
 {
 	Drawer::UnRegisterText(menu);
 }

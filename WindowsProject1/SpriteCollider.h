@@ -1,8 +1,8 @@
 #include "Sprite.h"
 #include "Collider.h"
-#include "TimedCodeBullet.h"
+#include "TimedCode.h"
 #pragma once
-class SpriteCollider : TimedCodeBullet
+class SpriteCollider : TimedCode
 {
 public:
 	SpriteCollider(Vector2*, Vector2*, HWND);
@@ -13,9 +13,9 @@ public:
 	void SetPosition(Vector2*);
 	void SetScale(Vector2*);
 
-	void BulletEnter();
-	void BulletPeriodic();
-	void BulletExit();
+	void Enter() override;
+	void Periodic() override;
+	void Exit()  override;
 
 private:
 	Collider* collider;

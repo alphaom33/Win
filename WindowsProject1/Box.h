@@ -1,14 +1,14 @@
 #include "SpriteCollider.h"
-#include "TimedCodeBullet.h"
+#include "TimedCode.h"
 
 #pragma once
-class Box : TimedCodeBullet
+class Box : TimedCode
 {
 public:
 	Box(HWND, Vector2*);
-	void BulletEnter() override;
-	void BulletPeriodic() override;
-	void BulletExit() override;
+	void Enter() override;
+	void Periodic() override;
+	void Exit() override;
 private:
 	SpriteCollider* left;
 	SpriteCollider* right;

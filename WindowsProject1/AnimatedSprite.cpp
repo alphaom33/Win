@@ -4,7 +4,7 @@
 #include "thread"
 #include "Time.h"
 
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed)
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
@@ -37,15 +37,15 @@ void AnimatedSprite::Play()
 {
 }
 
-void AnimatedSprite::BulletEnter()
+void AnimatedSprite::Enter()
 {
 }
 
-void AnimatedSprite::BulletPeriodic()
+void AnimatedSprite::Periodic()
 {
 	current = frames[(int)round(Time::currentTime - startTime) % frames.size()];
 }
 
-void AnimatedSprite::BulletExit()
+void AnimatedSprite::Exit()
 {
 }

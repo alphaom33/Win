@@ -1,11 +1,15 @@
-#include "TimedCodeAlways.h"
+#include "TimedCode.h"
 #include "Sprite.h"
 
 #pragma once
-class Main : TimedCodeAlways
+class Main : public TimedCode
 {
 public:
 	Main(HWND);
-	void AlwaysPeriodic() override;
+
+	// Inherited via TimedCode
+	void Periodic() override;
+	void Enter() override;
+	void Exit() override;
 };
 

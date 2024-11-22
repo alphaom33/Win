@@ -173,14 +173,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	ShowWindow(win.Window(), TRUE);
 	Print::hy(win.Window());
 
-	MenuManager::InitMenu();
-
 	MSG msg = { };
 	MainWindow* a = &win;
 	std::wstring print = L"";
 	thread = std::thread([a, &print] {
-		GameManager::state = GameManager::BULLET;
-		new Main(a->Window());
+		GameManager::state = State::MENU;
+		GameManager::RegisterTimedCode(new Main(a->Window()));
 		while (a->Window() != NULL) {
 			Time::calcTimes();
 			GameManager::Periodics();

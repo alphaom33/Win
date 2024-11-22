@@ -7,18 +7,18 @@
 
 #define SPEED 10
 
-PlayerController::PlayerController(HWND hwnd) : TimedCodeBullet()
+PlayerController::PlayerController(HWND hwnd) : TimedCode(State::BULLET)
 {
 	heart = new Sprite(new Vector2(), new Vector2(100, 100), hwnd);
 	this->hwnd = hwnd;
 }
 
-void PlayerController::BulletEnter()
+void PlayerController::Enter()
 {
 	heart->Show();
 }
 
-void PlayerController::BulletPeriodic()
+void PlayerController::Periodic()
 {
 	Vector2* pos = heart->GetPosition();
 	Vector2* newPos = new Vector2();
@@ -44,7 +44,7 @@ void PlayerController::BulletPeriodic()
 	}
 }
 
-void PlayerController::BulletExit()
+void PlayerController::Exit()
 {
 	heart->Hide();
 }

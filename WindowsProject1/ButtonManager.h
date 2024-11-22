@@ -1,16 +1,16 @@
 #include "vector"
 #include "Button.h"
-#include "TimedCodeMenu.h"
+#include "TimedCode.h"
 
 #pragma once
-class ButtonManager : TimedCodeMenu
+class ButtonManager : TimedCode
 {
 public:
 	ButtonManager(std::vector<Button*> buttons);
 
-	void MenuEnter();
-	void MenuPeriodic();
-	void MenuExit();
+	void Enter();
+	void Periodic();
+	void Exit();
 
 	void ChangeButton(int amount);
 

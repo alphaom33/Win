@@ -1,6 +1,6 @@
 #include "Box.h"
 
-Box::Box(HWND hwnd, Vector2* startSize) : TimedCodeBullet()
+Box::Box(HWND hwnd, Vector2* startSize) : TimedCode(State::BULLET)
 {
 	left = new SpriteCollider(new Vector2((pos.x - startSize->x) + ((startSize->x / width - 1) * width), pos.y), new Vector2(width, startSize->y), hwnd);
 	right = new SpriteCollider(new Vector2(pos.x + startSize->x, pos.y), new Vector2(width, startSize->y), hwnd);
@@ -13,14 +13,14 @@ Box::Box(HWND hwnd, Vector2* startSize) : TimedCodeBullet()
 	bottomRight = new SpriteCollider(new Vector2(pos.x + startSize->x, pos.y + startSize->y), new Vector2(width, width), hwnd);
 }
 
-void Box::BulletEnter()
+void Box::Enter()
 {
 }
 
-void Box::BulletPeriodic()
+void Box::Periodic()
 {
 }
 
-void Box::BulletExit()
+void Box::Exit()
 {
 }

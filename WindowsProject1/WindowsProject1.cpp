@@ -63,6 +63,7 @@ void MainWindow::CalculateLayout() {
 		D2D1_SIZE_F size = pRenderTarget->GetSize();
 		const float x = size.width / 2;
 		const float y = size.height / 2;
+		OutputDebugString((std::to_wstring(size.width) + L", " + std::to_wstring(size.height)).c_str());
 		const float radius = min(x, y);
 		ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius);
 	}

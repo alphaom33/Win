@@ -62,7 +62,11 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 void Drawer::UnRegisterText(ITextable* text)
 {
 	auto index = std::find(toWrite.begin(), toWrite.end(), text);
+	for (auto a : toWrite) {
+		OutputDebugString(a->GetText().c_str());
+	}
 	if (index != toWrite.end()) {
+		OutputDebugString(L"gone");
 		toWrite.erase(index);
 	}
 }
@@ -73,34 +77,36 @@ void Drawer::RegisterText(ITextable* text)
 }
 
 HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* pDWriteFactory) {
-		ID2D1SolidColorBrush* brush;
-		HRESULT hr = pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1, 1, 1), &brush);
+	ID2D1SolidColorBrush* brush;
+	HRESULT hr = pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1, 1, 1), &brush);
 
-		if (SUCCEEDED(hr)) {
-			for (ITextable* t : toWrite)
-			{
-				IDWriteTextFormat* pTextFormat;
-				hr = pDWriteFactory->CreateTextFormat(
-					L"Gabriola",
-					NULL,
-					DWRITE_FONT_WEIGHT_REGULAR,
-					DWRITE_FONT_STYLE_NORMAL,
-					DWRITE_FONT_STRETCH_ULTRA_EXPANDED,
-					t->GetSize(),
-					L"en-us",
-					&pTextFormat
-				);
+	if (SUCCEEDED(hr)) {
+		for (ITextable* t : toWrite)
+		{
+			//OutputDebugString(L"a");
+			IDWriteTextFormat* pTextFormat;
+			hr = pDWriteFactory->CreateTextFormat(
+				L"Gabriola",
+				NULL,
+				DWRITE_FONT_WEIGHT_REGULAR,
+				DWRITE_FONT_STYLE_NORMAL,
+				DWRITE_FONT_STRETCH_NORMAL,
+				t->GetSize(),
+				L"en-us",
+				&pTextFormat
+			);
 
-				if (SUCCEEDED(hr)) {
-					D2D1_RECT_F a{
-						a.bottom = 0,
-						a.top = t->GetPos()->y,
-						a.left = t->GetPos()->x,
-						a.right = t->GetPos()->x + t->GetWidth(),
-					};
-					pRenderTarget->DrawTextW(t->GetText().c_str(), t->GetText().length(), pTextFormat, &a, brush);
-				}
+			if (SUCCEEDED(hr)) {
+				D2D1_RECT_F a{
+					a.bottom = 0,
+					a.top = t->GetPos()->y,
+					a.left = t->GetPos()->x,
+					a.right = 100000,
+				};
+				pRenderTarget->DrawTextW(t->GetText().c_str(), t->GetText().length(), pTextFormat, &a, brush);
 			}
 		}
+	}
+//	OutputDebugString(L"\n");
 	return hr;
 }

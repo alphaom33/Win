@@ -34,7 +34,9 @@ void GameManager::Periodics()
 void GameManager::Exits()
 {
 	for (ITimedCode* t : timedList) {
-		if (t->GetState() == state)
-		t->Exit();
+		if (t->GetState() == state) {
+			OutputDebugString(L"asdf");
+			t->Exit();
+		}
 	}
 }

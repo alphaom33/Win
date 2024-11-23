@@ -1,7 +1,8 @@
 #include "Box.h"
 
-Box::Box(HWND hwnd, Vector2* startSize) : TimedCode(State::BULLET)
+Box::Box(HWND hwnd, Vector2 pos, Vector2* startSize, int width) : TimedCode(State::BULLET)
 {
+	this->pos = pos;
 	left = new SpriteCollider(new Vector2((pos.x - startSize->x) + ((startSize->x / width - 1) * width), pos.y), new Vector2(width, startSize->y), hwnd);
 	right = new SpriteCollider(new Vector2(pos.x + startSize->x, pos.y), new Vector2(width, startSize->y), hwnd);
 	top = new SpriteCollider(new Vector2(pos.x, (pos.y - startSize->y) + ((startSize->y / width - 1) * width)), new Vector2(startSize->x, width), hwnd);

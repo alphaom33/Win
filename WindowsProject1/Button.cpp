@@ -3,8 +3,10 @@
 #include "InputManager.h"
 #include "MenuManager.h"
 
-Button::Button(std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu) : TimedCode(State::MENU)
+Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu) : TimedCode(State::MENU)
 {
+	this->text = text;
+
 	buttonOn = on;
 	buttonOff = off;
 	currentSprite = false;
@@ -15,6 +17,7 @@ Button::Button(std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, 
 	this->menu = menu;
 
 	Drawer::RegisterDraw(this, { on, off });
+	Drawer::RegisterText(this);
 }
 
 void Button::SetSprite(bool on)
@@ -50,4 +53,19 @@ void Button::Periodic()
 
 void Button::Exit()
 {
+}
+
+std::wstring Button::GetText()
+{
+	return text;
+}
+
+Vector2* Button::GetPos()
+{
+	return position;
+}
+
+float Button::GetSize()
+{
+	return 30.0f;
 }

@@ -5,7 +5,7 @@
 class Box : TimedCode
 {
 public:
-	Box(HWND, Vector2*);
+	Box(HWND hwnd, Vector2 pos, Vector2* startSize, int width);
 	void Enter() override;
 	void Periodic() override;
 	void Exit() override;
@@ -20,7 +20,7 @@ private:
 	SpriteCollider* bottomLeft;
 	SpriteCollider* bottomRight;
 
-	Vector2 pos = Vector2(500, 100);
+	Vector2 pos;
 	Vector2 size;
 	const double width = 64;
 };

@@ -9,7 +9,7 @@
 
 PlayerController::PlayerController(HWND hwnd) : TimedCode(State::BULLET)
 {
-	heart = new Sprite(new Vector2(), new Vector2(100, 100), hwnd);
+	heart = new Sprite(new Vector2(200, 200), new Vector2(50, 50), hwnd);
 	this->hwnd = hwnd;
 }
 

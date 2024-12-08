@@ -1,13 +1,16 @@
 #include "ITimedCode.h"
 #include "map"
 #include "vector"
+#include "queue"
 
 #pragma once
 class GameManager
 {
 public:
 	static State state;
-	static void RegisterTimedCode(ITimedCode* timedCode);
+	static int RegisterTimedCode(ITimedCode* timedCode);
+	static void UnRegisterTimedCode(ITimedCode* timedCode);
+	static void	QueueUnRegisterTimedCode(ITimedCode* timedCode);
 	static void SetState(State newState);
 
 	static void Entries();
@@ -15,5 +18,7 @@ public:
 	static void Exits();
 private:
 	static std::vector<ITimedCode*> timedList;
+	static std::queue<ITimedCode*> toFree;
+	static int count;
 };
 

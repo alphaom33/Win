@@ -11,6 +11,8 @@ PlayerController::PlayerController(HWND hwnd) : TimedCode(State::BULLET)
 {
 	heart = new Sprite(new Vector2(200, 200), new Vector2(50, 50), hwnd);
 	this->hwnd = hwnd;
+
+	items = { Item{L"health", 0}, Item{L"apple", 10}};
 }
 
 void PlayerController::Enter()
@@ -47,4 +49,14 @@ void PlayerController::Periodic()
 void PlayerController::Exit()
 {
 	heart->Hide();
+}
+
+std::vector<Item> PlayerController::GetItems()
+{
+	return items;
+}
+
+void PlayerController::UseItem(Item item)
+{
+	//TODO
 }

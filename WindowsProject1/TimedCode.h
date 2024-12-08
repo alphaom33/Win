@@ -7,7 +7,9 @@ public:
 	TimedCode(State state);
 
 	State GetState();
+	int GetID();
 protected:
 	State state;
+	int id;
 };
 

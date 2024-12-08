@@ -1,35 +1,72 @@
 #include "ButtonManager.h"
 #include "InputManager.h"
 #include "MoreVK.h"
+#include "GameManager.h"
 
-ButtonManager::ButtonManager(std::vector<Button*> buttons) : TimedCode(State::MENU)
+ButtonManager::ButtonManager(std::vector<IButton*> buttons, bool alwaysShowing, State state) : TimedCode(state)
 {
 	this->buttons = buttons;
 	current = 0;
 
 	this->buttons[current]->SetSprite(true);
+	this->alwaysShowing = alwaysShowing;
+	if (alwaysShowing) 
+	{
+		for (auto b : buttons) 
+		{
+			b->Register();
+		}
+	}
+}
+
+ButtonManager::~ButtonManager()
+{
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		buttons[i]->UnRegister();
+		// delete buttons[i];
+	}
+	buttons.clear();
+	GameManager::UnRegisterTimedCode(this);
 }
 
 void ButtonManager::Enter()
 {
+	if (!alwaysShowing) 
+	{
+		for (auto b : buttons) 
+		{
+			b->Register();
+		}
+	}
+	this->buttons[current]->SetSprite(true);
 }
 
 void ButtonManager::Periodic()
 {
-	if (InputManager::GetKeyDown(VK_RIGHT))
+	if (InputManager::GetKeyDown(VK_RIGHT) || InputManager::GetKeyDown(VK_DOWN))
 	{
 		ChangeButton(1);
 	}
-	else if (InputManager::GetKeyDown(VK_LEFT))
+	else if (InputManager::GetKeyDown(VK_LEFT) || InputManager::GetKeyDown(VK_UP))
 	{
 		ChangeButton(-1);
+	}
+
+	if (InputManager::GetKeyDown(VK_Z)) {
+		buttons[current]->Clicked();
 	}
 }
 
 void ButtonManager::Exit()
 {
-	for (Button* b : buttons) {
+	for (auto b : buttons) 
+	{
 		b->SetSprite(false);
+		if (!alwaysShowing) 
+		{
+			b->UnRegister();
+		}
 	}
 }
 

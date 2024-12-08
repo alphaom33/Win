@@ -3,5 +3,8 @@ enum State
 {
 	ALWAYS,
 	BULLET,
-	MENU
+	BUTTON,
+	MENU,
+	FLEE,
+	NEVER
 };

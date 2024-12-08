@@ -2,7 +2,15 @@
 #include "Drawer.h"
 #include "Drawer.h"
 
-Menu::Menu(Vector2* pos, Vector2* scale, std::wstring text, float size) : TimedCode(State::MENU)
+Menu::Menu(std::wstring text)
+{
+    pos = new Vector2(100, 150);
+    scale = new Vector2(400, 400);
+    this->text = text;
+    size = 20;
+}
+
+Menu::Menu(Vector2* pos, Vector2* scale, std::wstring text, float size)
 {
     this->pos = pos;
     this->scale = scale;
@@ -10,14 +18,10 @@ Menu::Menu(Vector2* pos, Vector2* scale, std::wstring text, float size) : TimedC
     this->size = size;
 }
 
-void Menu::SetCurrent()
+void Menu::SetCurrent(bool current)
 {
-    Drawer::RegisterText(this);
-}
-
-void Menu::SetNotCurrent()
-{
-    Drawer::UnRegisterText(this);
+    if (current) Drawer::RegisterText(this);
+    else Drawer::UnRegisterText(this);
 }
 
 std::wstring Menu::GetText()
@@ -46,4 +50,9 @@ void Menu::Periodic()
 void Menu::Exit()
 {
     Drawer::UnRegisterText(this);
+}
+
+void Menu::setText(std::wstring text)
+{
+    this->text = text;
 }

@@ -3,10 +3,11 @@
 #include "TimedCode.h"
 
 #pragma once
-class ButtonManager : TimedCode
+class ButtonManager : public TimedCode
 {
 public:
-	ButtonManager(std::vector<Button*> buttons);
+	ButtonManager(std::vector<IButton*> buttons, bool alwaysShowing, State state);
+	~ButtonManager();
 
 	void Enter();
 	void Periodic();
@@ -15,7 +16,8 @@ public:
 	void ChangeButton(int amount);
 
 private:
-	std::vector<Button*> buttons;
+	std::vector<IButton*> buttons;
 	int current;
+	bool alwaysShowing;
 };
 

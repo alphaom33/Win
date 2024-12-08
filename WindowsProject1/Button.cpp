@@ -2,8 +2,9 @@
 #include "Drawer.h"
 #include "InputManager.h"
 #include "MenuManager.h"
+#include "GameManager.h"
 
-Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu) : TimedCode(State::MENU)
+Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu, MenuManager* menuManager, State state)
 {
 	this->text = text;
 
@@ -15,9 +16,9 @@ Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2* po
 	this->scale = scale;
 
 	this->menu = menu;
+	this->menuManager = menuManager;
 
-	Drawer::RegisterDraw(this, { on, off });
-	Drawer::RegisterText(this);
+	this->state = state;
 }
 
 void Button::SetSprite(bool on)
@@ -40,19 +41,22 @@ Vector2* Button::GetScale()
 	return scale;
 }
 
-void Button::Enter()
+void Button::Register()
 {
+	Drawer::RegisterDraw(this, { buttonOn, buttonOff });
+	Drawer::RegisterText(this);
 }
 
-void Button::Periodic()
+void Button::UnRegister()
 {
-	if (currentSprite && InputManager::GetKeyDown(VK_Z)) {
-		MenuManager::SetMenu(menu);
-	}
+	Drawer::UnRegisterDraw(this);
+	Drawer::UnRegisterText(this);
 }
 
-void Button::Exit()
+void Button::Clicked()
 {
+	menuManager->SetMenu(menu);
+	GameManager::SetState(state);
 }
 
 std::wstring Button::GetText()

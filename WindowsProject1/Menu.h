@@ -2,13 +2,19 @@
 #include "TimedCode.h"
 
 #pragma once
-class Menu : public ITextable, TimedCode
+class Menu : public ITextable
 {
 public:
+	Menu(std::wstring text);
 	Menu(Vector2* pos, Vector2* scale, std::wstring text, float size);
 
-	void SetCurrent();
-	void SetNotCurrent();
+	void SetCurrent(bool current);
+
+	virtual void Enter();
+	virtual void Periodic();
+	virtual void Exit();
+
+	void setText(std::wstring text);
 
 private:
 	Vector2* pos;
@@ -20,10 +26,5 @@ private:
 	std::wstring GetText() override;
 	Vector2* GetPos() override;
 	float GetSize() override;
-
-	// Inherited via TimedCode
-	void Enter() override;
-	void Periodic() override;
-	void Exit() override;
 };
 

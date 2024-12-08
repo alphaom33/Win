@@ -178,7 +178,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	MainWindow* a = &win;
 	std::wstring print = L"";
 	thread = std::thread([a, &print] {
-		GameManager::state = State::MENU;
+		GameManager::state = State::BUTTON;
 		GameManager::RegisterTimedCode(new Main(a->Window()));
 		while (a->Window() != NULL) {
 			Time::calcTimes();

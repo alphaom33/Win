@@ -17,7 +17,10 @@ void Drawer::RegisterDraw(IDrawable *toDraw, std::vector<std::wstring> toAdd) {
 }
 
 void Drawer::UnRegisterDraw(IDrawable* toNotDraw) {
-	//TODO
+	auto index = std::find(toDraws.begin(), toDraws.end(), toNotDraw);
+	if (index != toDraws.end()) {
+		toDraws.erase(index);
+	}
 }
 
 void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWICImagingFactory *iwicFactory) {
@@ -62,12 +65,13 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 void Drawer::UnRegisterText(ITextable* text)
 {
 	auto index = std::find(toWrite.begin(), toWrite.end(), text);
-	for (auto a : toWrite) {
-		OutputDebugString(a->GetText().c_str());
-	}
 	if (index != toWrite.end()) {
-		OutputDebugString(L"gone");
 		toWrite.erase(index);
+	}
+	else
+	{
+		if (text != NULL) OutputDebugString((text->GetText() + L" ").c_str());
+		OutputDebugString(L"oh goodness mate that don't exist ere you imbecile\n");
 	}
 }
 
@@ -79,6 +83,11 @@ void Drawer::RegisterText(ITextable* text)
 HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* pDWriteFactory) {
 	ID2D1SolidColorBrush* brush;
 	HRESULT hr = pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1, 1, 1), &brush);
+
+	for (ITextable* t : toWrite) {
+		//OutputDebugString((t->GetText() + L", ").c_str());
+	}
+	//OutputDebugString(L"\n");
 
 	if (SUCCEEDED(hr)) {
 		for (ITextable* t : toWrite)

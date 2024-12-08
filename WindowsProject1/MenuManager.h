@@ -2,12 +2,18 @@
 #include "TimedCode.h"
 
 #pragma once
-class MenuManager
+class MenuManager : TimedCode
 {
 public:
-	static void SetMenu(Menu* menu);
+	MenuManager(State state);
+	void SetMenu(Menu* menu);
 
 private:
-	static Menu* menu;
+	Menu* menu;
+
+	// Inherited via TimedCode
+	void Enter() override;
+	void Periodic() override;
+	void Exit() override;
 };
 

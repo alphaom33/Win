@@ -27,10 +27,12 @@ void GameManager::QueueUnRegisterTimedCode(ITimedCode* timedCode)
 }
 
 
+int thing;
 void GameManager::SetState(State newState)
 {
 	Exits();
 	state = newState;
+	if (state == State::BULLET) thing = 0;
 	Entries();
 }
 
@@ -51,6 +53,16 @@ void GameManager::Periodics()
 		UnRegisterTimedCode(toFree.front());
 		delete toFree.front();
 		toFree.pop();
+	}
+
+	if (thing < 300) 
+	{
+		thing++;
+	}
+	else if (thing == 300) 
+	{
+		thing++;
+		SetState(State::BUTTON);
 	}
 }
 

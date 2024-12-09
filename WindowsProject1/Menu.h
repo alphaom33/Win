@@ -16,15 +16,15 @@ public:
 
 	void setText(std::wstring text);
 
+protected:
+	std::wstring GetText() override;
+	Vector2* GetPos() override;
+	float GetSize() override;
+
 private:
 	Vector2* pos;
 	Vector2* scale;
 	std::wstring text;
 	float size;
-
-	// Inherited via ITextable
-	std::wstring GetText() override;
-	Vector2* GetPos() override;
-	float GetSize() override;
 };
 

@@ -4,29 +4,23 @@
 #include "GameManager.h"
 #include "State.h"
 #include "FleeMenu.h"
+#include "LambdaButton.h"
+
+struct fleeState {
+	MenuManager* menuManager;
+};
 
 FleeChooser::FleeChooser() : Menu(new Vector2(100, 150), new Vector2(400, 400), L"", 20)
 {
 	MenuManager* menuManager = new MenuManager(State::FLEE);
 	buttons = new ButtonManager({
-		new Button(
-			L"Flee",
-			L"C:\\Users\\mBorchert\\Desktop\\nothing.bmp",
-			L"C:\\Users\\mBorchert\\Desktop\\dsfmask.bmp",
-			new Vector2(100, 150),
-			new Vector2(200, 100),
-			new FleeMenu(),
-			menuManager,
-			State::FLEE),
-		new Button(
-			L"Spare",
-			L"C:\\Users\\mBorchert\\Desktop\\nothing.bmp",
-			L"C:\\Users\\mBorchert\\Desktop\\dsfmask.bmp",
-			new Vector2(100, 300),
-			new Vector2(200, 100),
-			NULL,
-			menuManager,
-			State::MENU) },
+		new LambdaButton(new Vector2(100, 150), L"Flee", new fleeState{menuManager}, [](void* state) {
+			fleeState* ack = (fleeState*)state;
+			ack->menuManager->SetMenu(new FleeMenu());
+			GameManager::SetState(State::FLEE);
+			}),
+		new LambdaButton(new Vector2(100, 200), L"Spare", NULL, [](void*) {})
+		},
 		false,
 		State::NEVER);
 }

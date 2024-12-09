@@ -14,6 +14,7 @@
 #include "State.h"
 #include "FleeChooser.h"
 #include "ItemChooser.h"
+#include "FightMenu.h"
 
 int buttonHeight = 70;
 int buttonWidth = 150;
@@ -42,7 +43,7 @@ Main::Main(HWND hwnd) : TimedCode(State::ALWAYS)
 	PlayerController* playerController = new PlayerController(hwnd);
 
 	new ButtonManager({
-		MakeButton(L"fight", 0, new Menu(new Vector2(100, 150), new Vector2(400, 400), L"asdfasdfasdf", 20)),
+		MakeButton(L"fight", 0, new FightMenu()),
 		MakeButton(L"item", 1, new ItemChooser(playerController)),
 		MakeButton(L"act", 2, new Menu(new Vector2(100, 150), new Vector2(400, 400), L"c", 20)),
 		MakeButton(L"flee", 3, new FleeChooser()) },

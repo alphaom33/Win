@@ -4,6 +4,7 @@
 #include "Print.h"
 #include "Collider.h"
 #include "ColliderController.h"
+#include "algorithm"
 
 #define SPEED 10
 
@@ -58,5 +59,9 @@ std::vector<Item> PlayerController::GetItems()
 
 void PlayerController::UseItem(Item item)
 {
-	//TODO
+	auto index = std::find_if(items.begin(), items.end(), [item](Item x) {return x.name == item.name; });
+	if (index != items.end()) {
+		OutputDebugString(L"no item gone :(");
+	}
+	items.erase(index);
 }

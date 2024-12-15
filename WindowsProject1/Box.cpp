@@ -1,17 +1,22 @@
 #include "Box.h"
 
-Box::Box(HWND hwnd, Vector2 pos, Vector2* startSize, int width) : TimedCode(State::BULLET)
-{
-	this->pos = pos;
-	left = new SpriteCollider(new Vector2((pos.x - startSize->x) + ((startSize->x / width - 1) * width), pos.y), new Vector2(width, startSize->y), hwnd);
-	right = new SpriteCollider(new Vector2(pos.x + startSize->x, pos.y), new Vector2(width, startSize->y), hwnd);
-	top = new SpriteCollider(new Vector2(pos.x, (pos.y - startSize->y) + ((startSize->y / width - 1) * width)), new Vector2(startSize->x, width), hwnd);
-	bottom = new SpriteCollider(new Vector2(pos.x, pos.y + startSize->y), new Vector2(startSize->x, width), hwnd);
+Vector2* Box::pos;
+Vector2* Box::size;
 
-	topLeft = new SpriteCollider(new Vector2(pos.x - startSize->x + ((startSize->x / width - 1) * width), pos.y - startSize->y + ((startSize->y / width - 1) * width)), new Vector2(width, width), hwnd);
-	topRight = new SpriteCollider(new Vector2(pos.x + startSize->x, (pos.y - startSize->y) + ((startSize->y / width - 1) * width)), new Vector2(width, width), hwnd);
-	bottomLeft = new SpriteCollider(new Vector2(pos.x - startSize->x + ((startSize->x / width - 1) * width), pos.y + startSize->y), new Vector2(width, width), hwnd);
-	bottomRight = new SpriteCollider(new Vector2(pos.x + startSize->x, pos.y + startSize->y), new Vector2(width, width), hwnd);
+Box::Box(HWND hwnd, Vector2* p_pos, Vector2* startSize, int width) : TimedCode(State::BULLET)
+{
+	pos = p_pos;
+	size = startSize;
+
+	left = new SpriteCollider(new Vector2((p_pos->x - startSize->x) + ((startSize->x / width - 1) * width), p_pos->y), new Vector2(width, startSize->y), hwnd);
+	right = new SpriteCollider(new Vector2(p_pos->x + startSize->x, p_pos->y), new Vector2(width, startSize->y), hwnd);
+	top = new SpriteCollider(new Vector2(p_pos->x, (p_pos->y - startSize->y) + ((startSize->y / width - 1) * width)), new Vector2(startSize->x, width), hwnd);
+	bottom = new SpriteCollider(new Vector2(p_pos->x, p_pos->y + startSize->y), new Vector2(startSize->x, width), hwnd);
+
+	topLeft = new SpriteCollider(new Vector2(p_pos->x - startSize->x + ((startSize->x / width - 1) * width), p_pos->y - startSize->y + ((startSize->y / width - 1) * width)), new Vector2(width, width), hwnd);
+	topRight = new SpriteCollider(new Vector2(p_pos->x + startSize->x, (p_pos->y - startSize->y) + ((startSize->y / width - 1) * width)), new Vector2(width, width), hwnd);
+	bottomLeft = new SpriteCollider(new Vector2(p_pos->x - startSize->x + ((startSize->x / width - 1) * width), p_pos->y + startSize->y), new Vector2(width, width), hwnd);
+	bottomRight = new SpriteCollider(new Vector2(p_pos->x + startSize->x, p_pos->y + startSize->y), new Vector2(width, width), hwnd);
 }
 
 void Box::Enter()
@@ -24,4 +29,21 @@ void Box::Periodic()
 
 void Box::Exit()
 {
+}
+
+Vector2* Box::GetPos()
+{
+	return pos;
+}
+
+Vector2* Box::GetScale()
+{
+	return size;
+}
+
+void Box::SpawnBullet(IBullet* bullet)
+{
+	bullet->SetPos(new Vector2(
+		rand() / (RAND_MAX / (size->x - pos->x)),
+		rand() / (RAND_MAX / (size->y - pos->y))));
 }

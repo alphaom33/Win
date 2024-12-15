@@ -1,11 +1,11 @@
 #include "Menu.h"
 #include "Drawer.h"
-#include "Drawer.h"
+#include "Box.h"
 
 Menu::Menu(std::wstring text)
 {
-    pos = new Vector2(100, 150);
-    scale = new Vector2(400, 400);
+    pos = Box::GetPos();
+    scale = Box::GetScale();
     this->text = text;
     size = 20;
 }

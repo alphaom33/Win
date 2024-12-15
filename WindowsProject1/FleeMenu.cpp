@@ -11,6 +11,6 @@ void FleeMenu::Periodic()
 {
 	time++;
 	if (time > 100) {
-		GameManager::SetState(State::BULLET);
+		GameManager::SetState(State::ENEMY);
 	}
 }

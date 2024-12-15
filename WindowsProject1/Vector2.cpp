@@ -29,6 +29,11 @@ Vector2* Vector2::operator+(Vector2 rhs)
 	return new Vector2(x + rhs.x, y + rhs.y);
 }
 
+Vector2* Vector2::operator-(Vector2 rhs)
+{
+	return new Vector2(x - rhs.x, y - rhs.y);
+}
+
 bool Vector2::operator==(Vector2 rhs)
 {
 	return x == rhs.x && y == rhs.y;

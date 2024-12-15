@@ -1,7 +1,10 @@
 #include "ITimedCode.h"
-#include "map"
-#include "vector"
-#include "queue"
+#include "Turn.h"
+
+#include <map>
+#include <vector>
+#include <queue>
+#include <functional>
 
 #pragma once
 class GameManager
@@ -12,6 +15,8 @@ public:
 	static void UnRegisterTimedCode(ITimedCode* timedCode);
 	static void	QueueUnRegisterTimedCode(ITimedCode* timedCode);
 	static void SetState(State newState);
+
+	static void RunTurn(Turn* turn);
 
 	static void Entries();
 	static void Periodics();

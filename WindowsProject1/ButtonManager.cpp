@@ -54,6 +54,7 @@ void ButtonManager::Periodic()
 	}
 
 	if (InputManager::GetKeyDown(VK_Z)) {
+		OutputDebugString(L"inputz\n");
 		buttons[current]->Clicked();
 	}
 }

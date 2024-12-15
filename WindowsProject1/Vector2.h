@@ -18,6 +18,7 @@ public:
 	static Vector2* One();
 
 	Vector2* operator +(Vector2 lhs);
+	Vector2* operator-(Vector2 rhs);
 	bool operator ==(Vector2 rhs);
 };
 

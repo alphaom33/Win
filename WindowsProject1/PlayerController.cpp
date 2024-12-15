@@ -11,6 +11,7 @@
 PlayerController::PlayerController(HWND hwnd) : TimedCode(State::BULLET)
 {
 	heart = new Sprite(new Vector2(200, 200), new Vector2(50, 50), hwnd);
+	heart->Hide();
 	this->hwnd = hwnd;
 
 	items = { Item{L"health", 0}, Item{L"apple", 10}};

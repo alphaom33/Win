@@ -82,16 +82,12 @@ void Drawer::RegisterText(ITextable* text)
 
 HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* pDWriteFactory) {
 	ID2D1SolidColorBrush* brush;
-	HRESULT hr = pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1, 1, 1), &brush);
 
-	for (ITextable* t : toWrite) {
-		//OutputDebugString((t->GetText() + L", ").c_str());
-	}
-	//OutputDebugString(L"\n");
-
-	if (SUCCEEDED(hr)) {
-		for (ITextable* t : toWrite)
-		{
+	HRESULT hr = S_OK;
+	for (ITextable* t : toWrite)
+	{
+		HRESULT hr = pRenderTarget->CreateSolidColorBrush(t->GetColor(), &brush);
+		if (SUCCEEDED(hr)) {
 			//OutputDebugString(L"a");
 			IDWriteTextFormat* pTextFormat;
 			hr = pDWriteFactory->CreateTextFormat(
@@ -116,6 +112,5 @@ HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* 
 			}
 		}
 	}
-//	OutputDebugString(L"\n");
 	return hr;
 }

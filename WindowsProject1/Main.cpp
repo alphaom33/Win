@@ -1,4 +1,5 @@
 #include "Main.h"
+
 #include "Print.h"
 #include "PlayerController.h"
 #include "Box.h"
@@ -15,6 +16,8 @@
 #include "FleeChooser.h"
 #include "ItemChooser.h"
 #include "FightMenu.h"
+#include "ActMenu.h"
+#include "Enemy.h"
 
 int buttonHeight = 70;
 int buttonWidth = 150;
@@ -41,17 +44,16 @@ Button* MakeButton(const wchar_t* name, int num, Menu* menu) {
 Main::Main(HWND hwnd) : TimedCode(State::ALWAYS)
 {
 	PlayerController* playerController = new PlayerController(hwnd);
+	Enemy* enemy = new Enemy();
+	Box* box = new Box(hwnd, new Vector2(sideButton * 2, 175), new Vector2(945 - (4 * sideButton), 150), 10);
 
 	new ButtonManager({
-		MakeButton(L"fight", 0, new FightMenu()),
+		MakeButton(L"fight", 0, new FightMenu(box->GetPos(), box->GetScale())),
 		MakeButton(L"item", 1, new ItemChooser(playerController)),
-		MakeButton(L"act", 2, new Menu(new Vector2(100, 150), new Vector2(400, 400), L"c", 20)),
+		MakeButton(L"act", 2, new ActMenu()),
 		MakeButton(L"flee", 3, new FleeChooser()) },
 		true,
 		State::BUTTON);
-
-	new Box(hwnd, Vector2(sideButton, 125), new Vector2(945 - (2 * sideButton), 200), 10);
-	//new AnimatedSprite(new Vector2(0, 0), new Vector2(100, 100), { L"C:\\Users\\mBorchert\\Desktop\\nothing.bmp", L"C:\\Users\\mBorchert\\Desktop\\dsfmask.bmp" }, 4);
 }
 
 void Main::Enter()

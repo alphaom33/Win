@@ -6,5 +6,6 @@ enum State
 	BUTTON,
 	MENU,
 	FLEE,
+	ENEMY,
 	NEVER
 };

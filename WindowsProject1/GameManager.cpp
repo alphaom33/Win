@@ -2,11 +2,17 @@
 #include "list"
 #include "Print.h"
 
+#include <thread>
+
 State GameManager::state;
 int GameManager::count;
 
 std::vector<ITimedCode*> GameManager::timedList;
 std::queue<ITimedCode*> GameManager::toFree;
+
+void GameManager::RunTurn(Turn* turn) {
+	std::thread(turn->turn).detach();
+}
 
 int GameManager::RegisterTimedCode(ITimedCode* timedCode) {
 	timedList.push_back(timedCode);
@@ -27,12 +33,10 @@ void GameManager::QueueUnRegisterTimedCode(ITimedCode* timedCode)
 }
 
 
-int thing;
 void GameManager::SetState(State newState)
 {
 	Exits();
 	state = newState;
-	if (state == State::BULLET) thing = 0;
 	Entries();
 }
 
@@ -53,16 +57,6 @@ void GameManager::Periodics()
 		UnRegisterTimedCode(toFree.front());
 		delete toFree.front();
 		toFree.pop();
-	}
-
-	if (thing < 300) 
-	{
-		thing++;
-	}
-	else if (thing == 300) 
-	{
-		thing++;
-		SetState(State::BUTTON);
 	}
 }
 

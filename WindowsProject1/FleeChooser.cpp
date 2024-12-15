@@ -10,16 +10,16 @@ struct fleeState {
 	MenuManager* menuManager;
 };
 
-FleeChooser::FleeChooser() : Menu(new Vector2(100, 150), new Vector2(400, 400), L"", 20)
+FleeChooser::FleeChooser() : Menu(L"")
 {
 	MenuManager* menuManager = new MenuManager(State::FLEE);
 	buttons = new ButtonManager({
-		new LambdaButton(new Vector2(100, 150), L"Flee", new fleeState{menuManager}, [](void* state) {
+		new LambdaButton(GetPos(), L"Flee", new fleeState{menuManager}, [](void* state) {
 			fleeState* ack = (fleeState*)state;
 			ack->menuManager->SetMenu(new FleeMenu());
 			GameManager::SetState(State::FLEE);
 			}),
-		new LambdaButton(new Vector2(100, 200), L"Spare", NULL, [](void*) {})
+		new LambdaButton(*GetPos() + Vector2(0, 50), L"Spare", NULL, [](void*) {})
 		},
 		false,
 		State::NEVER);

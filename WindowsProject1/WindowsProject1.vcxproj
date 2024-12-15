@@ -133,9 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Action.h" />
     <ClInclude Include="ActMenu.h" />
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="Battle.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonManager.h" />
@@ -147,6 +147,7 @@
     <ClInclude Include="FleeChooser.h" />
     <ClInclude Include="FleeMenu.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="IBullet.h" />
     <ClInclude Include="IButton.h" />
     <ClInclude Include="ICollider.h" />
@@ -182,9 +183,9 @@
     <ClInclude Include="WindowsProject1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActMenu.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonManager.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="FleeChooser.cpp" />
     <ClCompile Include="FleeMenu.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="ItemChooser.cpp" />
     <ClCompile Include="LambdaButton.cpp" />

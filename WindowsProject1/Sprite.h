@@ -6,6 +6,7 @@ class Sprite : IDrawable
 {
 public:
 	Sprite(Vector2* pos, Vector2* scale, HWND hwnd);
+	~Sprite();
 
 	std::wstring GetBitmap();
 	Vector2* GetPosition();

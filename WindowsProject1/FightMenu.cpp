@@ -1,6 +1,7 @@
 #include "FightMenu.h"
 #include "GameManager.h"
 #include "InputManager.h"
+#include "Battle.h"
 
 FightMenu::FightMenu(Vector2* pos, Vector2* scale) : Menu(L"")
 {
@@ -31,7 +32,7 @@ void FightMenu::Periodic()
 		float halfRange = (825 - GetPos()->x) / 2;
 		float dst = halfRange + GetPos()->x - pointer->GetPosition()->x;
 		float damage = 1 - (abs(dst) / halfRange);
-		OutputDebugString(std::to_wstring(damage).c_str());
+		Battle::GetEnemy()->Damage(damage);
 		GameManager::SetState(State::ENEMY);
 	}
 }

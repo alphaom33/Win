@@ -7,6 +7,8 @@ public:
 	virtual void Periodic() = 0;
 	virtual void Exit() = 0;
 
+	virtual void OnUnregister() = 0;
+
 	virtual State GetState() = 0;
 	virtual int GetID() = 0;
 };

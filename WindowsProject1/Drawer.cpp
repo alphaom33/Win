@@ -2,6 +2,7 @@
 #include "Images.h"
 #include "string"
 #include "Print.h"
+#include "MoreWM.h"
 
 std::vector<IDrawable*> Drawer::toDraws;
 std::map<std::wstring, ID2D1Bitmap*> Drawer::bitmaps;

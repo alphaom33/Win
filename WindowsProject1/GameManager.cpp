@@ -55,7 +55,7 @@ void GameManager::Periodics()
 
 	for (int i = 0; i < toFree.size(); i++) {
 		UnRegisterTimedCode(toFree.front());
-		delete toFree.front();
+		toFree.front()->OnUnregister();
 		toFree.pop();
 	}
 }
@@ -67,4 +67,9 @@ void GameManager::Exits()
 			t->Exit();
 		}
 	}
+}
+
+void GameManager::Reset()
+{
+	timedList = std::vector<ITimedCode*>();
 }

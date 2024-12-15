@@ -15,3 +15,5 @@ State TimedCode::GetState()
 int TimedCode::GetID() {
 	return id;
 }
+
+void TimedCode::OnUnregister() { }

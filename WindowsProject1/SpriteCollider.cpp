@@ -1,12 +1,23 @@
 #include "SpriteCollider.h"
 #include "Print.h"
+#include "GameManager.h"
+#include "ColliderController.h"
 
 SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
 	sprite = new Sprite(position, size, hwnd);
-	collider = new Collider(position, size, std::to_wstring(position->x));
+	collider = new Collider(position, size);
+}
+
+SpriteCollider::~SpriteCollider()
+{
+	sprite->Hide();
+	delete sprite;
+
+	ColliderController::UnRegisterCollider(collider);
+	delete collider;
 }
 
 Vector2* SpriteCollider::GetPosition()
@@ -23,14 +34,14 @@ void SpriteCollider::SetPosition(Vector2* newPos)
 {
 	this->position = newPos;
 	sprite->SetPosition(newPos);
-	collider->SetPosition(newPos);
+	collider->SetPos(newPos);
 }
 
 void SpriteCollider::SetScale(Vector2* newScale)
 {
 	this->scale = newScale;
 	sprite->SetScale(newScale);
-	collider->SetSize(newScale);
+	collider->SetScale(newScale);
 }
 
 void SpriteCollider::Enter()
@@ -44,4 +55,14 @@ void SpriteCollider::Periodic()
 
 void SpriteCollider::Exit()
 {
+}
+
+void SpriteCollider::Hide()
+{
+	sprite->Hide();
+}
+
+void SpriteCollider::Show()
+{
+	sprite->Show();
 }

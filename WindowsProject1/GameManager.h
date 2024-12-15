@@ -21,6 +21,8 @@ public:
 	static void Entries();
 	static void Periodics();
 	static void Exits();
+
+	static void Reset();
 private:
 	static std::vector<ITimedCode*> timedList;
 	static std::queue<ITimedCode*> toFree;

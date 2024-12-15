@@ -6,6 +6,7 @@ class SpriteCollider : TimedCode
 {
 public:
 	SpriteCollider(Vector2*, Vector2*, HWND);
+	~SpriteCollider();
 
 	Vector2* GetPosition();
 	Vector2* GetScale();
@@ -16,6 +17,9 @@ public:
 	void Enter() override;
 	void Periodic() override;
 	void Exit()  override;
+
+	void Hide();
+	void Show();
 
 private:
 	Collider* collider;

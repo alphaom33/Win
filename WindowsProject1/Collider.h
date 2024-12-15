@@ -3,26 +3,26 @@
 #include "ICollider.h"
 #include "string"
 #pragma once
-class Collider : ICollider
+class Collider : public ICollider
 {
 public:
 	Collider(Vector2* position, Vector2* size);
-	Collider(Vector2* position, Vector2* size, std::wstring name);
 
-	Vector2* GetSize();
-	Vector2* GetPosition();
+	void SetCollided(bool collided);
 	bool GetCollided();
-	std::wstring GetName();
 
-	void SetSize(Vector2* newSize);
-	void SetPosition(Vector2* newPosition);
-	void SetCollided(bool newCollided);
-
-	bool collided;
+	void SetPos(Vector2* pos);
+	void SetScale(Vector2* scale);
 
 private:
 	Vector2* position;
 	Vector2* size;
-	std::wstring name;
+
+	bool collided;
+
+	// Inherited via ICollider
+	void OnCollision(ICollider* other) override;
+	Vector2* GetSize() override;
+	Vector2* GetPosition() override;
 };
 

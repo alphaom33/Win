@@ -18,6 +18,8 @@
 #include "FightMenu.h"
 #include "ActMenu.h"
 #include "Enemy.h"
+#include "HealthBar.h"
+#include "Battle.h"
 
 int buttonHeight = 70;
 int buttonWidth = 150;
@@ -43,8 +45,13 @@ Button* MakeButton(const wchar_t* name, int num, Menu* menu) {
 
 Main::Main(HWND hwnd) : TimedCode(State::ALWAYS)
 {
-	PlayerController* playerController = new PlayerController(hwnd);
-	Enemy* enemy = new Enemy();
+	HealthBar* healthBar = new HealthBar(new Vector2(), new Vector2(80, 30));
+	PlayerController* playerController = new PlayerController(healthBar, hwnd);
+	Battle::SetPlayer(playerController);
+
+	Enemy* enemy = new Enemy(hwnd);
+	Battle::SetEnemy(enemy);
+
 	Box* box = new Box(hwnd, new Vector2(sideButton * 2, 175), new Vector2(945 - (4 * sideButton), 150), 10);
 
 	new ButtonManager({

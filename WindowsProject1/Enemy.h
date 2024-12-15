@@ -1,8 +1,9 @@
-#include "Action.h"
 #include "Sprite.h"
 #include "TimedCode.h"
 #include "ITextable.h"
 #include "Turn.h"
+#include "HealthBar.h"
+#include "IEnemy.h"
 
 #include <functional>
 #include <vector>
@@ -11,14 +12,18 @@
 class Enemy : public IEnemy, TimedCode, ITextable
 {
 public:
-	Enemy();
+	Enemy(HWND hwnd);
 
-	static std::vector<Action> GetActions();
 	Turn* GetTurn();
+
+	void Damage(double damage);
 private:
-	static std::vector<Action> actions;
+	std::vector<IEnemy::Action> actions;
 	Sprite* sprite;
 	Sprite* textBox;
+
+	double health;
+	HealthBar* healthBar;
 
 	Vector2* pos;
 	Vector2* scale;
@@ -27,6 +32,8 @@ private:
 	int currentText;
 
 	std::vector<Turn*> turns;
+
+	HWND hwnd;
 
 	// Inherited via TimedCode
 	void Enter() override;
@@ -38,5 +45,8 @@ private:
 	Vector2* GetPos() override;
 	float GetSize() override;
 	D2D1::ColorF GetColor() override;
+
+	// Inherited via IEnemy
+	std::vector<IEnemy::Action> GetActions() override;
 };
 

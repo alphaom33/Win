@@ -10,6 +10,11 @@ Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd)
 	Drawer::RegisterDraw(this, { L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp" });
 }
 
+Sprite::~Sprite()
+{
+	Drawer::UnRegisterDraw(this);
+}
+
 Vector2* Sprite::GetPosition() {
 	return position;
 }

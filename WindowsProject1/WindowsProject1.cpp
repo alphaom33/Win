@@ -162,10 +162,24 @@ void MainWindow::Resize() {
 }
 
 std::thread thread;
+MainWindow win;
+
+void StartGame() {
+	thread = std::thread([] {
+		GameManager::state = State::BUTTON;
+		GameManager::RegisterTimedCode(new Main(win.Window()));
+		while (win.Window() != NULL) {
+			Time::calcTimes();
+			GameManager::Periodics();
+			InputManager::ResetKeys();
+			ColliderController::CheckCollisions();
+			SendMessage(win.Window(), WM_PAINT, NULL, NULL);
+		}
+		});
+	thread.detach();
+}
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int nCmdShow) {
-
-	MainWindow win;
 
 	if (!win.Create(L"Circle", WS_OVERLAPPEDWINDOW)) {
 		return 0;
@@ -175,23 +189,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	Print::hy(win.Window());
 
 	MSG msg = { };
-	MainWindow* a = &win;
-	std::wstring print = L"";
-	thread = std::thread([a, &print] {
-		GameManager::state = State::BUTTON;
-		GameManager::RegisterTimedCode(new Main(a->Window()));
-		while (a->Window() != NULL) {
-			Time::calcTimes();
-			GameManager::Periodics();
-			InputManager::ResetKeys();
-			ColliderController::CheckCollisions();
-			SendMessage(a->Window(), WM_PAINT, NULL, NULL);
-		}
-		});
-	thread.detach();
+
+	StartGame();
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
-		OutputDebugString(print.c_str());
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
@@ -240,6 +241,10 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_PRINTTHREAD:
 		Print::Printy();
 		break;
+
+	case WM_RESET:
+		delete &thread;
+		StartGame();
 	}
 
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);

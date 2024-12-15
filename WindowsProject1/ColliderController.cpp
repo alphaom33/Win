@@ -10,7 +10,10 @@ void ColliderController::RegisterCollider(ICollider* toRegister)
 
 void ColliderController::UnRegisterCollider(ICollider* toUnRegister)
 {
-	throw std::exception();
+	auto index = std::find(colliders.begin(), colliders.end(), toUnRegister);
+	if (index != colliders.end()) {
+		colliders.erase(index);
+	}
 }
 
 bool ColliderController::GetCollideds(Vector2* aPos, Vector2* aScale, Vector2* bPos, Vector2* bScale)
@@ -31,15 +34,13 @@ bool ColliderController::GetCollideds(ICollider* a, ICollider* b)
 
 void ColliderController::CheckCollisions()
 {
-	for (ICollider* a : colliders) {
-		a->SetCollided(false);
-	}
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		for (int j = i + 1; j < colliders.size(); j++) {
 
 			if (GetCollideds(colliders[i], colliders[j])) {
-				colliders[i]->SetCollided(true);
+				colliders[i]->OnCollision(colliders[j]);
+				colliders[j]->OnCollision(colliders[i]);
 			}
 		}
 	}

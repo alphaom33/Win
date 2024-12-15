@@ -9,10 +9,10 @@
 #include <vector>
 
 #pragma once
-class Enemy : public IEnemy, TimedCode, ITextable
+class Froggit : public IEnemy, TimedCode, ITextable
 {
 public:
-	Enemy(HWND hwnd);
+	Froggit(HWND hwnd);
 
 	Turn* GetTurn();
 

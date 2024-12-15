@@ -142,7 +142,8 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderController.h" />
     <ClInclude Include="Drawer.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Fly.h" />
+    <ClInclude Include="Froggit.h" />
     <ClInclude Include="FightMenu.h" />
     <ClInclude Include="FleeChooser.h" />
     <ClInclude Include="FleeMenu.h" />
@@ -192,7 +193,8 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderController.cpp" />
     <ClCompile Include="Drawer.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Fly.cpp" />
+    <ClCompile Include="Froggit.cpp" />
     <ClCompile Include="FightMenu.cpp" />
     <ClCompile Include="FleeChooser.cpp" />
     <ClCompile Include="FleeMenu.cpp" />

@@ -15,6 +15,7 @@ public:
 	static Vector2* GetScale();
 
 	static void SpawnBullet(IBullet* bullet);
+	static void EdgeBullet(IBullet* bullet);
 
 private:
 	SpriteCollider* left;

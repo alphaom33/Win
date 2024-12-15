@@ -43,7 +43,18 @@ Vector2* Box::GetScale()
 
 void Box::SpawnBullet(IBullet* bullet)
 {
-	bullet->SetPos(new Vector2(
-		rand() / (RAND_MAX / (size->x - pos->x)),
-		rand() / (RAND_MAX / (size->y - pos->y))));
+	bullet->SetPos(*new Vector2(
+			rand() / (RAND_MAX / (size->x - pos->x)),
+			rand() / (RAND_MAX / (size->y - pos->y))) +
+		*pos);
+}
+
+void Box::EdgeBullet(IBullet* bullet)
+{
+	Vector2* signs = new Vector2(
+		rand() / (RAND_MAX / 2) == 0 ? -1 : 1, 
+		rand() / (RAND_MAX / 2) == 0 ? -1 : 1);
+
+	bullet->SetPos(*(*signs * *size) + *pos);
+
 }

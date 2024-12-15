@@ -1,10 +1,10 @@
 #include "TimedCode.h"
-#include "Sprite.h"
+#include "SpriteCollider.h"
 #include "Item.h"
 #include "HealthBar.h"
 
 #pragma once
-class PlayerController : TimedCode
+class PlayerController : TimedCode, ICollider
 {
 public:
 	PlayerController(HealthBar* healthBar, HWND hwnd);
@@ -32,5 +32,11 @@ private:
 	std::vector<Item> items;
 
 	HWND hwnd;
+
+	// Inherited via ICollider
+	Vector2* GetSize() override;
+	Vector2* GetPosition() override;
+	void OnCollision(ICollider* other) override;
+	std::wstring GetName() override;
 };
 

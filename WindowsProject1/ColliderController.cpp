@@ -46,11 +46,11 @@ void ColliderController::CheckCollisions()
 	}
 }
 
-bool ColliderController::CheckBox(Vector2* pos, Vector2* scale) {
+bool ColliderController::CheckBox(Vector2* pos, Vector2* scale, std::wstring filter) {
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
-		if (GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale)) {
+		if (colliders[i]->GetName() != filter && GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale)) {
 			return true;
 		}
 	}

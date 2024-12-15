@@ -1,11 +1,15 @@
 #include "Collider.h"
 #include "ColliderController.h"
 
-Collider::Collider(Vector2* position, Vector2* size)
+Collider::Collider(Vector2* position, Vector2* size) : Collider(position, size, L"") {}
+
+Collider::Collider(Vector2* position, Vector2* size, std::wstring name)
 {
 	this->size = size;
 	this->position = position;
+	this->name = name;
 	this->collided = false;
+
 	ColliderController::RegisterCollider(this);
 }
 
@@ -37,6 +41,11 @@ Vector2* Collider::GetSize()
 Vector2* Collider::GetPosition()
 {
 	return position;
+}
+
+std::wstring Collider::GetName()
+{
+	return name;
 }
 
 void Collider::OnCollision(ICollider* other)

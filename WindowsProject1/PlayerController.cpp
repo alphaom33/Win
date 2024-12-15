@@ -5,6 +5,8 @@
 #include "Collider.h"
 #include "ColliderController.h"
 #include "algorithm"
+#include "IBullet.h"
+#include "Fly.h"
 
 #define SPEED 10
 
@@ -22,6 +24,8 @@ PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(
 
 	maxIFrames = 100;
 	iFrames = 0;
+
+	ColliderController::RegisterCollider(this);
 }
 
 void PlayerController::Enter()
@@ -41,7 +45,8 @@ void PlayerController::Periodic()
 	} else if (InputManager::GetKey(VK_LEFT)) {
 		newPos->x = -SPEED;
 	}
-	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale())) {
+
+	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale(), L"Bullet")) {
 		heart->SetPosition(*heart->GetPosition() + *newPos);
 	}
 
@@ -53,7 +58,7 @@ void PlayerController::Periodic()
 		newPos->y = SPEED;
 	}
 
-	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale())) {
+	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale(), L"Bullet")) {
 		heart->SetPosition(*heart->GetPosition() + *newPos);
 	}
 }
@@ -92,4 +97,26 @@ void PlayerController::Damage(double damage)
 	if (health <= 0) {
 		SendMessage(hwnd, WM_RESET, NULL, NULL);
 	}
+}
+
+Vector2* PlayerController::GetSize()
+{
+	return heart->GetScale();
+}
+
+Vector2* PlayerController::GetPosition()
+{
+	return heart->GetPosition();
+}
+
+void PlayerController::OnCollision(ICollider* other)
+{
+	if (other->GetName() == L"Bullet") {
+		Damage(dynamic_cast<IBullet*>(other)->GetDamage());
+	}
+}
+
+std::wstring PlayerController::GetName()
+{
+	return L"Player";
 }

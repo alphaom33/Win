@@ -11,7 +11,7 @@ public:
 	static void UnRegisterCollider(ICollider* toUnRegister);
 
 	static void CheckCollisions();
-	static bool CheckBox(Vector2* pos, Vector2* scale);
+	static bool CheckBox(Vector2* pos, Vector2* scale, std::wstring filter);
 private:
 	static bool CheckIntersect(double aPos, double aScale, double bPos, double bScale);
 

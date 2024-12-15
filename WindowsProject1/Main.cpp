@@ -17,7 +17,7 @@
 #include "ItemChooser.h"
 #include "FightMenu.h"
 #include "ActMenu.h"
-#include "Enemy.h"
+#include "Froggit.h"
 #include "HealthBar.h"
 #include "Battle.h"
 
@@ -49,7 +49,7 @@ Main::Main(HWND hwnd) : TimedCode(State::ALWAYS)
 	PlayerController* playerController = new PlayerController(healthBar, hwnd);
 	Battle::SetPlayer(playerController);
 
-	Enemy* enemy = new Enemy(hwnd);
+	Froggit* enemy = new Froggit(hwnd);
 	Battle::SetEnemy(enemy);
 
 	Box* box = new Box(hwnd, new Vector2(sideButton * 2, 175), new Vector2(945 - (4 * sideButton), 150), 10);

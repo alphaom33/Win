@@ -1,6 +1,7 @@
-#pragma once
 #include "math.h"
+#include <string>
 
+#pragma once
 class Vector2
 {
 public:
@@ -13,12 +14,15 @@ public:
 	Vector2* Normalized();
 
 	float Length();
+	std::wstring ToString();
 
 	static Vector2* Zero();
 	static Vector2* One();
 
-	Vector2* operator +(Vector2 lhs);
+	Vector2* operator+(Vector2 rhs);
+	Vector2* operator+=(Vector2 rhs);
 	Vector2* operator-(Vector2 rhs);
-	bool operator ==(Vector2 rhs);
+	Vector2* operator*(Vector2 rhs);
+	bool operator==(Vector2 rhs);
 };
 

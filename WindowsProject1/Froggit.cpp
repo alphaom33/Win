@@ -1,14 +1,14 @@
-#include "Enemy.h"
+#include "Froggit.h"
 #include "Windows.h"
 #include "Drawer.h"
 #include "GameManager.h"
 #include "Box.h"
-#include "PointerBullet.h"
+#include "Fly.h"
 #include "PlayerController.h"
 #include "Battle.h"
 #include "MoreWM.h"
 
-Enemy::Enemy(HWND hwnd) : TimedCode(State::ENEMY)
+Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 {
 	this->pos = new Vector2(350, 0);
 	this->scale = new Vector2(200, 175);
@@ -23,7 +23,7 @@ Enemy::Enemy(HWND hwnd) : TimedCode(State::ENEMY)
 	textBox->Hide();
 	actions = {
 		IEnemy::Action(this, L"name", [](IEnemy* me) {
-
+			
 		})
 	};
 
@@ -32,7 +32,7 @@ Enemy::Enemy(HWND hwnd) : TimedCode(State::ENEMY)
 
 	turns = {
 		new Turn{[](){
-			Box::SpawnBullet(new PointerBullet(Battle::GetPlayer()));
+			Box::SpawnBullet(new Fly());
 			Sleep(3000);
 			GameManager::SetState(State::BUTTON);
 		}}
@@ -41,17 +41,17 @@ Enemy::Enemy(HWND hwnd) : TimedCode(State::ENEMY)
 	this->hwnd = hwnd;
 }
 
-std::vector<IEnemy::Action> Enemy::GetActions()
+std::vector<IEnemy::Action> Froggit::GetActions()
 {
 	return actions;
 }
 
-Turn* Enemy::GetTurn()
+Turn* Froggit::GetTurn()
 {
 	return turns[rand() / (RAND_MAX / turns.size())];
 }
 
-void Enemy::Damage(double damage)
+void Froggit::Damage(double damage)
 {
 	healthBar->Show();
 	health -= damage;
@@ -69,7 +69,7 @@ void Enemy::Damage(double damage)
 }
 
 int i = 0;
-void Enemy::Enter()
+void Froggit::Enter()
 {
 	currentText = rand() / (RAND_MAX / texts.size());
 	textBox->Show();
@@ -77,7 +77,7 @@ void Enemy::Enter()
 	i = 0;
 }
 
-void Enemy::Periodic()
+void Froggit::Periodic()
 {
 	i++;
 	if (i > 100) {
@@ -85,29 +85,29 @@ void Enemy::Periodic()
 	}
 }
 
-void Enemy::Exit()
+void Froggit::Exit()
 {
 	textBox->Hide();
 	Drawer::UnRegisterText(this);
 	GameManager::RunTurn(GetTurn());
 }
 
-std::wstring Enemy::GetText()
+std::wstring Froggit::GetText()
 {
 	return texts[currentText];
 }
 
-Vector2* Enemy::GetPos()
+Vector2* Froggit::GetPos()
 {
 	return textBox->GetPosition();
 }
 
-float Enemy::GetSize()
+float Froggit::GetSize()
 {
 	return 20;
 }
 
-D2D1::ColorF Enemy::GetColor()
+D2D1::ColorF Froggit::GetColor()
 {
 	return D2D1::ColorF(0, 0, 0);
 }

@@ -4,4 +4,5 @@
 class IBullet {
 public:
 	virtual void SetPos(Vector2* pos) = 0;
+	virtual double GetDamage() = 0;
 };

@@ -56,10 +56,15 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 			pos->x + scale->x,
 			pos->y + scale->y
 			);
+
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(s->GetRotation(), D2D1::Point2F(pos->x + scale->x / 2, pos->y + scale->y / 2)));
 		pRenderTarget->DrawBitmap(
 			bitmaps[s->GetBitmap()],
-			rcBrushRect
+			rcBrushRect,
+			1.f,
+			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR
 		);
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
 }
 

@@ -10,7 +10,7 @@ Fly::Fly(Vector2* pos, Vector2* scale) : TimedCode(State::BULLET)
 	this->pos = pos;
 	this->scale = scale;
 
-	sprite = new Sprite(pos, scale, NULL);
+	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1);
 
 	ColliderController::RegisterCollider(this);
 }
@@ -64,6 +64,6 @@ void Fly::Exit()
 
 void Fly::OnUnregister()
 {
-	delete sprite;
+	GameManager::QueueUnRegisterTimedCode(sprite);
 	delete this;
 }

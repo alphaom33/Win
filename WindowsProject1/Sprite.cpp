@@ -1,13 +1,16 @@
 #include "Sprite.h"
 
-Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd)
+Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd, std::wstring sprite) : Sprite(position, scale, hwnd, sprite, 0) {}
+
+Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd, std::wstring sprite, double rotation)
 {
 	this->position = position;
 	this->scale = scale;
-	this->rotation = 0;
+	this->rotation = rotation;
 	this->hwnd = hwnd;
+	this->sprite = sprite;
 
-	Drawer::RegisterDraw(this, { L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp" });
+	Drawer::RegisterDraw(this, { sprite });
 }
 
 Sprite::~Sprite()
@@ -44,6 +47,11 @@ void Sprite::Show()
 	Drawer::RegisterDraw(this, {});
 }
 
+double Sprite::GetRotation()
+{
+	return rotation;
+}
+
 std::wstring Sprite::GetBitmap() {
-	return L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp";
+	return sprite;
 }

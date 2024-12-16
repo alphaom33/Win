@@ -5,7 +5,8 @@
 class Sprite : IDrawable
 {
 public:
-	Sprite(Vector2* pos, Vector2* scale, HWND hwnd);
+	Sprite(Vector2* pos, Vector2* scale, HWND hwnd, std::wstring sprite);
+	Sprite(Vector2* pos, Vector2* scale, HWND hwnd, std::wstring sprite, double rotation);
 	~Sprite();
 
 	std::wstring GetBitmap();
@@ -19,11 +20,14 @@ public:
 	void Show();
 private:
 	Vector2* position;
-	int rotation;
+	double rotation;
 	Vector2* scale;
 
-	std::wstring bitmap;
+	std::wstring sprite;
 
 	HWND hwnd;
+
+	// Inherited via IDrawable
+	double GetRotation() override;
 };
 

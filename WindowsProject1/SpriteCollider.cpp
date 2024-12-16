@@ -3,11 +3,13 @@
 #include "GameManager.h"
 #include "ColliderController.h"
 
-SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd) : TimedCode(State::BULLET)
+SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd, std::wstring bitmap) : SpriteCollider(position, size, hwnd, bitmap, 0) {}
+
+SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd, std::wstring bitmap, double rotation) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
-	sprite = new Sprite(position, size, hwnd);
+	sprite = new Sprite(position, size, hwnd, bitmap, rotation);
 	collider = new Collider(position, size);
 }
 

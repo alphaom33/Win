@@ -13,8 +13,8 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 	this->pos = new Vector2(350, 0);
 	this->scale = new Vector2(200, 175);
 
-	this->sprite = new Sprite(pos, scale, NULL);
-	this->textBox = new Sprite(*pos + Vector2(200, 0), new Vector2(100, 75), NULL);
+	this->sprite = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\frog.bmp");
+	this->textBox = new Sprite(*pos + Vector2(200, 0), new Vector2(100, 75), NULL, L"C:\\Users\\mBorchert\\Desktop\\textbox.bmp");
 
 	health = 1;
 	healthBar = new HealthBar(*pos + Vector2(scale->x / 2 - 50, 10), new Vector2(100, 30));
@@ -27,7 +27,7 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 		})
 	};
 
-	texts = { L"adsf", L"csdf", L"zsdf" };
+	texts = { L"Ribbit" };
 	currentText = 0;
 
 	turns = {

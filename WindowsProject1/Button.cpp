@@ -73,3 +73,8 @@ float Button::GetSize()
 {
 	return 30.0f;
 }
+
+double Button::GetRotation()
+{
+	return 0.0;
+}

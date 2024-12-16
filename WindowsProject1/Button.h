@@ -40,5 +40,8 @@ private:
 	std::wstring GetText() override;
 	Vector2* GetPos() override;
 	float GetSize() override;
+
+	// Inherited via IDrawable
+	double GetRotation() override;
 };
 

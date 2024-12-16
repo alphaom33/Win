@@ -169,7 +169,6 @@
     <ClInclude Include="MoreVK.h" />
     <ClInclude Include="MoreWM.h" />
     <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="PointerBullet.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sprite.h" />
@@ -207,7 +206,6 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="PointerBullet.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteCollider.cpp" />

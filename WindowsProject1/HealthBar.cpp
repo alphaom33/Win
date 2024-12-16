@@ -2,8 +2,8 @@
 
 HealthBar::HealthBar(Vector2* pos, Vector2* scale)
 {
-	back = new Sprite(pos, scale, NULL);
-	front = new Sprite(pos, scale, NULL);
+	back = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\dsfMask.bmp");
+	front = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp");
 
 	initialScale = scale->x;
 }

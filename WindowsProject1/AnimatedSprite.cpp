@@ -3,8 +3,9 @@
 #include "Drawer.h"
 #include "thread"
 #include "Time.h"
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : AnimatedSprite(position, scale, frames, speed, 0) {}
 
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : TimedCode(State::BULLET)
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
@@ -12,6 +13,8 @@ AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<st
 	this->frames = frames;
 	this->current = frames[0];
 	this->speed = speed;
+
+	this->rotation = rotation;
 
 	startTime = 0;
 
@@ -48,4 +51,24 @@ void AnimatedSprite::Periodic()
 
 void AnimatedSprite::Exit()
 {
+}
+
+void AnimatedSprite::SetPosition(Vector2* pos)
+{
+	position = pos;
+}
+
+void AnimatedSprite::Show()
+{
+	Drawer::RegisterDraw(this, {});
+}
+
+void AnimatedSprite::Hide()
+{
+	Drawer::UnRegisterDraw(this);
+}
+
+double AnimatedSprite::GetRotation()
+{
+	return rotation;
 }

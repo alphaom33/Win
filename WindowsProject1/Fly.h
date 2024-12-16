@@ -1,5 +1,5 @@
 #include "IBullet.h"
-#include "Sprite.h"
+#include "AnimatedSprite.h"
 #include "ICollider.h"
 #include "TimedCode.h"
 
@@ -15,7 +15,7 @@ public:
 	double GetDamage() override;
 
 private:
-	Sprite* sprite;
+	AnimatedSprite* sprite;
 
 	Vector2* pos;
 	Vector2* scale;

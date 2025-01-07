@@ -162,6 +162,12 @@
     <ClInclude Include="Fly.h">
       <Filter>Froggit</Filter>
     </ClInclude>
+    <ClInclude Include="CheckMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Death.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsProject1.cpp">
@@ -253,6 +259,12 @@
     </ClCompile>
     <ClCompile Include="Fly.cpp">
       <Filter>Froggit</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Death.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

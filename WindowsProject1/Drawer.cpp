@@ -57,7 +57,8 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 			pos->y + scale->y
 			);
 
-		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(s->GetRotation(), D2D1::Point2F(pos->x + scale->x / 2, pos->y + scale->y / 2)));
+		D2D1_POINT_2F point = s->FromCorner() ?  D2D1::Point2F(pos->x, pos->y) : D2D1::Point2F(pos->x + scale->x / 2, pos->y + scale->y / 2);
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(s->GetRotation(), point));
 		pRenderTarget->DrawBitmap(
 			bitmaps[s->GetBitmap()],
 			rcBrushRect,
@@ -119,4 +120,11 @@ HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* 
 		}
 	}
 	return hr;
+}
+
+void Drawer::Reset()
+{
+	toDraws.clear();
+	bitmaps.clear();
+	toWrite.clear();
 }

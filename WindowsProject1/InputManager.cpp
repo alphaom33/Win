@@ -12,6 +12,11 @@ void InputManager::ResetKeys() {
 	}
 }
 
+void InputManager::UseInput(int key)
+{
+	keysDown[key] = false;
+}
+
 bool InputManager::GetKey(int key) {
 	return (1 << 15) & GetAsyncKeyState(key);
 }

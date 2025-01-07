@@ -8,7 +8,7 @@ class AnimatedSprite : IDrawable, public TimedCode
 {
 public:
 	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed);
-	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation);
+	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep);
 
 	Vector2* GetPosition();
 	Vector2* GetScale();

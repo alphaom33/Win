@@ -12,6 +12,8 @@ public:
 	static bool GetKey(int key);
 
 	static void ResetKeys();
+
+	static void UseInput(int key);
 private:
 	static bool keysDown[HIGH_KEY];
 	static bool keysUp[HIGH_KEY];

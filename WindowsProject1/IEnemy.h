@@ -19,4 +19,5 @@ public:
 	virtual std::vector<Action> GetActions() = 0;
 	virtual Turn* GetTurn() = 0;
 	virtual void Damage(double damage) = 0;
+	virtual double GetSpare() = 0;
 };

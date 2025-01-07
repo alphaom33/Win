@@ -7,5 +7,7 @@ enum State
 	MENU,
 	FLEE,
 	ENEMY,
+	CHECK,
+	DEATH,
 	NEVER
 };

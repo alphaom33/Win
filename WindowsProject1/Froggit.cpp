@@ -7,6 +7,8 @@
 #include "PlayerController.h"
 #include "Battle.h"
 #include "MoreWM.h"
+#include "InputManager.h"
+#include "CheckMenu.h"
 
 Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 {
@@ -22,8 +24,17 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 
 	textBox->Hide();
 	actions = {
-		IEnemy::Action(this, L"name", [](IEnemy* me) {
-			
+		IEnemy::Action(this, L"Check", [](IEnemy*) {
+			GameManager::SetState(State::CHECK);
+			(new CheckMenu(1, 1, L"Life VERY hard for this enemy"))->SetCurrent(true);
+		}),
+		IEnemy::Action(this, L"Scare", [](IEnemy* me) {
+			((Froggit*)me)->spared = true;
+			GameManager::SetState(State::ENEMY);
+		}),
+		IEnemy::Action(this, L"Compliment", [](IEnemy* me) {
+			((Froggit*)me)->spared = true;
+			GameManager::SetState(State::ENEMY);
 		})
 	};
 
@@ -32,18 +43,35 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 
 	turns = {
 		new Turn{[](){
-			Box::SpawnBullet(new Fly());
-			Sleep(3000);
+			for (int i = 0; i < 7; i++) {
+				auto fly = new Fly();
+				Box::EdgeBullet(fly);
+				Sleep(300);
+				fly->Hide(false);
+			}
+			Sleep(6000);
 			GameManager::SetState(State::BUTTON);
 		}}
 	};
 
 	this->hwnd = hwnd;
+	spared = false;
+}
+
+Froggit::~Froggit()
+{
+	Drawer::UnRegisterDraw(sprite);
+	Drawer::UnRegisterDraw(textBox);
 }
 
 std::vector<IEnemy::Action> Froggit::GetActions()
 {
 	return actions;
+}
+
+double Froggit::GetSpare()
+{
+	return spared;
 }
 
 Turn* Froggit::GetTurn()
@@ -58,7 +86,7 @@ void Froggit::Damage(double damage)
 	healthBar->SetHealth(health);
 	if (health <= 0) 
 	{
-		SendMessage(hwnd, WM_RESET, NULL, NULL);
+		GameManager::Reset();
 	}
 	else 
 	{
@@ -68,19 +96,24 @@ void Froggit::Damage(double damage)
 	}
 }
 
-int i = 0;
+LONGLONG getMillis() {
+	FILETIME t;
+	GetSystemTimeAsFileTime(&t);
+	return ((LONGLONG)t.dwLowDateTime + (((LONGLONG)t.dwHighDateTime) << 32LL)) / 10000LL;
+}
+
+LONGLONG i;
 void Froggit::Enter()
 {
 	currentText = rand() / (RAND_MAX / texts.size());
 	textBox->Show();
 	Drawer::RegisterText(this);
-	i = 0;
+	i = getMillis();
 }
 
 void Froggit::Periodic()
 {
-	i++;
-	if (i > 100) {
+	if (getMillis() > i + 1000 || InputManager::GetKey(VK_Z)) {
 		GameManager::SetState(State::BULLET);
 	}
 }

@@ -24,5 +24,8 @@ public:
 	Vector2* operator-(Vector2 rhs);
 	Vector2* operator*(Vector2 rhs);
 	bool operator==(Vector2 rhs);
+
+	Vector2* operator*(double rhs);
+	Vector2* operator/(double rhs);
 };
 

@@ -5,6 +5,7 @@
 #include "State.h"
 #include "FleeMenu.h"
 #include "LambdaButton.h"
+#include "Battle.h"
 
 struct fleeState {
 	MenuManager* menuManager;
@@ -19,7 +20,15 @@ FleeChooser::FleeChooser() : Menu(L"")
 			ack->menuManager->SetMenu(new FleeMenu());
 			GameManager::SetState(State::FLEE);
 			}),
-		new LambdaButton(*GetPos() + Vector2(0, 50), L"Spare", NULL, [](void*) {})
+		new LambdaButton(*GetPos() + Vector2(0, 50), L"Spare", NULL, [](void*) {
+			if (Battle::GetEnemy()->GetSpare() >= 1) {
+				GameManager::Reset();
+			}
+			else 
+			{
+				GameManager::SetState(State::ENEMY);
+			}
+			})
 		},
 		false,
 		State::NEVER);

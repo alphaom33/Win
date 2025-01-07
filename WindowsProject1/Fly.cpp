@@ -10,7 +10,7 @@ Fly::Fly(Vector2* pos, Vector2* scale) : TimedCode(State::BULLET)
 	this->pos = pos;
 	this->scale = scale;
 
-	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1);
+	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1, 0, false);
 
 	ColliderController::RegisterCollider(this);
 }
@@ -23,6 +23,18 @@ void Fly::SetPos(Vector2* pos)
 double Fly::GetDamage()
 {
 	return 0.3;
+}
+
+void Fly::Hide(bool hide)
+{
+	if (hide) 
+	{
+		sprite->Hide();
+	}
+	else 
+	{
+		sprite->Show();
+	}
 }
 
 Vector2* Fly::GetSize()
@@ -42,7 +54,6 @@ std::wstring Fly::GetName()
 
 void Fly::OnCollision(ICollider* other)
 {
-	OutputDebugString((L"yay I hit " + other->GetName()).c_str());
 }
 
 void Fly::Enter()
@@ -51,19 +62,18 @@ void Fly::Enter()
 
 void Fly::Periodic()
 {
-	pos = *pos + *(*Battle::GetPlayer()->GetPos() - *pos)->Normalized();
+	pos = *pos + *(*(*Battle::GetPlayer()->GetPos() - *pos)->Normalized() * speed);
 	sprite->SetPosition(pos);
 }
 
 void Fly::Exit()
 {
 	sprite->Hide();
-	ColliderController::UnRegisterCollider(this);
 	GameManager::QueueUnRegisterTimedCode(this);
 }
 
 void Fly::OnUnregister()
 {
-	GameManager::QueueUnRegisterTimedCode(sprite);
+	ColliderController::UnRegisterCollider(this);
 	delete this;
 }

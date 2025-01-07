@@ -10,6 +10,5 @@ public:
 	virtual void OnUnregister() = 0;
 
 	virtual State GetState() = 0;
-	virtual int GetID() = 0;
 };
 

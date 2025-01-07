@@ -25,7 +25,6 @@ void ActMenu::Enter()
 		{
 			buttons.push_back(new LambdaButton(*GetPos() + Vector2(i * 100, 0), actions[i].name, new data{actions[i]}, [](void* d) {
 				((data*)d)->action.lambda(Battle::GetEnemy());
-				GameManager::SetState(State::ENEMY);
 				}));
 		}
 	}

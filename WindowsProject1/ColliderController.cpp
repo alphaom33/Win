@@ -2,6 +2,7 @@
 #include "Print.h"
 
 std::vector<ICollider*> ColliderController::colliders;
+std::queue<ICollider*> ColliderController::toFree;
 
 void ColliderController::RegisterCollider(ICollider* toRegister)
 {
@@ -14,6 +15,11 @@ void ColliderController::UnRegisterCollider(ICollider* toUnRegister)
 	if (index != colliders.end()) {
 		colliders.erase(index);
 	}
+}
+
+void ColliderController::QueueUnRegisterCollider(ICollider* toUnRegister)
+{
+	toFree.push(toUnRegister);
 }
 
 bool ColliderController::GetCollideds(Vector2* aPos, Vector2* aScale, Vector2* bPos, Vector2* bScale)
@@ -44,17 +50,27 @@ void ColliderController::CheckCollisions()
 			}
 		}
 	}
+
+	while (toFree.size()) {
+		UnRegisterCollider(toFree.front());
+		toFree.pop();
+	}
 }
 
 bool ColliderController::CheckBox(Vector2* pos, Vector2* scale, std::wstring filter) {
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
-		if (colliders[i]->GetName() != filter && GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale)) {
+		if (GetCollideds(colliders[i]->GetPosition(), colliders[i]->GetSize(), pos, scale) && colliders[i]->GetName() != filter) {
 			return true;
 		}
 	}
 	return false;
+}
+
+void ColliderController::Reset()
+{
+	colliders.clear();
 }
 
 bool ColliderController::CheckIntersect(double aPos, double aScale, double bPos, double bScale)

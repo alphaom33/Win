@@ -8,10 +8,13 @@ class ColliderController
 {
 public:
 	static void RegisterCollider(ICollider* toRegister);
+	static void QueueUnRegisterCollider(ICollider* toUnRegister);
 	static void UnRegisterCollider(ICollider* toUnRegister);
 
 	static void CheckCollisions();
 	static bool CheckBox(Vector2* pos, Vector2* scale, std::wstring filter);
+
+	static void Reset();
 private:
 	static bool CheckIntersect(double aPos, double aScale, double bPos, double bScale);
 
@@ -20,5 +23,6 @@ private:
 
 
 	static std::vector<ICollider*> colliders;
+	static std::queue<ICollider*> toFree;
 };
 

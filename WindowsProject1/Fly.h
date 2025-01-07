@@ -14,11 +14,15 @@ public:
 	void SetPos(Vector2* pos) override;
 	double GetDamage() override;
 
+	void Hide(bool hide);
+
 private:
 	AnimatedSprite* sprite;
 
 	Vector2* pos;
 	Vector2* scale;
+
+	const double speed = 1.5;
 
 	// Inherited via ICollider
 	Vector2* GetSize() override;

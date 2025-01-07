@@ -13,6 +13,7 @@ class Froggit : public IEnemy, TimedCode, ITextable
 {
 public:
 	Froggit(HWND hwnd);
+	~Froggit();
 
 	Turn* GetTurn();
 
@@ -35,6 +36,8 @@ private:
 
 	HWND hwnd;
 
+	bool spared;
+
 	// Inherited via TimedCode
 	void Enter() override;
 	void Periodic() override;
@@ -48,5 +51,6 @@ private:
 
 	// Inherited via IEnemy
 	std::vector<IEnemy::Action> GetActions() override;
+	double GetSpare() override;
 };
 

@@ -18,6 +18,8 @@ public:
 	static void RegisterText(ITextable* text);
 	static HRESULT DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* pDWriteFactory);
 
+	static void Reset();
+
 private:
 	static std::vector<IDrawable*> toDraws;
 	static std::vector<ITextable*> toWrite;

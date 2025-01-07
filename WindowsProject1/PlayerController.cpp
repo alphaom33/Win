@@ -8,11 +8,11 @@
 #include "IBullet.h"
 #include "Fly.h"
 
-#define SPEED 10
+#define SPEED 20
 
 PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(State::BULLET)
 {
-	heart = new Sprite(new Vector2(200, 200), new Vector2(50, 50), NULL, L"C:\\Users\\mBorchert\\Desktop\\dsf.bmp");
+	heart = new Sprite(new Vector2(200, 200), new Vector2(20, 20), NULL, L"C:\\Users\\mBorchert\\Desktop\\Heart.bmp");
 	heart->Hide();
 
 	items = { Item{L"health", 0}, Item{L"apple", 10}};
@@ -22,7 +22,7 @@ PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(
 	health = maxHealth;
 	this->hwnd = hwnd;
 
-	maxIFrames = 100;
+	maxIFrames = 30;
 	iFrames = 0;
 
 	ColliderController::RegisterCollider(this);
@@ -95,7 +95,7 @@ void PlayerController::Damage(double damage)
 	healthBar->SetHealth(health);
 	iFrames = maxIFrames;
 	if (health <= 0) {
-		SendMessage(hwnd, WM_RESET, NULL, NULL);
+		SendMessage(hwnd, WM_DIE, NULL, NULL);
 	}
 }
 

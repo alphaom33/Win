@@ -3,9 +3,9 @@
 #include "Drawer.h"
 #include "thread"
 #include "Time.h"
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : AnimatedSprite(position, scale, frames, speed, 0) {}
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : AnimatedSprite(position, scale, frames, speed, 0, false) {}
 
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation) : TimedCode(State::BULLET)
+AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
@@ -18,7 +18,10 @@ AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<st
 
 	startTime = 0;
 
-	Drawer::RegisterDraw(this, frames);
+	if (yep)
+	{
+		Drawer::RegisterDraw(this, frames);
+	}
 }
 
 Vector2* AnimatedSprite::GetPosition()

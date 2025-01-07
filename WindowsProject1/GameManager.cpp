@@ -5,18 +5,25 @@
 #include <thread>
 
 State GameManager::state;
-int GameManager::count;
 
 std::vector<ITimedCode*> GameManager::timedList;
 std::queue<ITimedCode*> GameManager::toFree;
+std::queue<ITimedCode*> GameManager::toAdd;
+
+HWND GameManager::hwnd;
+bool goAway = false;
 
 void GameManager::RunTurn(Turn* turn) {
 	std::thread(turn->turn).detach();
 }
 
-int GameManager::RegisterTimedCode(ITimedCode* timedCode) {
-	timedList.push_back(timedCode);
-	return count++;
+void GameManager::Setup(HWND p_hwnd)
+{
+	hwnd = p_hwnd;
+}
+
+void GameManager::RegisterTimedCode(ITimedCode* timedCode) {
+	toAdd.push(timedCode);
 }
 
 void GameManager::UnRegisterTimedCode(ITimedCode* timedCode)
@@ -50,13 +57,29 @@ void GameManager::Entries()
 void GameManager::Periodics()
 {
 	for (ITimedCode* t : timedList) {
-		if (t->GetState() == state || t->GetState() == State::ALWAYS) t->Periodic();
+		if (t->GetState() == state || t->GetState() == State::ALWAYS) {
+			t->Periodic();
+		}
 	}
 
-	for (int i = 0; i < toFree.size(); i++) {
+	while (toFree.size()) {
 		UnRegisterTimedCode(toFree.front());
 		toFree.front()->OnUnregister();
 		toFree.pop();
+	}
+
+	while (toAdd.size()) {
+		timedList.push_back(toAdd.front());
+		toAdd.pop();
+	}
+
+	if (goAway) {
+		for (ITimedCode* t : timedList) {
+			UnRegisterTimedCode(t);
+		}
+		goAway = false;
+		timedList.clear();
+		SendMessage(hwnd, WM_RESET, NULL, NULL);
 	}
 }
 
@@ -71,5 +94,5 @@ void GameManager::Exits()
 
 void GameManager::Reset()
 {
-	timedList = std::vector<ITimedCode*>();
+	goAway = true;
 }

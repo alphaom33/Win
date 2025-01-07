@@ -9,13 +9,12 @@
 #include <wincodecsdk.h>
 #include <stdio.h>
 #include <string>
+#include <iostream>
 #include "dwrite.h"
 
 #include "basewin.h"
 #include "MoreVK.h"
-#include <iostream>
 #include "sstream"
-#include <string>
 #include "Utils.h"
 #include "InputManager.h"
 #include "Main.h"
@@ -26,6 +25,7 @@
 #include "Print.h"
 #include "GameManager.h"
 #include "MenuManager.h"
+#include "Death.h"
 
 using namespace utils;
 
@@ -49,7 +49,7 @@ public:
 	void OnPaint();
 	void Resize();
 
-
+	bool dead;
 
 	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), iwicFactory(NULL), pDWriteFactory(NULL), ellipse() {
 	}
@@ -164,16 +164,29 @@ void MainWindow::Resize() {
 std::thread thread;
 MainWindow win;
 
+static void ResetGame() {
+	Drawer::Reset();
+	ColliderController::Reset();
+	InputManager::ResetKeys();
+}
+
 void StartGame() {
+	GameManager::Setup(win.Window());
 	thread = std::thread([] {
-		GameManager::state = State::BUTTON;
-		GameManager::RegisterTimedCode(new Main(win.Window()));
-		while (win.Window() != NULL) {
-			Time::calcTimes();
-			GameManager::Periodics();
-			InputManager::ResetKeys();
-			ColliderController::CheckCollisions();
-			SendMessage(win.Window(), WM_PAINT, NULL, NULL);
+		while (true) {
+			GameManager::state = State::BUTTON;
+			Main* main = new Main(win.Window());
+			GameManager::RegisterTimedCode(main);
+			while (!win.dead) {
+				Time::calcTimes();
+				GameManager::Periodics();
+				InputManager::ResetKeys();
+				ColliderController::CheckCollisions();
+				SendMessage(win.Window(), WM_PAINT, NULL, NULL);
+			}
+			ResetGame();
+			delete main;
+			win.dead = false;
 		}
 		});
 	thread.detach();
@@ -243,8 +256,15 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case WM_RESET:
-		delete &thread;
-		StartGame();
+		dead = true;
+		break;
+
+	case WM_DIE:
+		GameManager::SetState(State::DEATH);
+		//Drawer::Reset();
+		ColliderController::Reset();
+		new Death();
+		break;
 	}
 
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);

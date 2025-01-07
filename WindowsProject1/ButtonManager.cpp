@@ -24,7 +24,6 @@ ButtonManager::~ButtonManager()
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		buttons[i]->UnRegister();
-		// delete buttons[i];
 	}
 	buttons.clear();
 	GameManager::UnRegisterTimedCode(this);
@@ -46,15 +45,17 @@ void ButtonManager::Periodic()
 {
 	if (InputManager::GetKeyDown(VK_RIGHT) || InputManager::GetKeyDown(VK_DOWN))
 	{
+		OutputDebugString(L"RIGHT\n");
 		ChangeButton(1);
 	}
 	else if (InputManager::GetKeyDown(VK_LEFT) || InputManager::GetKeyDown(VK_UP))
 	{
+		OutputDebugString(L"LEFTRIGHT\n");
 		ChangeButton(-1);
 	}
 
 	if (InputManager::GetKeyDown(VK_Z)) {
-		OutputDebugString(L"inputz\n");
+		InputManager::UseInput(VK_Z);
 		buttons[current]->Clicked();
 	}
 }

@@ -1,5 +1,6 @@
 #include "ITimedCode.h"
 #include "Turn.h"
+#include "Windows.h"
 
 #include <map>
 #include <vector>
@@ -10,8 +11,10 @@
 class GameManager
 {
 public:
+	static void Setup(HWND p_hwnd);
+
 	static State state;
-	static int RegisterTimedCode(ITimedCode* timedCode);
+	static void RegisterTimedCode(ITimedCode* timedCode);
 	static void UnRegisterTimedCode(ITimedCode* timedCode);
 	static void	QueueUnRegisterTimedCode(ITimedCode* timedCode);
 	static void SetState(State newState);
@@ -26,6 +29,8 @@ public:
 private:
 	static std::vector<ITimedCode*> timedList;
 	static std::queue<ITimedCode*> toFree;
+	static std::queue<ITimedCode*> toAdd;
 	static int count;
+	static HWND hwnd;
 };
 

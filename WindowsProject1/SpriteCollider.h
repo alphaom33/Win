@@ -5,7 +5,7 @@
 class SpriteCollider : TimedCode
 {
 public:
-	SpriteCollider(Vector2*, Vector2*, HWND, std::wstring bitmap, double rotation);
+	SpriteCollider(Vector2*, Vector2*, HWND, std::wstring bitmap, double rotation, bool fromCorner);
 	SpriteCollider(Vector2*, Vector2*, HWND, std::wstring bitmap);
 	~SpriteCollider();
 

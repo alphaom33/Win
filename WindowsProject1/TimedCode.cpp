@@ -4,7 +4,7 @@
 TimedCode::TimedCode(State state)
 {
 	this->state = state;
-	id = GameManager::RegisterTimedCode(this);
+	GameManager::RegisterTimedCode(this);
 }
 
 State TimedCode::GetState()
@@ -12,8 +12,5 @@ State TimedCode::GetState()
 	return state;
 }
 
-int TimedCode::GetID() {
-	return id;
+void TimedCode::OnUnregister() {
 }
-
-void TimedCode::OnUnregister() { }

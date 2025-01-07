@@ -7,8 +7,9 @@
 #include "algorithm"
 #include "IBullet.h"
 #include "Fly.h"
+#include "Time.h"
 
-#define SPEED 20
+#define SPEED 500
 
 PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(State::BULLET)
 {
@@ -47,7 +48,7 @@ void PlayerController::Periodic()
 	}
 
 	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(heart->GetPosition() + newPos);
+		heart->SetPosition(heart->GetPosition() + newPos * Time::deltaTime);
 	}
 
 	newPos = Vector2();
@@ -59,7 +60,7 @@ void PlayerController::Periodic()
 	}
 
 	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(heart->GetPosition() + newPos);
+		heart->SetPosition(heart->GetPosition() + newPos * Time::deltaTime);
 	}
 }
 

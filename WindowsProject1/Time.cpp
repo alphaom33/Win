@@ -2,8 +2,8 @@
 #include "Windows.h"
 #include "Print.h"
 
-double Time::currentTime;
-double Time::lastTime;
+LONGLONG Time::currentTime;
+LONGLONG Time::lastTime;
 double Time::deltaTime;
 
 void Time::calcTimes()
@@ -12,7 +12,7 @@ void Time::calcTimes()
 	GetSystemTimeAsFileTime(&rawTime);
 	unsigned long time1 = rawTime.dwHighDateTime & 0b00000000000000111111111111111111;
 	unsigned long time2 = rawTime.dwLowDateTime;
-	double adjustedTime = ((double)time1 * 1000) + ((double)time2 / 10000000);
-	currentTime = adjustedTime;
-	lastTime = adjustedTime;
+	currentTime = (((LONGLONG)rawTime.dwLowDateTime) + (((LONGLONG)rawTime.dwHighDateTime) << 32));
+	deltaTime = ((double)(currentTime - lastTime)) / 10000000;
+	lastTime = currentTime;
 }

@@ -26,7 +26,7 @@ void Drawer::UnRegisterDraw(IDrawable* toNotDraw) {
 
 void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWICImagingFactory *iwicFactory) {
 	for (auto &kv : bitmaps) {
-		if (SUCCEEDED(*hr)) {
+		if (kv.second == NULL && SUCCEEDED(*hr)) {
 			*hr = image::LoadBitmapFromFile(
 				pRenderTarget,
 				iwicFactory,

@@ -1,14 +1,15 @@
+#include "ITimedCode.h"
+
 #pragma once
-
-#include "Windows.h"
-
-class TimedCode {
+class TimedCode : public ITimedCode
+{
 public:
-	TimedCode(HWND hwnd);
+	TimedCode(State state);
 
-	virtual void Start() = 0;
-	virtual void Periodic() = 0;
+	State GetState();
+
+	void OnUnregister() override;
 protected:
-	HWND m_hwnd;
-
+	State state;
 };
+

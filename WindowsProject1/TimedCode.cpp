@@ -1,9 +1,16 @@
 #include "TimedCode.h"
-#include "TimedCodeController.h"
-#include "Windows.h"
-#include <map>
+#include "GameManager.h"
 
-TimedCode::TimedCode(HWND hwnd) {
-	m_hwnd = hwnd;
-	TimedCodeController::RegisterTimedCode(this);
+TimedCode::TimedCode(State state)
+{
+	this->state = state;
+	GameManager::RegisterTimedCode(this);
+}
+
+State TimedCode::GetState()
+{
+	return state;
+}
+
+void TimedCode::OnUnregister() {
 }

@@ -1,33 +1,20 @@
-#pragma once
-
 #include "MoreVK.h"
-#include <WinUser.h>
+#pragma once
+class InputManager {
+public:
 
-bool keysDown[HIGH_KEY];
-bool keysUp[HIGH_KEY];
+	static void SetKeyDown(int key);
+	static void SetKeyUp(int key);
 
-void SetKeyDown(int key) {
-	keysDown[key] = true;
-}
-void SetKeyUp(int key) {
-	keysUp[key] = true;
-}
+	static bool GetKeyDown(int key);
+	static bool GetKeyUp(int key);
 
-bool GetKeyDown(int key) {
-	return keysDown[key];
-}
-bool GetKeyUp(int key) {
-	return keysUp[key];
-}
+	static bool GetKey(int key);
 
-bool GetKey(int key) {
-	return GetKeyState(key) & 0x8000;
-}
+	static void ResetKeys();
 
-void ResetKeys() {
-	for (int i = 0; i < sizeof(keysDown); i++) {
-		keysDown[i] = false;
-		keysUp[i] = false;
-	}
-}
-
+	static void UseInput(int key);
+private:
+	static bool keysDown[HIGH_KEY];
+	static bool keysUp[HIGH_KEY];
+};

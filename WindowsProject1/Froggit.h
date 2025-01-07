@@ -26,8 +26,8 @@ private:
 	double health;
 	HealthBar* healthBar;
 
-	Vector2* pos;
-	Vector2* scale;
+	Vector2 pos;
+	Vector2 scale;
 
 	std::vector<std::wstring> texts;
 	int currentText;
@@ -45,7 +45,7 @@ private:
 
 	// Inherited via ITextable
 	std::wstring GetText() override;
-	Vector2* GetPos() override;
+	Vector2 GetPos() override;
 	float GetSize() override;
 	D2D1::ColorF GetColor() override;
 

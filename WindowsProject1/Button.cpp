@@ -4,7 +4,7 @@
 #include "MenuManager.h"
 #include "GameManager.h"
 
-Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu, MenuManager* menuManager, State state)
+Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos, Vector2 scale, Menu* menu, MenuManager* menuManager, State state)
 {
 	this->text = text;
 
@@ -31,12 +31,12 @@ std::wstring Button::GetBitmap() {
 	return currentSprite ? buttonOn : buttonOff;
 }
 
-Vector2* Button::GetPosition()
+Vector2 Button::GetPosition()
 {
 	return position;
 }
 
-Vector2* Button::GetScale()
+Vector2 Button::GetScale()
 {
 	return scale;
 }
@@ -64,7 +64,7 @@ std::wstring Button::GetText()
 	return text;
 }
 
-Vector2* Button::GetPos()
+Vector2 Button::GetPos()
 {
 	return position;
 }

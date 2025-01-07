@@ -4,7 +4,7 @@
 class HealthBar
 {
 public:
-	HealthBar(Vector2* pos, Vector2* scale);
+	HealthBar(Vector2 pos, Vector2 scale);
 
 	void SetHealth(double health);
 

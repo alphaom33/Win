@@ -1,8 +1,8 @@
 #include "Sprite.h"
 
-Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd, std::wstring sprite) : Sprite(position, scale, hwnd, sprite, 0, false) {}
+Sprite::Sprite(Vector2 position, Vector2 scale, HWND hwnd, std::wstring sprite) : Sprite(position, scale, hwnd, sprite, 0, false) {}
 
-Sprite::Sprite(Vector2* position, Vector2* scale, HWND hwnd, std::wstring sprite, double rotation, bool fromCorner)
+Sprite::Sprite(Vector2 position, Vector2 scale, HWND hwnd, std::wstring sprite, double rotation, bool fromCorner)
 {
 	this->position = position;
 	this->scale = scale;
@@ -19,21 +19,21 @@ Sprite::~Sprite()
 	Drawer::UnRegisterDraw(this);
 }
 
-Vector2* Sprite::GetPosition() {
+Vector2 Sprite::GetPosition() {
 	return position;
 }
 
-Vector2* Sprite::GetScale()
+Vector2 Sprite::GetScale()
 {
 	return scale;
 }
 
-void Sprite::SetPosition(Vector2* newPos)
+void Sprite::SetPosition(Vector2 newPos)
 {
 	position = newPos;
 }
 
-void Sprite::SetScale(Vector2* newScale)
+void Sprite::SetScale(Vector2 newScale)
 {
 	scale = newScale;
 }

@@ -5,7 +5,7 @@
 class LambdaButton : ITextable, public IButton
 {
 public:
-	LambdaButton(Vector2* pos, std::wstring text, void* state, void(*lambda)(void* stat));
+	LambdaButton(Vector2 pos, std::wstring text, void* state, void(*lambda)(void* stat));
 
 	// Inherited via IButton
 	void SetSprite(bool on) override;
@@ -16,7 +16,7 @@ public:
 	void Clicked() override;
 
 private:
-	Vector2* pos;
+	Vector2 pos;
 	std::wstring baseText;
 	std::wstring text;
 
@@ -25,7 +25,7 @@ private:
 
 	// Inherited via ITextable
 	std::wstring GetText() override;
-	Vector2* GetPos() override;
+	Vector2 GetPos() override;
 	float GetSize() override;
 };
 

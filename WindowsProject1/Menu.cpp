@@ -10,7 +10,7 @@ Menu::Menu(std::wstring text)
     size = 20;
 }
 
-Menu::Menu(Vector2* pos, Vector2* scale, std::wstring text, float size)
+Menu::Menu(Vector2 pos, Vector2 scale, std::wstring text, float size)
 {
     this->pos = pos;
     this->scale = scale;
@@ -29,7 +29,7 @@ std::wstring Menu::GetText()
     return text;
 }
 
-Vector2* Menu::GetPos()
+Vector2 Menu::GetPos()
 {
     return pos;
 }

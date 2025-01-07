@@ -9,11 +9,11 @@
 class Button : IDrawable, ITextable, public IButton
 {
 public:
-	Button(std::wstring text, std::wstring on, std::wstring off, Vector2* pos, Vector2* scale, Menu* menu, MenuManager* menuManager, State state);
+	Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos, Vector2 scale, Menu* menu, MenuManager* menuManager, State state);
 
 	std::wstring GetBitmap();
-	Vector2* GetPosition();
-	Vector2* GetScale();
+	Vector2 GetPosition();
+	Vector2 GetScale();
 
 	void SetSprite(bool on) override;
 	void Register() override;
@@ -22,8 +22,8 @@ public:
 	void Clicked() override;
 
 private:
-	Vector2* position;
-	Vector2* scale;
+	Vector2 position;
+	Vector2 scale;
 
 	std::wstring text;
 
@@ -38,7 +38,7 @@ private:
 
 	// Inherited via ITextable
 	std::wstring GetText() override;
-	Vector2* GetPos() override;
+	Vector2 GetPos() override;
 	float GetSize() override;
 
 	// Inherited via IDrawable

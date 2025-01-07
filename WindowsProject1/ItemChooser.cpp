@@ -25,7 +25,7 @@ void ItemChooser::Enter()
 	{
 		for (int i = 0; i < items.size(); i++) 
 		{
-			itemButtons.push_back(new LambdaButton(*GetPos() + Vector2(i * 100, 0), items[i].name, new data{items[i], player}, [](void* state) {
+			itemButtons.push_back(new LambdaButton(GetPos() + Vector2(i * 100, 0), items[i].name, new data{items[i], player}, [](void* state) {
 				data d = *((data*)state);
 				d.player->UseItem(d.i);
 				GameManager::SetState(State::ENEMY);

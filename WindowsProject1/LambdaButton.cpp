@@ -3,7 +3,7 @@
 #include <string>
 #include "Drawer.h"
 
-LambdaButton::LambdaButton(Vector2* pos, std::wstring text, void* state, void(*lambda)(void* state))
+LambdaButton::LambdaButton(Vector2 pos, std::wstring text, void* state, void(*lambda)(void* state))
 {
 	this->pos = pos;
 	this->baseText = text;
@@ -23,7 +23,7 @@ std::wstring LambdaButton::GetText()
 	return text;
 }
 
-Vector2* LambdaButton::GetPos()
+Vector2 LambdaButton::GetPos()
 {
 	return pos;
 }

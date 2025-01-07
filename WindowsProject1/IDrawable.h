@@ -6,8 +6,8 @@
 class IDrawable {
 public:
 	virtual std::wstring GetBitmap() = 0;
-	virtual Vector2* GetPosition() = 0;
-	virtual Vector2* GetScale() = 0;
+	virtual Vector2 GetPosition() = 0;
+	virtual Vector2 GetScale() = 0;
 	virtual double GetRotation() = 0;
 
 	virtual bool FromCorner() { return false; }

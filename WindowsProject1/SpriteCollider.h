@@ -5,15 +5,15 @@
 class SpriteCollider : TimedCode
 {
 public:
-	SpriteCollider(Vector2*, Vector2*, HWND, std::wstring bitmap, double rotation, bool fromCorner);
-	SpriteCollider(Vector2*, Vector2*, HWND, std::wstring bitmap);
+	SpriteCollider(Vector2, Vector2, HWND, std::wstring bitmap, double rotation, bool fromCorner);
+	SpriteCollider(Vector2, Vector2, HWND, std::wstring bitmap);
 	~SpriteCollider();
 
-	Vector2* GetPosition();
-	Vector2* GetScale();
+	Vector2 GetPosition();
+	Vector2 GetScale();
 
-	void SetPosition(Vector2*);
-	void SetScale(Vector2*);
+	void SetPosition(Vector2);
+	void SetScale(Vector2);
 
 	void Enter() override;
 	void Periodic() override;
@@ -26,7 +26,7 @@ private:
 	Collider* collider;
 	Sprite* sprite;
 
-	Vector2* position;
-	Vector2* scale;
+	Vector2 position;
+	Vector2 scale;
 };
 

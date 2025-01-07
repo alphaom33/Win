@@ -3,9 +3,9 @@
 #include "Drawer.h"
 #include "thread"
 #include "Time.h"
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed) : AnimatedSprite(position, scale, frames, speed, 0, false) {}
+AnimatedSprite::AnimatedSprite(Vector2 position, Vector2 scale, std::vector<std::wstring> frames, double speed) : AnimatedSprite(position, scale, frames, speed, 0, false) {}
 
-AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep) : TimedCode(State::BULLET)
+AnimatedSprite::AnimatedSprite(Vector2 position, Vector2 scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
@@ -24,12 +24,12 @@ AnimatedSprite::AnimatedSprite(Vector2* position, Vector2* scale, std::vector<st
 	}
 }
 
-Vector2* AnimatedSprite::GetPosition()
+Vector2 AnimatedSprite::GetPosition()
 {
 	return position;
 }
 
-Vector2* AnimatedSprite::GetScale()
+Vector2 AnimatedSprite::GetScale()
 {
 	return scale;
 }
@@ -56,7 +56,7 @@ void AnimatedSprite::Exit()
 {
 }
 
-void AnimatedSprite::SetPosition(Vector2* pos)
+void AnimatedSprite::SetPosition(Vector2 pos)
 {
 	position = pos;
 }

@@ -7,11 +7,11 @@
 class AnimatedSprite : IDrawable, public TimedCode
 {
 public:
-	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed);
-	AnimatedSprite(Vector2* position, Vector2* scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep);
+	AnimatedSprite(Vector2 position, Vector2 scale, std::vector<std::wstring> frames, double speed);
+	AnimatedSprite(Vector2 position, Vector2 scale, std::vector<std::wstring> frames, double speed, double rotation, bool yep);
 
-	Vector2* GetPosition();
-	Vector2* GetScale();
+	Vector2 GetPosition();
+	Vector2 GetScale();
 	std::wstring GetBitmap();
 
 	void Play();
@@ -20,7 +20,7 @@ public:
 	void Periodic() override;
 	void Exit() override;
 
-	void SetPosition(Vector2* pos);
+	void SetPosition(Vector2 pos);
 
 	void Show();
 	void Hide();
@@ -32,8 +32,8 @@ private:
 
 	double startTime;
 
-	Vector2* position;
-	Vector2* scale;
+	Vector2 position;
+	Vector2 scale;
 
 	double rotation;
 

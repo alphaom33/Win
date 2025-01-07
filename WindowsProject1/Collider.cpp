@@ -1,9 +1,9 @@
 #include "Collider.h"
 #include "ColliderController.h"
 
-Collider::Collider(Vector2* position, Vector2* size) : Collider(position, size, L"") {}
+Collider::Collider(Vector2 position, Vector2 size) : Collider(position, size, L"") {}
 
-Collider::Collider(Vector2* position, Vector2* size, std::wstring name)
+Collider::Collider(Vector2 position, Vector2 size, std::wstring name)
 {
 	this->size = size;
 	this->position = position;
@@ -23,22 +23,22 @@ bool Collider::GetCollided()
 	return collided;
 }
 
-void Collider::SetPos(Vector2* pos)
+void Collider::SetPos(Vector2 pos)
 {
 	this->position = pos;
 }
 
-void Collider::SetScale(Vector2* scale)
+void Collider::SetScale(Vector2 scale)
 {
 	this->size = scale;
 }
 
-Vector2* Collider::GetSize()
+Vector2 Collider::GetSize()
 {
 	return size;
 }
 
-Vector2* Collider::GetPosition()
+Vector2 Collider::GetPosition()
 {
 	return position;
 }

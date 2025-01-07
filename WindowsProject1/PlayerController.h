@@ -13,7 +13,7 @@ public:
 	void Periodic() override;
 	void Exit() override;
 
-	Vector2* GetPos();
+	Vector2 GetPos();
 
 	std::vector<Item> GetItems();
 	void UseItem(Item item);
@@ -34,8 +34,8 @@ private:
 	HWND hwnd;
 
 	// Inherited via ICollider
-	Vector2* GetSize() override;
-	Vector2* GetPosition() override;
+	Vector2 GetSize() override;
+	Vector2 GetPosition() override;
 	void OnCollision(ICollider* other) override;
 	std::wstring GetName() override;
 };

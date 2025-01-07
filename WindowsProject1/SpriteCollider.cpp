@@ -3,9 +3,9 @@
 #include "GameManager.h"
 #include "ColliderController.h"
 
-SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd, std::wstring bitmap) : SpriteCollider(position, size, hwnd, bitmap, 0, false) {}
+SpriteCollider::SpriteCollider(Vector2 position, Vector2 size, HWND hwnd, std::wstring bitmap) : SpriteCollider(position, size, hwnd, bitmap, 0, false) {}
 
-SpriteCollider::SpriteCollider(Vector2* position, Vector2* size, HWND hwnd, std::wstring bitmap, double rotation, bool fromCorner) : TimedCode(State::BULLET)
+SpriteCollider::SpriteCollider(Vector2 position, Vector2 size, HWND hwnd, std::wstring bitmap, double rotation, bool fromCorner) : TimedCode(State::BULLET)
 {
 	this->position = position;
 	this->scale = scale;
@@ -22,24 +22,24 @@ SpriteCollider::~SpriteCollider()
 	delete collider;
 }
 
-Vector2* SpriteCollider::GetPosition()
+Vector2 SpriteCollider::GetPosition()
 {
 	return position;
 }
 
-Vector2* SpriteCollider::GetScale()
+Vector2 SpriteCollider::GetScale()
 {
 	return scale;
 }
 
-void SpriteCollider::SetPosition(Vector2* newPos)
+void SpriteCollider::SetPosition(Vector2 newPos)
 {
 	this->position = newPos;
 	sprite->SetPosition(newPos);
 	collider->SetPos(newPos);
 }
 
-void SpriteCollider::SetScale(Vector2* newScale)
+void SpriteCollider::SetScale(Vector2 newScale)
 {
 	this->scale = newScale;
 	sprite->SetScale(newScale);

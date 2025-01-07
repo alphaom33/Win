@@ -9,8 +9,8 @@ Vector2::Vector2(double x, double y) {
 	this->y = y;
 }
 
-Vector2* Vector2::Normalized() {
-	return new Vector2(x / Length(), y / Length());
+Vector2 Vector2::Normalized() {
+	return Vector2(x / Length(), y / Length());
 }
 
 float Vector2::Length() {
@@ -22,38 +22,38 @@ std::wstring Vector2::ToString()
 	return std::to_wstring(x) + L", " + std::to_wstring(y);
 }
 
-Vector2* Vector2::Zero() {
-	return new Vector2(0, 0);
+Vector2 Vector2::Zero() {
+	return Vector2(0, 0);
 }
-Vector2* Vector2::One() {
-	return new Vector2(1, 1);
+Vector2 Vector2::One() {
+	return Vector2(1, 1);
 }
 
-Vector2* Vector2::operator+(Vector2 rhs)
+Vector2 Vector2::operator+(Vector2 rhs)
 {
-	return new Vector2(x + rhs.x, y + rhs.y);
+	return Vector2(x + rhs.x, y + rhs.y);
 }
 
-Vector2* Vector2::operator+=(Vector2 lhs)
+Vector2 Vector2::operator+=(Vector2 lhs)
 {
 	x += lhs.x;
 	y += lhs.y;
-	return this;
+	return *this;
 }
 
-Vector2* Vector2::operator-(Vector2 rhs)
+Vector2 Vector2::operator-(Vector2 rhs)
 {
-	return new Vector2(x - rhs.x, y - rhs.y);
+	return Vector2(x - rhs.x, y - rhs.y);
 }
 
-Vector2* Vector2::operator*(Vector2 rhs)
+Vector2 Vector2::operator*(Vector2 rhs)
 {
-	return new Vector2(x * rhs.x, y * rhs.y);
+	return Vector2(x * rhs.x, y * rhs.y);
 }
 
-Vector2* Vector2::operator*(double rhs)
+Vector2 Vector2::operator*(double rhs)
 {
-	return new Vector2(x * rhs, y * rhs);
+	return Vector2(x * rhs, y * rhs);
 }
 
 bool Vector2::operator==(Vector2 rhs)
@@ -61,7 +61,7 @@ bool Vector2::operator==(Vector2 rhs)
 	return x == rhs.x && y == rhs.y;
 }
 
-Vector2* Vector2::operator/(double rhs)
+Vector2 Vector2::operator/(double rhs)
 {
-	return new Vector2(x / rhs, y / rhs);
+	return Vector2(x / rhs, y / rhs);
 }

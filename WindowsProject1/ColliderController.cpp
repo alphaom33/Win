@@ -22,13 +22,13 @@ void ColliderController::QueueUnRegisterCollider(ICollider* toUnRegister)
 	toFree.push(toUnRegister);
 }
 
-bool ColliderController::GetCollideds(Vector2* aPos, Vector2* aScale, Vector2* bPos, Vector2* bScale)
+bool ColliderController::GetCollideds(Vector2 aPos, Vector2 aScale, Vector2 bPos, Vector2 bScale)
 {
-	bool sideIntersecta = CheckIntersect(aPos->x, aScale->x, bPos->x, bScale->x);
-	bool topIntersecta = CheckIntersect(aPos->y, aScale->y, bPos->y, bScale->y);
+	bool sideIntersecta = CheckIntersect(aPos.x, aScale.x, bPos.x, bScale.x);
+	bool topIntersecta = CheckIntersect(aPos.y, aScale.y, bPos.y, bScale.y);
 
-	bool sideIntersectb = CheckIntersect(bPos->x, bScale->x, aPos->x, aScale->x);
-	bool topIntersectb = CheckIntersect(bPos->y, bScale->y, aPos->y, aScale->y);
+	bool sideIntersectb = CheckIntersect(bPos.x, bScale.x, aPos.x, aScale.x);
+	bool topIntersectb = CheckIntersect(bPos.y, bScale.y, aPos.y, aScale.y);
 
 	return (sideIntersecta || sideIntersectb) && (topIntersecta || topIntersectb);
 }
@@ -57,7 +57,7 @@ void ColliderController::CheckCollisions()
 	}
 }
 
-bool ColliderController::CheckBox(Vector2* pos, Vector2* scale, std::wstring filter) {
+bool ColliderController::CheckBox(Vector2 pos, Vector2 scale, std::wstring filter) {
 
 	for (int i = 0; i < colliders.size(); i++)
 	{

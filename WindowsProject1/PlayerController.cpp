@@ -12,7 +12,7 @@
 
 PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(State::BULLET)
 {
-	heart = new Sprite(new Vector2(200, 200), new Vector2(20, 20), NULL, L"C:\\Users\\mBorchert\\Desktop\\Heart.bmp");
+	heart = new Sprite(Vector2(200, 200), Vector2(20, 20), NULL, L"C:\\Users\\mBorchert\\Desktop\\Heart.bmp");
 	heart->Hide();
 
 	items = { Item{L"health", 0}, Item{L"apple", 10}};
@@ -38,28 +38,28 @@ void PlayerController::Periodic()
 {
 	iFrames--;
 
-	Vector2* pos = heart->GetPosition();
-	Vector2* newPos = new Vector2();
+	Vector2 pos = heart->GetPosition();
+	Vector2 newPos = Vector2();
 	if (InputManager::GetKey(VK_RIGHT)) {
-		newPos->x = SPEED;
+		newPos.x = SPEED;
 	} else if (InputManager::GetKey(VK_LEFT)) {
-		newPos->x = -SPEED;
+		newPos.x = -SPEED;
 	}
 
-	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(*heart->GetPosition() + *newPos);
+	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
+		heart->SetPosition(heart->GetPosition() + newPos);
 	}
 
-	newPos = new Vector2();
+	newPos = Vector2();
 	pos = heart->GetPosition();
 	if (InputManager::GetKey(VK_UP)) {
-		newPos->y = -SPEED;
+		newPos.y = -SPEED;
 	} else if (InputManager::GetKey(VK_DOWN)) {
-		newPos->y = SPEED;
+		newPos.y = SPEED;
 	}
 
-	if (!ColliderController::CheckBox(*heart->GetPosition() + *newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(*heart->GetPosition() + *newPos);
+	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
+		heart->SetPosition(heart->GetPosition() + newPos);
 	}
 }
 
@@ -68,7 +68,7 @@ void PlayerController::Exit()
 	heart->Hide();
 }
 
-Vector2* PlayerController::GetPos()
+Vector2 PlayerController::GetPos()
 {
 	return heart->GetPosition();
 }
@@ -99,12 +99,12 @@ void PlayerController::Damage(double damage)
 	}
 }
 
-Vector2* PlayerController::GetSize()
+Vector2 PlayerController::GetSize()
 {
 	return heart->GetScale();
 }
 
-Vector2* PlayerController::GetPosition()
+Vector2 PlayerController::GetPosition()
 {
 	return heart->GetPosition();
 }

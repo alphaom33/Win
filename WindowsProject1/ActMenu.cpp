@@ -23,14 +23,14 @@ void ActMenu::Enter()
 	if (actions.size() > 0) {
 		for (int i = 0; i < actions.size(); i++)
 		{
-			buttons.push_back(new LambdaButton(*GetPos() + Vector2(i * 100, 0), actions[i].name, new data{actions[i]}, [](void* d) {
+			buttons.push_back(new LambdaButton(GetPos() + Vector2(i * 100, 0), actions[i].name, new data{actions[i]}, [](void* d) {
 				((data*)d)->action.lambda(Battle::GetEnemy());
 				}));
 		}
 	}
 	else 
 	{
-		buttons.push_back(new LambdaButton(new Vector2(100, 150), L"", NULL, [](void*) {}));
+		buttons.push_back(new LambdaButton(Vector2(100, 150), L"", NULL, [](void*) {}));
 	}
 
 	buttonManager = new ButtonManager(buttons, false, State::MENU);

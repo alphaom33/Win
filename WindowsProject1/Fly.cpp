@@ -3,9 +3,9 @@
 #include "ColliderController.h"
 #include "GameManager.h"
 
-Fly::Fly() : Fly(new Vector2(), new Vector2(20, 20)) {}
+Fly::Fly() : Fly(Vector2(), Vector2(20, 20)) {}
 
-Fly::Fly(Vector2* pos, Vector2* scale) : TimedCode(State::BULLET)
+Fly::Fly(Vector2 pos, Vector2 scale) : TimedCode(State::BULLET)
 {
 	this->pos = pos;
 	this->scale = scale;
@@ -15,7 +15,7 @@ Fly::Fly(Vector2* pos, Vector2* scale) : TimedCode(State::BULLET)
 	ColliderController::RegisterCollider(this);
 }
 
-void Fly::SetPos(Vector2* pos)
+void Fly::SetPos(Vector2 pos)
 {
 	this->pos = pos;
 }
@@ -37,12 +37,12 @@ void Fly::Hide(bool hide)
 	}
 }
 
-Vector2* Fly::GetSize()
+Vector2 Fly::GetSize()
 {
 	return scale;
 }
 
-Vector2* Fly::GetPosition()
+Vector2 Fly::GetPosition()
 {
 	return pos;
 }
@@ -62,7 +62,7 @@ void Fly::Enter()
 
 void Fly::Periodic()
 {
-	pos = *pos + *(*(*Battle::GetPlayer()->GetPos() - *pos)->Normalized() * speed);
+	pos = pos + (Battle::GetPlayer()->GetPos() - pos).Normalized() * speed;
 	sprite->SetPosition(pos);
 }
 

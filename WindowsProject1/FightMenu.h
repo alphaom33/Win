@@ -5,7 +5,7 @@
 class FightMenu : public Menu
 {
 public:
-	FightMenu(Vector2* pos, Vector2* scale);
+	FightMenu(Vector2 pos, Vector2 scale);
 
 	void Enter() override;
 	void Periodic() override;

@@ -36,8 +36,8 @@ Button* Main::MakeButton(const wchar_t* name, int num, Menu* menu) {
 		name,
 		L"C:\\Users\\mBorchert\\Desktop\\nothing.bmp",
 		L"C:\\Users\\mBorchert\\Desktop\\dsfmask.bmp", 
-		new Vector2(sideButton + (buttonGap + buttonWidth) * num + (num > 1 ? middle : 0), 453 - buttonHeight - bottomButton),
-		new Vector2(buttonWidth, buttonHeight),
+		Vector2(sideButton + (buttonGap + buttonWidth) * num + (num > 1 ? middle : 0), 453 - buttonHeight - bottomButton),
+		Vector2(buttonWidth, buttonHeight),
 		menu,
 		menuManager,
 		State::MENU);
@@ -47,16 +47,16 @@ Main::Main(HWND hwnd) : TimedCode(State::ALWAYS)
 {
 	menuManager = new MenuManager(State::MENU);
 	int width = 125;
-	(new Menu(new Vector2(945 / 2 - width / 2 - 25, 453 - bottomButton - buttonHeight), new Vector2(50, 50), L"LV O", 15))->SetCurrent(true);
-	(new Menu(new Vector2(945 / 2 - 30, 453 - bottomButton - 50), new Vector2(50, 50), L"Carha", 30))->SetCurrent(true);
-	HealthBar* healthBar = new HealthBar(new Vector2(945 / 2 - width / 2, 453 - bottomButton - buttonHeight), new Vector2(width, 30));
+	(new Menu(Vector2(945 / 2 - width / 2 - 25, 453 - bottomButton - buttonHeight), Vector2(50, 50), L"LV O", 15))->SetCurrent(true);
+	(new Menu(Vector2(945 / 2 - 30, 453 - bottomButton - 50), Vector2(50, 50), L"Carha", 30))->SetCurrent(true);
+	HealthBar* healthBar = new HealthBar(Vector2(945 / 2 - width / 2, 453 - bottomButton - buttonHeight), Vector2(width, 30));
 	PlayerController* playerController = new PlayerController(healthBar, hwnd);
 	Battle::SetPlayer(playerController);
 
 	Froggit* enemy = new Froggit(hwnd);
 	Battle::SetEnemy(enemy);
 
-	Box* box = new Box(hwnd, new Vector2(sideButton * 2, 175), new Vector2(945 - (4 * sideButton), 150), 10);
+	Box* box = new Box(hwnd, Vector2(sideButton * 2, 175), Vector2(945 - (4 * sideButton), 150), 10);
 
 	new ButtonManager({
 		MakeButton(L"fight", 0, new FightMenu(box->GetPos(), box->GetScale())),

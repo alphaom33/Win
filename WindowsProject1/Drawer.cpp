@@ -48,16 +48,16 @@ void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 			continue;
 		}
 
-		Vector2* pos = s->GetPosition();
-		Vector2* scale = s->GetScale();
+		Vector2 pos = s->GetPosition();
+		Vector2 scale = s->GetScale();
 		D2D1_RECT_F rcBrushRect = D2D1::Rect(
-			pos->x,
-			pos->y,
-			pos->x + scale->x,
-			pos->y + scale->y
+			pos.x,
+			pos.y,
+			pos.x + scale.x,
+			pos.y + scale.y
 			);
 
-		D2D1_POINT_2F point = s->FromCorner() ?  D2D1::Point2F(pos->x, pos->y) : D2D1::Point2F(pos->x + scale->x / 2, pos->y + scale->y / 2);
+		D2D1_POINT_2F point = s->FromCorner() ?  D2D1::Point2F(pos.x, pos.y) : D2D1::Point2F(pos.x + scale.x / 2, pos.y + scale.y / 2);
 		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(s->GetRotation(), point));
 		pRenderTarget->DrawBitmap(
 			bitmaps[s->GetBitmap()],
@@ -111,8 +111,8 @@ HRESULT Drawer::DrawTexts(ID2D1HwndRenderTarget* pRenderTarget, IDWriteFactory* 
 			if (SUCCEEDED(hr)) {
 				D2D1_RECT_F a{
 					a.bottom = 0,
-					a.top = t->GetPos()->y,
-					a.left = t->GetPos()->x,
+					a.top = t->GetPos().y,
+					a.left = t->GetPos().x,
 					a.right = 100000,
 				};
 				pRenderTarget->DrawTextW(t->GetText().c_str(), t->GetText().length(), pTextFormat, &a, brush);

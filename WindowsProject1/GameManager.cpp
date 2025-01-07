@@ -57,7 +57,7 @@ void GameManager::Entries()
 
 void GameManager::Periodics()
 {
-	rand();
+	//rand();
 	for (ITimedCode* t : timedList) {
 		if (t->GetState() == state || t->GetState() == State::ALWAYS) {
 			t->Periodic();

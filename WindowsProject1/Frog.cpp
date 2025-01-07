@@ -1,6 +1,7 @@
 #include "Frog.h"
 #include "GameManager.h"
 #include "Box.h"
+#include "ColliderController.h"
 
 Frog::Frog(Vector2 pos, double dir) : TimedCode(State::BULLET)
 {
@@ -8,6 +9,7 @@ Frog::Frog(Vector2 pos, double dir) : TimedCode(State::BULLET)
 	sprite = new Sprite(pos - (dir > 0 ? scale.WithX(0) : scale), scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\smallFrog.bmp");
 	upSpeed = maxUpSpeed;
 	this->dir = dir;
+	ColliderController::RegisterCollider(this);
 }
 
 Frog::~Frog()
@@ -43,5 +45,30 @@ void Frog::Periodic()
 void Frog::Exit()
 {
 	sprite->Hide();
+	ColliderController::QueueUnRegisterCollider(this);
 	GameManager::QueueUnRegisterTimedCode(this);
+}
+
+void Frog::SetPos(Vector2 pos)
+{
+}
+
+double Frog::GetDamage()
+{
+	return 5;
+}
+
+Vector2 Frog::GetSize()
+{
+	return sprite->GetScale();
+}
+
+Vector2 Frog::GetPosition()
+{
+	return sprite->GetPosition();
+}
+
+std::wstring Frog::GetName()
+{
+	return L"Bullet";
 }

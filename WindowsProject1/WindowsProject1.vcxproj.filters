@@ -169,7 +169,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Frog.h">
-      <Filter>Header Files</Filter>
+      <Filter>Froggit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +270,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Frog.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Froggit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

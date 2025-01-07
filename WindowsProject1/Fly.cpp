@@ -23,7 +23,7 @@ void Fly::SetPos(Vector2 pos)
 
 double Fly::GetDamage()
 {
-	return 0.3;
+	return 5;
 }
 
 void Fly::Hide(bool hide)

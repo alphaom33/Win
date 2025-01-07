@@ -24,7 +24,7 @@ private:
 
 	HealthBar* healthBar;
 	double health;
-	double maxHealth;
+	const double maxHealth = 20;
 
 	double iFrames;
 	double maxIFrames;

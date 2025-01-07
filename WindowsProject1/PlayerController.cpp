@@ -16,10 +16,9 @@ PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(
 	heart = new Sprite(Vector2(200, 200), Vector2(20, 20), NULL, L"C:\\Users\\mBorchert\\Desktop\\Heart.bmp");
 	heart->Hide();
 
-	items = { Item{L"health", 0}, Item{L"apple", 10}};
+	items = { Item{L"snowBall", 45}, Item{L"apple", 10}};
 
 	this->healthBar = healthBar;
-	maxHealth = 1;
 	health = maxHealth;
 	this->hwnd = hwnd;
 
@@ -81,10 +80,18 @@ std::vector<Item> PlayerController::GetItems()
 
 void PlayerController::UseItem(Item item)
 {
-	auto index = std::find_if(items.begin(), items.end(), [item](Item x) {return x.name == item.name; });
-	if (index != items.end()) {
+	auto index = std::find_if(items.begin(), items.end(), [item](Item x) {
+		OutputDebugString((x.name + L", " + item.name + L"\n").c_str());
+		return x.name == item.name;
+		});
+	if (index == items.end()) {
 		OutputDebugString(L"no item gone :(");
+		return;
 	}
+	OutputDebugString(((*index).name + std::to_wstring((*index).healthPoints)).c_str());
+	health += (*index).healthPoints;
+	health = min(health, maxHealth);
+	healthBar->SetHealth(health / maxHealth);
 	items.erase(index);
 }
 
@@ -93,7 +100,7 @@ void PlayerController::Damage(double damage)
 	if (iFrames > 0) return;
 
 	health -= damage;
-	healthBar->SetHealth(health);
+	healthBar->SetHealth(health / maxHealth);
 	iFrames = maxIFrames;
 	if (health <= 0) {
 		SendMessage(hwnd, WM_DIE, NULL, NULL);

@@ -9,6 +9,7 @@
 #include "MoreWM.h"
 #include "InputManager.h"
 #include "CheckMenu.h"
+#include "Frog.h"
 
 Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 {
@@ -51,7 +52,19 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 			}
 			Sleep(6000);
 			GameManager::SetState(State::BUTTON);
-		}}
+		}},
+		new Turn([] {
+			Frog* frog;
+			if (rand() / (RAND_MAX / 2)) {
+				frog = new Frog(Box::GetPos() + Box::GetScale(), -1);
+			}
+			else 
+			{
+				frog = new Frog(Box::GetPos() + Box::GetScale().WithX(0), 1);
+			}
+			while (!frog->GetEnd());
+			GameManager::SetState(State::BUTTON);
+		})
 	};
 
 	this->hwnd = hwnd;

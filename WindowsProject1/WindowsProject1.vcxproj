@@ -145,6 +145,7 @@
     <ClInclude Include="Death.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Fly.h" />
+    <ClInclude Include="Frog.h" />
     <ClInclude Include="Froggit.h" />
     <ClInclude Include="FightMenu.h" />
     <ClInclude Include="FleeChooser.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Death.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Fly.cpp" />
+    <ClCompile Include="Frog.cpp" />
     <ClCompile Include="Froggit.cpp" />
     <ClCompile Include="FightMenu.cpp" />
     <ClCompile Include="FleeChooser.cpp" />

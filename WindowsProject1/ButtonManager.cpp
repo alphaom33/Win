@@ -45,12 +45,10 @@ void ButtonManager::Periodic()
 {
 	if (InputManager::GetKeyDown(VK_RIGHT) || InputManager::GetKeyDown(VK_DOWN))
 	{
-		OutputDebugString(L"RIGHT\n");
 		ChangeButton(1);
 	}
 	else if (InputManager::GetKeyDown(VK_LEFT) || InputManager::GetKeyDown(VK_UP))
 	{
-		OutputDebugString(L"LEFTRIGHT\n");
 		ChangeButton(-1);
 	}
 

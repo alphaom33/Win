@@ -2,6 +2,7 @@
 #include "Battle.h"
 #include "ColliderController.h"
 #include "GameManager.h"
+#include "Time.h"
 
 Fly::Fly() : Fly(Vector2(), Vector2(20, 20)) {}
 
@@ -10,7 +11,7 @@ Fly::Fly(Vector2 pos, Vector2 scale) : TimedCode(State::BULLET)
 	this->pos = pos;
 	this->scale = scale;
 
-	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1, 0, false);
+	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1.5, 0, false);
 
 	ColliderController::RegisterCollider(this);
 }
@@ -62,7 +63,7 @@ void Fly::Enter()
 
 void Fly::Periodic()
 {
-	pos = pos + (Battle::GetPlayer()->GetPos() - pos).Normalized() * speed;
+	pos = pos + (Battle::GetPlayer()->GetPos() - pos).Normalized() * speed * Time::deltaTime;
 	sprite->SetPosition(pos);
 }
 

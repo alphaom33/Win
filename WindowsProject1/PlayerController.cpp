@@ -42,25 +42,25 @@ void PlayerController::Periodic()
 	Vector2 pos = heart->GetPosition();
 	Vector2 newPos = Vector2();
 	if (InputManager::GetKey(VK_RIGHT)) {
-		newPos.x = SPEED;
+		newPos.x = SPEED * Time::deltaTime;
 	} else if (InputManager::GetKey(VK_LEFT)) {
-		newPos.x = -SPEED;
+		newPos.x = -SPEED * Time::deltaTime;
 	}
 
 	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(heart->GetPosition() + newPos * Time::deltaTime);
+		heart->SetPosition(heart->GetPosition() + newPos);
 	}
 
 	newPos = Vector2();
 	pos = heart->GetPosition();
 	if (InputManager::GetKey(VK_UP)) {
-		newPos.y = -SPEED;
+		newPos.y = -SPEED * Time::deltaTime;
 	} else if (InputManager::GetKey(VK_DOWN)) {
-		newPos.y = SPEED;
+		newPos.y = SPEED * Time::deltaTime;
 	}
 
 	if (!ColliderController::CheckBox(heart->GetPosition() + newPos, heart->GetScale(), L"Bullet")) {
-		heart->SetPosition(heart->GetPosition() + newPos * Time::deltaTime);
+		heart->SetPosition(heart->GetPosition() + newPos);
 	}
 }
 

@@ -19,6 +19,7 @@ void GameManager::RunTurn(Turn* turn) {
 
 void GameManager::Setup(HWND p_hwnd)
 {
+	srand(1);
 	hwnd = p_hwnd;
 }
 
@@ -56,6 +57,7 @@ void GameManager::Entries()
 
 void GameManager::Periodics()
 {
+	rand();
 	for (ITimedCode* t : timedList) {
 		if (t->GetState() == state || t->GetState() == State::ALWAYS) {
 			t->Periodic();

@@ -22,7 +22,7 @@ private:
 	Vector2 pos;
 	Vector2 scale;
 
-	const double speed = 1.5;
+	const double speed = 50;
 
 	// Inherited via ICollider
 	Vector2 GetSize() override;

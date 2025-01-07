@@ -12,7 +12,7 @@ public:
 	void Exit() override;
 
 private:
-	const double speed = 30;
+	const double speed = 1000;
 
 	Sprite* pointer;
 	Sprite* background;

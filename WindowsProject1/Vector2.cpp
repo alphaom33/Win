@@ -13,6 +13,16 @@ Vector2 Vector2::Normalized() {
 	return Vector2(x / Length(), y / Length());
 }
 
+Vector2 Vector2::WithX(double x)
+{
+	return Vector2(x, y);
+}
+
+Vector2 Vector2::Withy(double y)
+{
+	return Vector2(x, y);
+}
+
 float Vector2::Length() {
 	return sqrt(pow(x, 2) + pow(y, 2));
 }

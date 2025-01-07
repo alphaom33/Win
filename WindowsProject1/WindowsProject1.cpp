@@ -226,6 +226,9 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		SafeRelease(&pFactory);
 		PostQuitMessage(0);
 		m_hwnd = NULL;
+		GameManager::Reset();
+		ColliderController::Reset();
+		Drawer::Reset();
 		return 0;
 
 	case WM_PAINT:

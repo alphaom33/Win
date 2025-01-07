@@ -13,6 +13,9 @@ public:
 
 	Vector2 Normalized();
 
+	Vector2 WithX(double x);
+	Vector2 Withy(double y);
+
 	float Length();
 	std::wstring ToString();
 

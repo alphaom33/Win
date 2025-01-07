@@ -49,7 +49,7 @@ void AnimatedSprite::Enter()
 
 void AnimatedSprite::Periodic()
 {
-	current = frames[(int)round(Time::currentTime - startTime) % frames.size()];
+	current = frames[(Time::currentTime / (int)(10000000 / speed)) % frames.size()];
 }
 
 void AnimatedSprite::Exit()

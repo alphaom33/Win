@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "Battle.h"
+#include "Time.h"
 
 FightMenu::FightMenu(Vector2 pos, Vector2 scale) : Menu(L"")
 {
@@ -22,7 +23,7 @@ void FightMenu::Enter()
 
 void FightMenu::Periodic()
 {
-	pointer->SetPosition(pointer->GetPosition() + Vector2(speed, 0));
+	pointer->SetPosition(pointer->GetPosition() + Vector2(speed * Time::deltaTime, 0));
 	if (pointer->GetPosition().x >= 825)
 	{
 		GameManager::SetState(State::ENEMY);

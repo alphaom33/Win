@@ -204,6 +204,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
 	MSG msg = { };
 
 	StartGame();
+	PlaySound(L"C:\\Users\\mBorchert\\Desktop\\yessong.wav", NULL, SND_LOOP | SND_ASYNC);
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
 		TranslateMessage(&msg);

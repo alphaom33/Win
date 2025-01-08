@@ -24,6 +24,8 @@ Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos
 void Button::SetSprite(bool on)
 {
 	currentSprite = on;
+	// if (on)
+	// 	PlaySound(L"C:\\Users\\mBorchert\\Desktop\\bip.wav", NULL, SND_ASYNC);
 }
 
 

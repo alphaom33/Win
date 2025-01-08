@@ -11,7 +11,7 @@ Fly::Fly(Vector2 pos, Vector2 scale) : TimedCode(State::BULLET)
 	this->pos = pos;
 	this->scale = scale;
 
-	sprite = new AnimatedSprite(pos, scale, { L"C:\\Users\\mBorchert\\Desktop\\fly.bmp", L"C:\\Users\\mBorchert\\Desktop\\fly2.bmp"}, 1.5, 0, false);
+	sprite = new AnimatedSprite(pos, scale, { L"fly.bmp", L"fly2.bmp"}, 1.5, 0, false);
 
 	ColliderController::RegisterCollider(this);
 }

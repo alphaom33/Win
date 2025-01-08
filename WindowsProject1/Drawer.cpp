@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include "Drawer.h"
 #include "Images.h"
 #include "string"
@@ -25,12 +27,13 @@ void Drawer::UnRegisterDraw(IDrawable* toNotDraw) {
 }
 
 void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWICImagingFactory *iwicFactory) {
+	std::wstring path = std::filesystem::current_path().wstring() + L"\\";
 	for (auto &kv : bitmaps) {
 		if (kv.second == NULL && SUCCEEDED(*hr)) {
 			*hr = image::LoadBitmapFromFile(
 				pRenderTarget,
 				iwicFactory,
-				kv.first.c_str(),
+				(path + kv.first).c_str(),
 				200,
 				0,
 				&kv.second

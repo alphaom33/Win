@@ -13,7 +13,7 @@
 
 PlayerController::PlayerController(HealthBar* healthBar, HWND hwnd) : TimedCode(State::BULLET)
 {
-	heart = new Sprite(Vector2(200, 200), Vector2(20, 20), NULL, L"C:\\Users\\mBorchert\\Desktop\\Heart.bmp");
+	heart = new Sprite(Vector2(200, 200), Vector2(20, 20), NULL, L"Heart.bmp");
 	heart->Hide();
 
 	items = { Item{L"snowBall", 45}, Item{L"apple", 10}};

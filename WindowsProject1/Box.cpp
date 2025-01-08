@@ -8,18 +8,18 @@ Box::Box(HWND hwnd, Vector2 p_pos, Vector2 startSize, int width) : TimedCode(Sta
 	pos = p_pos;
 	size = startSize;
 
-	left = new SpriteCollider(Vector2((p_pos.x - startSize.x) + ((startSize.x / width - 1) * width), p_pos.y), Vector2(width, startSize.y), hwnd, L"C:\\Users\\mBorchert\\Desktop\\wall.bmp", 0, false);
-	right = new SpriteCollider(Vector2(p_pos.x + startSize.x, p_pos.y), Vector2(width, startSize.y), hwnd, L"C:\\Users\\mBorchert\\Desktop\\wall.bmp", 180, false);
-	new Sprite(Vector2(p_pos.x + startSize.x, (p_pos.y - startSize.y) + ((startSize.y / width - 1) * width)), Vector2(width, startSize.x), hwnd, L"C:\\Users\\mBorchert\\Desktop\\wall.bmp", 90, true);
-	new Sprite(Vector2(p_pos.x, p_pos.y + startSize.y + width), Vector2(width, startSize.x), hwnd, L"C:\\Users\\mBorchert\\Desktop\\wall.bmp", 270, true);
+	left = new SpriteCollider(Vector2((p_pos.x - startSize.x) + ((startSize.x / width - 1) * width), p_pos.y), Vector2(width, startSize.y), hwnd, L"wall.bmp", 0, false);
+	right = new SpriteCollider(Vector2(p_pos.x + startSize.x, p_pos.y), Vector2(width, startSize.y), hwnd, L"wall.bmp", 180, false);
+	new Sprite(Vector2(p_pos.x + startSize.x, (p_pos.y - startSize.y) + ((startSize.y / width - 1) * width)), Vector2(width, startSize.x), hwnd, L"wall.bmp", 90, true);
+	new Sprite(Vector2(p_pos.x, p_pos.y + startSize.y + width), Vector2(width, startSize.x), hwnd, L"wall.bmp", 270, true);
 	new Collider(Vector2(p_pos.x, (p_pos.y - startSize.y) + ((startSize.y / width - 1) * width)), Vector2(startSize.x, width));
 	new Collider(Vector2(p_pos.x, p_pos.y + startSize.y), Vector2(startSize.x, width));
 
 	Vector2 block = Vector2(width + 2, width + 2);
-	topLeft = new SpriteCollider(Vector2(p_pos.x - startSize.x + ((startSize.x / width - 1) * width), p_pos.y - startSize.y + ((startSize.y / width - 1) * width)), block, hwnd, L"C:\\Users\\mBorchert\\Desktop\\corner.bmp", 270, false);
-	topRight = new SpriteCollider(Vector2(p_pos.x + startSize.x, (p_pos.y - startSize.y) + ((startSize.y / width - 1) * width)), block, hwnd, L"C:\\Users\\mBorchert\\Desktop\\corner.bmp", 0, false);
-	bottomLeft = new SpriteCollider(Vector2(p_pos.x - startSize.x + ((startSize.x / width - 1) * width), p_pos.y + startSize.y), block, hwnd, L"C:\\Users\\mBorchert\\Desktop\\corner.bmp", 180, false);
-	bottomRight = new SpriteCollider(Vector2(p_pos.x + startSize.x, p_pos.y + startSize.y), block, hwnd, L"C:\\Users\\mBorchert\\Desktop\\corner.bmp", 90, false);
+	topLeft = new SpriteCollider(Vector2(p_pos.x - startSize.x + ((startSize.x / width - 1) * width), p_pos.y - startSize.y + ((startSize.y / width - 1) * width)), block, hwnd, L"corner.bmp", 270, false);
+	topRight = new SpriteCollider(Vector2(p_pos.x + startSize.x, (p_pos.y - startSize.y) + ((startSize.y / width - 1) * width)), block, hwnd, L"corner.bmp", 0, false);
+	bottomLeft = new SpriteCollider(Vector2(p_pos.x - startSize.x + ((startSize.x / width - 1) * width), p_pos.y + startSize.y), block, hwnd, L"corner.bmp", 180, false);
+	bottomRight = new SpriteCollider(Vector2(p_pos.x + startSize.x, p_pos.y + startSize.y), block, hwnd, L"corner.bmp", 90, false);
 }
 
 void Box::Enter()

@@ -34,8 +34,8 @@ Button* Main::MakeButton(const wchar_t* name, int num, Menu* menu) {
 
 	return new Button(
 		name,
-		L"C:\\Users\\mBorchert\\Desktop\\nothing.bmp",
-		L"C:\\Users\\mBorchert\\Desktop\\dsfmask.bmp", 
+		L"nothing.bmp",
+		L"dsfmask.bmp", 
 		Vector2(sideButton + (buttonGap + buttonWidth) * num + (num > 1 ? middle : 0), 453 - buttonHeight - bottomButton),
 		Vector2(buttonWidth, buttonHeight),
 		menu,

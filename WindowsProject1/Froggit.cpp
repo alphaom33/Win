@@ -16,8 +16,8 @@ Froggit::Froggit(HWND hwnd) : TimedCode(State::ENEMY)
 	this->pos = Vector2(350, 0);
 	this->scale = Vector2(200, 175);
 
-	this->sprite = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\frog.bmp");
-	this->textBox = new Sprite(pos + Vector2(200, 0), Vector2(100, 75), NULL, L"C:\\Users\\mBorchert\\Desktop\\textbox.bmp");
+	this->sprite = new Sprite(pos, scale, NULL, L"frog.bmp");
+	this->textBox = new Sprite(pos + Vector2(200, 0), Vector2(100, 75), NULL, L"textbox.bmp");
 
 	health = 1;
 	healthBar = new HealthBar(pos + Vector2(scale.x / 2 - 50, 10), Vector2(100, 30));

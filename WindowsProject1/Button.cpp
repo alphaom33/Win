@@ -25,7 +25,7 @@ void Button::SetSprite(bool on)
 {
 	currentSprite = on;
 	// if (on)
-	// 	PlaySound(L"C:\\Users\\mBorchert\\Desktop\\bip.wav", NULL, SND_ASYNC);
+	// 	PlaySound(L"bip.wav", NULL, SND_ASYNC);
 }
 
 

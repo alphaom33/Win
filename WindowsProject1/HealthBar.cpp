@@ -2,8 +2,8 @@
 
 HealthBar::HealthBar(Vector2 pos, Vector2 scale)
 {
-	back = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\HealthBack.bmp");
-	front = new Sprite(pos, scale, NULL, L"C:\\Users\\mBorchert\\Desktop\\HealthFront.bmp");
+	back = new Sprite(pos, scale, NULL, L"HealthBack.bmp");
+	front = new Sprite(pos, scale, NULL, L"HealthFront.bmp");
 
 	initialScale = scale.x;
 }

@@ -6,10 +6,10 @@
 
 FightMenu::FightMenu(Vector2 pos, Vector2 scale) : Menu(L"")
 {
-	pointer = new Sprite(GetPos(), Vector2(30, 150), NULL, L"C:\\Users\\mBorchert\\Desktop\\cursor.bmp");
+	pointer = new Sprite(GetPos(), Vector2(30, 150), NULL, L"cursor.bmp");
 	pointer->Hide();
 
-	background = new Sprite(Vector2(pos.x, pos.y), Vector2(scale.x, scale.y), NULL, L"C:\\Users\\mBorchert\\Desktop\\fightback.bmp");
+	background = new Sprite(Vector2(pos.x, pos.y), Vector2(scale.x, scale.y), NULL, L"fightback.bmp");
 	background->Hide();
 }
 

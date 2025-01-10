@@ -51,6 +51,6 @@ private:
 
 	// Inherited via IEnemy
 	std::vector<IEnemy::Action> GetActions() override;
-	double GetSpare() override;
+	bool GetSpare() override;
 };
 

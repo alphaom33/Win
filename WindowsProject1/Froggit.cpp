@@ -82,9 +82,9 @@ std::vector<IEnemy::Action> Froggit::GetActions()
 	return actions;
 }
 
-double Froggit::GetSpare()
+bool Froggit::GetSpare()
 {
-	return spared;
+	return spared || health < 0.2;
 }
 
 Turn* Froggit::GetTurn()
@@ -126,7 +126,7 @@ void Froggit::Enter()
 
 void Froggit::Periodic()
 {
-	if (getMillis() > i + 1000 || InputManager::GetKey(VK_Z)) {
+	if (getMillis() > i + 1000 || InputManager::GetKeyDown(VK_Z)) {
 		GameManager::SetState(State::BULLET);
 	}
 }

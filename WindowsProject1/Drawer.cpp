@@ -44,6 +44,8 @@ void Drawer::ReadySprites(HRESULT *hr, ID2D1HwndRenderTarget *pRenderTarget, IWI
 
 void Drawer::DrawSprites(ID2D1HwndRenderTarget* pRenderTarget) {
 	for (auto s : toDraws) {
+		if (s == NULL) continue;
+
 		if (!bitmaps.count(s->GetBitmap())) {
 			bitmaps[s->GetBitmap()] = NULL;
 		}

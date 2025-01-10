@@ -36,10 +36,13 @@ private:
 
 	State state;
 
+	D2D1::ColorF color;
+
 	// Inherited via ITextable
 	std::wstring GetText() override;
 	Vector2 GetPos() override;
 	float GetSize() override;
+	D2D1::ColorF GetColor() override;
 
 	// Inherited via IDrawable
 	double GetRotation() override;

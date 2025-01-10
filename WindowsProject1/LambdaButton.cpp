@@ -3,7 +3,11 @@
 #include <string>
 #include "Drawer.h"
 
-LambdaButton::LambdaButton(Vector2 pos, std::wstring text, void* state, void(*lambda)(void* state))
+LambdaButton::LambdaButton(Vector2 pos, std::wstring text, void* state, void(*lambda)(void* state)) : LambdaButton(pos, text, state, lambda, D2D1::ColorF(1, 1, 1))
+{
+}
+
+LambdaButton::LambdaButton(Vector2 pos, std::wstring text, void* state, void(*lambda)(void* state), D2D1::ColorF color) : color(color)
 {
 	this->pos = pos;
 	this->baseText = text;
@@ -11,6 +15,12 @@ LambdaButton::LambdaButton(Vector2 pos, std::wstring text, void* state, void(*la
 
 	this->state = state;
 	this->lambda = lambda;
+	this->color = color;
+}
+
+void LambdaButton::SetColor(D2D1::ColorF color)
+{
+	this->color = color;
 }
 
 void LambdaButton::Clicked()
@@ -31,6 +41,11 @@ Vector2 LambdaButton::GetPos()
 float LambdaButton::GetSize()
 {
 	return 20;
+}
+
+D2D1::ColorF LambdaButton::GetColor()
+{
+	return color;
 }
 
 void LambdaButton::SetSprite(bool on)

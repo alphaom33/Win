@@ -1,8 +1,9 @@
-#include "GameManager.h"
-#include "list"
-#include "Print.h"
-
 #include <thread>
+#include <list>
+
+#include "GameManager.h"
+#include "Print.h"
+#include "InputManager.h"
 
 State GameManager::state;
 
@@ -57,7 +58,7 @@ void GameManager::Entries()
 
 void GameManager::Periodics()
 {
-	rand();
+	int _ = rand();
 	for (ITimedCode* t : timedList) {
 		if (t->GetState() == state || t->GetState() == State::ALWAYS) {
 			t->Periodic();

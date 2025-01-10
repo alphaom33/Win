@@ -4,7 +4,7 @@
 #include "MenuManager.h"
 #include "GameManager.h"
 
-Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos, Vector2 scale, Menu* menu, MenuManager* menuManager, State state)
+Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos, Vector2 scale, Menu* menu, MenuManager* menuManager, State state) : color(1, 1, 1)
 {
 	this->text = text;
 
@@ -24,8 +24,7 @@ Button::Button(std::wstring text, std::wstring on, std::wstring off, Vector2 pos
 void Button::SetSprite(bool on)
 {
 	currentSprite = on;
-	// if (on)
-	// 	PlaySound(L"bip.wav", NULL, SND_ASYNC);
+	color = on ? D2D1::ColorF(0, 0, 0) : D2D1::ColorF(1, 1, 1);
 }
 
 
@@ -74,6 +73,11 @@ Vector2 Button::GetPos()
 float Button::GetSize()
 {
 	return 30.0f;
+}
+
+D2D1::ColorF Button::GetColor()
+{
+	return color;
 }
 
 double Button::GetRotation()

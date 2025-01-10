@@ -33,6 +33,7 @@ void FightMenu::Periodic()
 		float halfRange = (825 - GetPos().x) / 2;
 		float dst = halfRange + GetPos().x - pointer->GetPosition().x;
 		float damage = 1 - (abs(dst) / halfRange);
+		InputManager::UseInput(VK_Z);
 		Battle::GetEnemy()->Damage(damage);
 		GameManager::SetState(State::ENEMY);
 	}
